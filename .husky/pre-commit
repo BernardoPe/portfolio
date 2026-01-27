@@ -1,0 +1,20 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+# Run Prettier to format code
+echo "Running pre-commit: prettier"
+npm run --silent prettier || {
+  echo "Prettier failed - aborting commit"
+  exit 1
+} 
+# Run linter and typecheck before commit
+echo "Running pre-commit: lint and typecheck"
+npm run --silent lint || {
+  echo "Lint failed - aborting commit"
+  exit 1
+}
+npm run --silent typecheck || {
+  echo "Typecheck failed - aborting commit"
+  exit 1
+}
+
+exit 0
