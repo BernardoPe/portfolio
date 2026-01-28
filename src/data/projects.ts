@@ -11,6 +11,7 @@ import typescriptIcon from '../assets/tech/typescript.svg';
 import nodejsIcon from '../assets/tech/nodejs.svg';
 import androidIcon from '../assets/tech/android.svg';
 import quarkusIcon from '../assets/tech/quarkus.svg';
+import cfWorkersIcon from '../assets/tech/cf-workers.svg';
 
 import type { Project } from '../types/projects';
 
@@ -94,6 +95,7 @@ const PROJECTS: Project[] = [
       { name: 'React', icon: reactIcon },
       { name: 'TypeScript', icon: typescriptIcon },
       { name: 'Tailwind CSS', icon: tailwindIcon },
+      { name: 'Cloudflare Workers', icon: cfWorkersIcon },
     ],
     githubUrl: 'https://github.com/BernardoPe/portfolio',
     liveUrl: 'https://bernardope.com',
