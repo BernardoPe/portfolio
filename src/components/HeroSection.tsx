@@ -2,6 +2,7 @@ import heroBg from '../assets/hero-bg.jpg';
 import GitHubLink from './ui/links/GithubLink';
 import LinkedInLink from './ui/links/LinkedinLink';
 import ResumeLink from './ui/links/ResumeLink';
+import wavingHand from '../assets/waving-hand.png';
 
 function HeroSection(): React.JSX.Element {
   return (
@@ -22,11 +23,7 @@ function HeroSection(): React.JSX.Element {
         </p>
         <p className="text-xl md:text-xl text-primary max-w-6xl">
           Hi there!
-          <img
-            src="https://em-content.zobj.net/source/microsoft-teams/337/waving-hand_1f44b.png"
-            alt="Waving Hand"
-            className="inline-block w-8 h-8 mr-2"
-          />
+          <img src={wavingHand} alt="Waving Hand" className="inline-block w-8 h-8 mr-2" />
           Welcome to my website.
         </p>
 
