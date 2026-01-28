@@ -1,9 +1,9 @@
 import me from '../assets/me.jpg';
 import Section from './ui/Section';
-import GitHubLink from './ui/links/github-link';
-import LinkedInLink from './ui/links/linkedin-link';
-import ResumeLink from './ui/links/resume-link';
-import SteamLink from './ui/links/steam-link';
+import GitHubLink from './ui/links/GithubLink';
+import LinkedInLink from './ui/links/LinkedinLink';
+import ResumeLink from './ui/links/ResumeLink';
+import SteamLink from './ui/links/SteamLink';
 import SectionId from '../types/sections';
 
 function AboutSection(): React.JSX.Element {
@@ -26,7 +26,7 @@ function AboutSection(): React.JSX.Element {
         </div>
 
         <div className="md:w-2/3">
-          <ul className="mt-4 max-w-3xl space-y-6 list-none text-tertiary text-lg">
+          <ul className="mt-4 max-w-3xl space-y-6 list-none color-tertiary text-md">
             <li className="flex items-start">
               <span className="mr-3">🎓</span>
               I'm a student currently working towards my Master's degree in Computer Science at

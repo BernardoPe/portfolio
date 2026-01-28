@@ -26,7 +26,7 @@ export default function ExperienceItem({
       <img src={logoUrl} alt={`${company} logo`} className="w-16 h-16 object-contain rounded-md" />
       <div>
         <div className="font-semibold text-white">{position}</div>
-        <div className="text-sm text-tertiary">{company}</div>
+        <div className="text-sm color-tertiary">{company}</div>
       </div>
     </button>
   );

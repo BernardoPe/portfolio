@@ -1,31 +1,37 @@
-export interface EducationEntry {
-  id: string;
-  title: string;
-  institution: string;
-  start: string;
-  end?: string;
-  bullets: string[];
-  logo?: string;
-}
+import iselLogo from '../assets/isel-logo.svg';
+import istLogo from '../assets/ist-logo.svg';
+
+import type { EducationEntry } from '../types/education';
 
 const EDUCATION: EducationEntry[] = [
   {
-    id: 'testuni',
-    title: 'Bachelor of Software Engineering',
-    institution: 'Test University',
-    start: '2022',
+    id: 'ist',
+    title: 'MSc in Computer Science & Engineering',
+    institution: 'Instituto Superior Técnico',
+    institutionUrl: 'https://tecnico.ulisboa.pt/',
+    grade: '17/20',
+    start: '2025',
     end: 'Present',
-    bullets: ['GPA: 3.8/4.0', 'Relevant Courses: Data Structures, Algorithms, Web Development'],
-    logo: undefined,
+    logo: istLogo,
   },
   {
-    id: 'testuni2',
-    title: 'Bachelor of Computer Science',
-    institution: 'Test University',
-    start: '2018',
-    end: '2022',
-    bullets: ['GPA: 3.7/4.0', 'Relevant Courses: Operating Systems, Database Systems, Networking'],
-    logo: undefined,
+    id: 'isel',
+    title: 'BSc in Computer Science & Engineering',
+    institution: 'Instituto Superior de Engenharia de Lisboa',
+    institutionUrl: 'https://www.isel.pt/',
+    grade: '17/20',
+    start: '2022',
+    end: '2025',
+    logo: iselLogo,
+    achievements: [
+      'Received a merit award for academic excellence for the 2022/2023 & 2024/2025 academic years',
+    ],
+    finalProject: {
+      title: 'Non-Blocking Progressive SSR Benchmark',
+      grade: '20/20',
+      description:
+        'Benchmarked reactive, coroutine, and virtual thread approaches to HTML rendering to evaluate viability of virtual threads for non-blocking PSSR with most external DSL engines.',
+    },
   },
 ];
 

@@ -7,7 +7,9 @@ export function useActiveSection(sectionIds: SectionId[]) {
   useEffect(() => {
     if (!sectionIds || sectionIds.length === 0) return;
 
-    let ticking = false;
+    const DEBOUNCE_MS = 5;
+
+    let debounceId: ReturnType<typeof setTimeout> | null = null;
 
     const computeActive = () => {
       const viewportHeight = window.innerHeight;
@@ -34,12 +36,11 @@ export function useActiveSection(sectionIds: SectionId[]) {
     };
 
     const onScroll = () => {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(() => {
+      if (debounceId) clearTimeout(debounceId);
+      debounceId = setTimeout(() => {
         computeActive();
-        ticking = false;
-      });
+        debounceId = null;
+      }, DEBOUNCE_MS);
     };
 
     computeActive();
@@ -48,6 +49,7 @@ export function useActiveSection(sectionIds: SectionId[]) {
     window.addEventListener('resize', onScroll);
 
     return () => {
+      if (debounceId) clearTimeout(debounceId);
       window.removeEventListener('scroll', onScroll);
       window.removeEventListener('resize', onScroll);
     };

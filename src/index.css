@@ -2,13 +2,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Dancing+Script:wght@500;600;700&display=swap');
 
 @layer utilities {
-  .text-tertiary {
+  .color-tertiary {
     color: var(--text-tertiary);
   }
-  .text-secondary {
+  .color-secondary {
     color: var(--text-secondary);
   }
-  .text-primary {
+  .color-primary {
     color: var(--text-primary);
   }
   .bg-primary {
@@ -23,7 +23,7 @@
   --font-poppins: 'Poppins', 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-dancing-script: 'Dancing Script', cursive;
   --text-primary: #ffffff;
-  --text-secondary: #bdbdbd;
+  --text-secondary: #8c8c8c;
   --text-tertiary: #a8a4c1;
   --bg-primary: #050816;
   --bg-secondary: #161037;

@@ -1,9 +1,7 @@
 import heroBg from '../assets/hero-bg.jpg';
-import SectionId from '../types/sections';
-import { navigateToSection } from '../utils/navigate';
-import GitHubLink from './ui/links/github-link';
-import LinkedInLink from './ui/links/linkedin-link';
-import ResumeLink from './ui/links/resume-link';
+import GitHubLink from './ui/links/GithubLink';
+import LinkedInLink from './ui/links/LinkedinLink';
+import ResumeLink from './ui/links/ResumeLink';
 
 function HeroSection(): React.JSX.Element {
   return (
@@ -38,27 +36,6 @@ function HeroSection(): React.JSX.Element {
           <ResumeLink />
         </div>
       </div>
-
-      <button
-        className="absolute bottom-6 left-1/2 transform -translate-x-1/2 text-white animate-bounce cursor-pointer bg-transparent border-none"
-        onClick={() => navigateToSection(SectionId.About)}
-        aria-label="Scroll to About section"
-      >
-        <svg
-          className="h-6 w-6"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            d="M19 14l-7 7m0 0l-7-7m7 7V3"
-          ></path>
-        </svg>
-      </button>
     </section>
   );
 }

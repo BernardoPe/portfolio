@@ -25,9 +25,9 @@ function Header(): React.JSX.Element {
           className="text-2xl font-bold text-white"
           style={{ fontFamily: "'Dancing Script', cursive" }}
         >
-          {'<'}
-          <img src={signature} alt="Signature" className="inline-block w-20 h-10 -mt-2 -mr-2" />
-          {'/>'}
+          {'</'}
+          <img src={signature} alt="Signature" className="inline-block w-20 h-10  -mr-4" />
+          {'>'}
         </span>
         <nav>
           <ul className="list-none hidden sm:flex flex-row gap-2">
