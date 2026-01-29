@@ -26,7 +26,7 @@ function AboutSection(): React.JSX.Element {
         </div>
 
         <div className="md:w-2/3">
-          <ul className="mt-4 max-w-3xl space-y-6 list-none color-tertiary text-md">
+          <ul className="mt-4 max-w-3xl space-y-6 list-none color-tertiary text-lg">
             <li className="flex items-start">
               <span className="mr-3">🎓</span>
               I'm a student currently working towards my Master's degree in Computer Science at

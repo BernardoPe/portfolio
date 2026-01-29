@@ -28,7 +28,7 @@ export default function ProjectCard({ project }: Props): React.JSX.Element {
           )}
         </div>
 
-        <p className="color-secondary text-lg font-medium mb-4">{project.subtitle}</p>
+        <p className="color-secondary text-md md:text-lg font-medium mb-4">{project.subtitle}</p>
 
         {project.role && (
           <div className="inline-block mb-5">
@@ -38,11 +38,16 @@ export default function ProjectCard({ project }: Props): React.JSX.Element {
           </div>
         )}
 
-        <p className="text-base color-tertiary mb-8 leading-relaxed">{project.description}</p>
-
+        <p className="text-base color-tertiary mb-8 text-sm md:text-base leading-relaxed">{project.description}</p>
         <div className="mb-8">
           <h4 className="color-primary text-base font-semibold mb-4">Technology Stack</h4>
-          <div className="flex flex-wrap gap-6">
+          <div
+            className="
+              grid grid-cols-2 
+              gap-x-6 gap-y-6 
+              sm:flex sm:flex-wrap sm:gap-6
+            "
+          >
             {project.technologies.map((tech, index) => (
               <div key={index} className="flex flex-col items-center gap-2">
                 <div className="w-12 h-12 flex items-center justify-center bg-slate-700/10 rounded-full">

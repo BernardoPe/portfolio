@@ -23,7 +23,9 @@ async function bootstrap() {
       preloadImage(wavingHand),
       preloadImage(signature),
     ]);
-  } catch (e) {}
+  } catch {
+    // no-op
+  }
 
   createRoot(document.getElementById('root')!).render(
     <StrictMode>

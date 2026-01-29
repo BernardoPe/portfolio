@@ -26,12 +26,12 @@ export default function ExperienceSection(): React.JSX.Element {
 
         <div className="md:w-2/3 bg-secondary rounded-xl p-8 shadow-lg min-h-[180px]">
           <h3 className="text-2xl font-semibold mb-2">{exp.position}</h3>
-          <div className="text-md color-secondary mb-2">{exp.company}</div>
-          <div className="text-md color-secondary mb-4">
+          <div className="text-lg color-secondary mb-2">{exp.company}</div>
+          <div className="text-lg color-secondary mb-4">
             {exp.start} {exp.end ? ` - ${exp.end}` : ''}
           </div>
 
-          <ul className="list-disc pl-5 space-y-2 color-tertiary">
+          <ul className="list-disc pl-5 space-y-2 color-tertiary text-sm md:text-base">
             {exp.bullets.map((b, i) => (
               <li key={i}>{b}</li>
             ))}
