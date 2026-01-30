@@ -18,10 +18,10 @@ function HeroSection(): React.JSX.Element {
 
       <div className="relative z-10 flex h-full flex-col items-center justify-center px-4 text-center gap-5">
         <h1 className="text-5xl md:text-6xl font-bold">Bernardo Pereira</h1>
-        <p className="text-xl md:text-xl text-secondary max-w-6xl">
+        <p className="text-xl md:text-xl color-secondary max-w-6xl">
           Lisbon, Portugal &#8226; MSc student @ Instituto Superior Técnico
         </p>
-        <p className="text-xl md:text-xl text-primary max-w-6xl">
+        <p className="text-xl md:text-xl color-primary max-w-6xl">
           Hi there!
           <img src={wavingHand} alt="Waving Hand" className="inline-block w-8 h-8 mr-2" />
           Welcome to my website.
