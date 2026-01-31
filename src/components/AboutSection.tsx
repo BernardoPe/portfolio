@@ -18,10 +18,10 @@ function AboutSection(): React.JSX.Element {
           />
 
           <div className="mt-4 flex items-center gap-3">
-            <GitHubLink />
             <LinkedInLink />
+            <GitHubLink />
             <SteamLink />
-            <ResumeLink>CV</ResumeLink>
+            <ResumeLink />
           </div>
         </div>
 

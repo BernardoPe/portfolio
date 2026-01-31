@@ -6,6 +6,7 @@ import EducationSection from './components/EducationSection';
 import ProjectsSection from './components/ProjectsSection';
 import SkillsSection from './components/SkillsSection';
 import ContactSection from './components/ContactSection';
+import ChatSection from './components/ChatSection';
 import NotFound from './components/NotFound';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
@@ -31,6 +32,7 @@ function MainApp(): React.JSX.Element {
       <EducationSection />
       <ProjectsSection />
       <SkillsSection />
+      <ChatSection />
       <ContactSection />
     </div>
   );

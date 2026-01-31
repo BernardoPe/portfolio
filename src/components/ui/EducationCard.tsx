@@ -54,7 +54,9 @@ export default function EducationCard({ entry }: Props): React.JSX.Element {
                 {entry.finalProject.title}
               </div>
               {entry.finalProject.description && (
-                <p className="text-sm md:text-base color-tertiary">{entry.finalProject.description}</p>
+                <p className="text-sm md:text-base color-tertiary">
+                  {entry.finalProject.description}
+                </p>
               )}
             </div>
             {entry.finalProject.grade && (

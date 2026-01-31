@@ -5,6 +5,7 @@ export enum SectionId {
   Experience = 'experience',
   Projects = 'projects',
   Skills = 'skills',
+  Chat = 'AI Chat',
   Contact = 'contact',
 }
 
@@ -15,6 +16,7 @@ export const ALL_SECTIONS: SectionId[] = [
   SectionId.Education,
   SectionId.Projects,
   SectionId.Skills,
+  SectionId.Chat,
   SectionId.Contact,
 ];
 
