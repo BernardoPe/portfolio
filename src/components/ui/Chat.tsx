@@ -28,6 +28,7 @@ export default function Chat({ embedded = false }: ChatProps) {
 
   const agent = useAgent({
     agent: 'chat',
+    name: getStoredId(),
   });
 
   const [agentInput, setAgentInput] = useState('');
@@ -320,4 +321,16 @@ export default function Chat({ embedded = false }: ChatProps) {
       </div>
     </div>
   );
+}
+
+function getStoredId() {
+  const key = 'chat-uuid';
+  let id = localStorage.getItem(key);
+
+  if (!id) {
+    id = crypto.randomUUID();
+    localStorage.setItem(key, id);
+  }
+
+  return id;
 }
