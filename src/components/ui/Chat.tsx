@@ -24,7 +24,7 @@ export default function Chat({ embedded = false }: ChatProps) {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const messagesContainerRef = useRef<HTMLDivElement>(null);
   const rootRef = useRef<HTMLDivElement>(null);
-  const [, setIsInView] = useState(false);
+  const [isInView, setIsInView] = useState(false);
 
   const agent = useAgent({
     agent: 'chat',
@@ -103,8 +103,10 @@ export default function Chat({ embedded = false }: ChatProps) {
 
   useEffect(() => {
     if (agentMessages.length === 0) return;
-    scrollToBottom('smooth');
-  }, [agentMessages, scrollToBottom]);
+    if (isInView) {
+      scrollToBottom('smooth');
+    }
+  }, [agentMessages, scrollToBottom, isInView]);
 
   const outerClass = embedded
     ? 'w-full flex justify-center items-center bg-fixed overflow-hidden'
