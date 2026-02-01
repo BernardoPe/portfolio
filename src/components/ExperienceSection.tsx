@@ -24,7 +24,7 @@ export default function ExperienceSection(): React.JSX.Element {
           ))}
         </div>
 
-        <div className="md:w-2/3 bg-secondary rounded-xl p-8 shadow-lg min-h-[180px]">
+        <div className="md:w-2/3 bg-secondary rounded-xl p-8 shadow-lg min-h-45">
           <h3 className="text-2xl font-semibold mb-2">{exp.position}</h3>
           <div className="text-lg color-secondary mb-2">{exp.company}</div>
           <div className="text-lg color-secondary mb-4">

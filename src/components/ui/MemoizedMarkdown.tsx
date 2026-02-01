@@ -1,18 +1,19 @@
-import { marked } from 'marked';
+import { marked, type Tokens } from 'marked';
 import { memo, useMemo } from 'react';
 import { Streamdown } from 'streamdown';
+import { code } from '@streamdown/code';
 
 function parseMarkdownIntoBlocks(markdown: string): string[] {
   const tokens: TokensList = marked.lexer(markdown);
-  return tokens.map((token: marked.Tokens.Generic) => token.raw);
+  return tokens.map((token: Tokens.Generic) => token.raw);
 }
 
-type TokensList = Array<marked.Tokens.Generic & { raw: string }>;
+type TokensList = Array<Tokens.Generic & { raw: string }>;
 
 const MemoizedMarkdownBlock = memo(
   ({ content }: { content: string }) => (
     <div className="markdown-body">
-      <Streamdown>{content}</Streamdown>
+      <Streamdown plugins={{ code }}>{content}</Streamdown>
     </div>
   ),
   (prevProps, nextProps) => prevProps.content === nextProps.content
