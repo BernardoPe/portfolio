@@ -174,7 +174,7 @@ export default function Chat({ embedded = false }: ChatProps) {
               <div key={m.id}>
                 <div className={`flex ${isUser ? 'justify-end' : 'justify-start'}`}>
                   <div
-                    className={`flex gap-2 max-w-[85%] ${isUser ? 'flex-row-reverse' : 'flex-row'}`}
+                    className={`flex gap-2 max-w-[70%] md:max-w-[85%] ${isUser ? 'flex-row-reverse' : 'flex-row'}`}
                   >
                     {showAvatar && !isUser ? (
                       <Avatar username={'AI'} className="shrink-0" />
@@ -189,7 +189,7 @@ export default function Chat({ embedded = false }: ChatProps) {
                             return (
                               <div key={i}>
                                 <Card
-                                  className={`p-3 rounded-md bg-neutral-100 dark:bg-neutral-900 ${
+                                  className={`p-4 rounded-md bg-neutral-100 dark:bg-neutral-900 ${
                                     isUser
                                       ? 'rounded-br-none'
                                       : 'rounded-bl-none border-assistant-border'
