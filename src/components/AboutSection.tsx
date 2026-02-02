@@ -14,7 +14,7 @@ function AboutSection(): React.JSX.Element {
           <img
             src={me}
             alt="My Photo"
-            className="w-75 h-75 rounded-full object-cover ring-4 ring-white/20 shadow-lg"
+            className="w-75 h-75 3xl:w-80 3xl:h-80 rounded-full object-cover ring-4 ring-white/20 shadow-lg"
           />
 
           <div className="mt-4 flex items-center gap-3">

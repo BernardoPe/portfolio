@@ -61,7 +61,7 @@ export default function ProjectCard({ project }: Props): React.JSX.Element {
                     </span>
                   )}
                 </div>
-                <span className="text-sm color-secondary text-center max-w-[88px] break-words">
+                <span className="text-sm color-secondary text-center max-w-[5.5rem] break-words">
                   {tech.name}
                 </span>
               </div>

@@ -17,13 +17,19 @@ function HeroSection(): React.JSX.Element {
       </div>
 
       <div className="relative z-10 flex h-full flex-col items-center justify-center px-4 text-center gap-5">
-        <h1 className="text-5xl md:text-6xl font-bold">Bernardo Pereira</h1>
-        <p className="text-xl md:text-xl color-secondary max-w-6xl">
+        <h1 className="text-5xl md:text-6xl 3xl:text-7xl font-bold tracking-tight">
+          Bernardo Pereira
+        </h1>
+        <p className="text-xl md:text-xl 3xl:text-2xl color-secondary max-w-6xl">
           MSc student @ Instituto Superior Técnico
         </p>
-        <p className="text-xl md:text-xl color-primary max-w-6xl">
+        <p className="text-xl md:text-xl 3xl:text-2xl color-primary max-w-6xl">
           Hi there!
-          <img src={wavingHand} alt="Waving Hand" className="inline-block w-8 h-8 mr-2" />
+          <img
+            src={wavingHand}
+            alt="Waving Hand"
+            className="inline-block w-8 h-8 3xl:w-10 3xl:h-10 mr-2"
+          />
           Welcome to my website.
         </p>
 

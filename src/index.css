@@ -29,6 +29,27 @@
   --accent: #f48120;
   --bg-primary: #050816;
   --bg-secondary: #161037;
+
+  --breakpoint-3xl: 120rem; /* 1920px */
+  --breakpoint-4xl: 160rem; /* 2560px */
+}
+
+@media (width >= 120rem) {
+  html {
+    font-size: 17px;
+  }
+}
+
+@media (width >= 160rem) {
+  html {
+    font-size: 18px;
+  }
+}
+
+@media (width >= 240rem) {
+  html {
+    font-size: 20px;
+  }
 }
 
 html,
@@ -62,7 +83,7 @@ body {
 
 /* Markdown rendering styles for improved readability */
 .markdown-body {
-  @apply text-[16px] leading-7 break-words mb-2;
+  @apply text-base leading-7 break-words mb-2;
 }
 
 .markdown-body a {

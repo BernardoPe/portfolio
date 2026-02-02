@@ -87,7 +87,7 @@ export default function ContactForm(): React.JSX.Element {
       />
 
       <textarea
-        className="w-full p-3 rounded bg-secondary border border-white/10 mb-4 min-h-[140px]"
+        className="w-full p-3 rounded bg-secondary border border-white/10 mb-4 min-h-[15rem]"
         placeholder="Your message"
         value={message}
         onChange={e => setMessage(e.target.value)}

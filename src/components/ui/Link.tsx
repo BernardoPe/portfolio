@@ -16,7 +16,7 @@ function Link({ id, children }: LinkProps): React.JSX.Element {
   return (
     <li onClick={() => navigateToSection(id)} className="cursor-pointer">
       <a
-        className={`inline-flex items-center justify-center rounded-md min-w-[90px] px-4 py-2 text-[16px] font-medium
+        className={`inline-flex items-center justify-center rounded-md min-w-[5.625rem] px-4 py-2 text-base font-medium
             transition-colors duration-300 ease-in-out border border-transparent
             ${isActive ? 'bg-black/20 text-white border-white/20' : 'text-white/70 hover:bg-black/40 hover:text-white hover:border-white/20'}`}
         aria-current={isActive ? 'page' : undefined}

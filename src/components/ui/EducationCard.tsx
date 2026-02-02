@@ -7,7 +7,7 @@ interface Props {
 
 export default function EducationCard({ entry }: Props): React.JSX.Element {
   return (
-    <div className="bg-secondary rounded-xl p-6 shadow-lg w-full max-w-[800px] mx-auto">
+    <div className="bg-secondary rounded-xl p-6 shadow-lg w-full max-w-[50rem] mx-auto">
       <div className="flex flex-col md:flex-row items-center md:items-start md:gap-6">
         {entry.logo && (
           <img

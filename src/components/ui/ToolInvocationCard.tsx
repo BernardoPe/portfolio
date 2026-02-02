@@ -28,7 +28,7 @@ export function ToolInvocationCard({ toolUIPart }: ToolInvocationCardProps) {
   const [isExpanded, setIsExpanded] = useState(false);
   const toolName = toolUIPart.type.replace(/^([^_]*_){2}/, '').trim();
   return (
-    <Card className="p-4 my-3 w-full max-w-[350px] rounded-md overflow-hidden">
+    <Card className="p-4 my-3 w-full max-w-[21.875rem] rounded-md overflow-hidden">
       <button
         type="button"
         onClick={() => setIsExpanded(!isExpanded)}
@@ -52,12 +52,12 @@ export function ToolInvocationCard({ toolUIPart }: ToolInvocationCardProps) {
       </button>
 
       <div
-        className={`transition-all duration-200 ${isExpanded ? 'max-h-[200px] opacity-100 mt-3' : 'max-h-0 opacity-0 overflow-hidden'}`}
+        className={`transition-all duration-200 ${isExpanded ? 'max-h-[12.5rem] opacity-100 mt-3' : 'max-h-0 opacity-0 overflow-hidden'}`}
       >
-        <div className="overflow-y-auto" style={{ maxHeight: isExpanded ? '180px' : '0px' }}>
+        <div className="overflow-y-auto" style={{ maxHeight: isExpanded ? '11.25rem' : '0px' }}>
           <div className="mb-3">
             <h5 className="text-xs font-medium mb-1 text-muted-foreground">Arguments:</h5>
-            <pre className="bg-background/80 p-2 rounded-md text-xs overflow-auto whitespace-pre-wrap wrap-break-word max-w-[450px]">
+            <pre className="bg-background/80 p-2 rounded-md text-xs overflow-auto whitespace-pre-wrap wrap-break-word max-w-[28.125rem]">
               {JSON.stringify(toolUIPart.input, null, 2)}
             </pre>
           </div>
@@ -67,7 +67,7 @@ export function ToolInvocationCard({ toolUIPart }: ToolInvocationCardProps) {
       {toolUIPart.state === 'output-available' && (
         <div className={`mt-3 border-t border-[#F48120]/10 pt-2 ${isExpanded ? '' : 'hidden'}`}>
           <h5 className="text-xs font-medium mb-1 text-muted-foreground">Result:</h5>
-          <pre className="bg-background/80 p-1 rounded-md text-xs overflow-auto whitespace-pre-wrap wrap-break-word max-w-[450px]">
+          <pre className="bg-background/80 p-1 rounded-md text-xs overflow-auto whitespace-pre-wrap wrap-break-word max-w-[28.125rem]">
             {(() => {
               const result = toolUIPart.output;
               if (isToolResultWithContent(result)) {
