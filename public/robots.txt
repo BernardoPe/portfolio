@@ -1,5 +1,4 @@
 User-agent: *
 Allow: /
 
-# Point to the sitemap (replace domain if different)
 Sitemap: https://bernardope.com/sitemap.xml

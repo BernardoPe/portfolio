@@ -83,46 +83,12 @@ body {
 
 /* Markdown rendering styles for improved readability */
 .markdown-body {
-  @apply text-base leading-7 break-words mb-2;
-}
-
-.markdown-body a {
-  color: var(--accent);
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-
-.markdown-body pre {
-  @apply p-6 rounded-lg overflow-auto mb-4 bg-neutral-900 text-white font-mono text-sm leading-relaxed;
-  max-height: 480px;
-  position: relative;
-  border: 1px solid rgba(255, 255, 255, 0.04);
-  box-shadow: 0 6px 18px rgba(2, 6, 23, 0.6);
-}
-
-/* Nice thin custom scrollbar for code blocks */
-.markdown-body pre::-webkit-scrollbar {
-  height: 10px;
-  width: 10px;
-}
-.markdown-body pre::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.02);
-  border-radius: 8px;
-}
-.markdown-body pre::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.06);
-  border-radius: 8px;
-  border: 2px solid transparent;
-  background-clip: padding-box;
-}
-
-.markdown-body blockquote {
-  @apply my-4 p-3 rounded border-l-4 border-neutral-200 bg-neutral-50 text-neutral-500;
+  @apply text-base leading-7 break-words p-1;
 }
 
 .markdown-body ul,
 .markdown-body ol {
-  @apply pl-5 mb-4;
+  @apply pl-5;
 }
 
 .markdown-body img {
@@ -131,4 +97,18 @@ body {
 
 .markdown-body table {
   @apply w-full border-collapse my-4;
+}
+
+.markdown-body a,
+.markdown-body button[data-streamdown="link"] {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.markdown-body a:hover,
+.markdown-body button[data-streamdown="link"]:hover {
+  opacity: 0.8;
 }
