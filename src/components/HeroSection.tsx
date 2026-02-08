@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import heroBg from '../assets/hero-bg.jpg';
 import GitHubLink from './ui/links/GithubLink';
 import LinkedInLink from './ui/links/LinkedinLink';
@@ -5,13 +6,17 @@ import ResumeLink from './ui/links/ResumeLink';
 import wavingHand from '../assets/waving-hand.png';
 
 function HeroSection(): React.JSX.Element {
+  const [isBgLoaded, setIsBgLoaded] = useState(false);
   return (
     <section id="home" className="relative h-screen w-full overflow-hidden text-white">
-      <div className="absolute inset-0">
+      <div className="absolute inset-0 bg-[#050816]">
         <img
           src={heroBg}
           alt="Hero Background"
-          className="h-full w-full object-cover blur-[4px] brightness-80"
+          onLoad={() => setIsBgLoaded(true)}
+          className={`h-full w-full object-cover blur-[4px] brightness-80 transition-opacity duration-1000 ${
+            isBgLoaded ? 'opacity-100' : 'opacity-0'
+          }`}
         />
         <div className="absolute inset-0 bg-black/60" />
       </div>
