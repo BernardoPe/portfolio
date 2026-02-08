@@ -1,23 +1,27 @@
+import { lazy, Suspense } from 'react';
 import Header from './components/layout/Header';
 import HeroSection from './components/HeroSection';
-import AboutSection from './components/AboutSection';
-import ExperienceSection from './components/ExperienceSection';
-import EducationSection from './components/EducationSection';
-import ProjectsSection from './components/ProjectsSection';
-import SkillsSection from './components/SkillsSection';
-import ContactSection from './components/ContactSection';
-import ChatSection from './components/ChatSection';
-import NotFound from './components/NotFound';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
+const AboutSection = lazy(() => import('./components/AboutSection'));
+const ExperienceSection = lazy(() => import('./components/ExperienceSection'));
+const EducationSection = lazy(() => import('./components/EducationSection'));
+const ProjectsSection = lazy(() => import('./components/ProjectsSection'));
+const SkillsSection = lazy(() => import('./components/SkillsSection'));
+const ContactSection = lazy(() => import('./components/ContactSection'));
+const ChatSection = lazy(() => import('./components/ChatSection'));
+const NotFound = lazy(() => import('./components/NotFound'));
 
 function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<MainApp />} />
-        <Route path="/r" element={<MainApp />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+      <Suspense>
+        <Routes>
+          <Route path="/" element={<MainApp />} />
+          <Route path="/r" element={<MainApp />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </Suspense>
     </BrowserRouter>
   );
 }
@@ -27,13 +31,15 @@ function MainApp(): React.JSX.Element {
     <div className="bg-primary min-h-screen text-white">
       <Header />
       <HeroSection />
-      <AboutSection />
-      <ExperienceSection />
-      <EducationSection />
-      <ProjectsSection />
-      <SkillsSection />
-      <ChatSection />
-      <ContactSection />
+      <Suspense>
+        <AboutSection />
+        <ExperienceSection />
+        <EducationSection />
+        <ProjectsSection />
+        <SkillsSection />
+        <ChatSection />
+        <ContactSection />
+      </Suspense>
     </div>
   );
 }

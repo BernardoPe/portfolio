@@ -2,27 +2,25 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import './index.css';
 import App from './App.tsx';
+
+function preloadImage(url: string) {
+  const link = document.createElement('link');
+  link.rel = 'preload';
+  link.as = 'image';
+  link.href = url;
+  document.head.appendChild(link);
+}
+
 import heroBg from './assets/hero-bg.jpg';
 import wavingHand from './assets/waving-hand.png';
 import signature from './assets/signature.png';
-
-async function preloadImage(url: string) {
-  return new Promise<void>(resolve => {
-    const img = new Image();
-    img.src = url;
-    img.onload = () => resolve();
-    img.onerror = () => resolve();
-  });
-}
+preloadImage(heroBg);
+preloadImage(wavingHand);
+preloadImage(signature);
 
 async function bootstrap() {
   try {
-    await Promise.all([
-      document.fonts?.ready || Promise.resolve(),
-      preloadImage(heroBg),
-      preloadImage(wavingHand),
-      preloadImage(signature),
-    ]);
+    await (document.fonts?.ready || Promise.resolve());
   } catch {
     // no-op
   }
