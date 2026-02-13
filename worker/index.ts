@@ -199,7 +199,7 @@ export default {
       else {
         return new Response(
           JSON.stringify({
-            error: 'No form endpoint configured. Set FORM_ENDPOINT or FORMSPREE_FORM_ID.',
+            error: 'There was an error.',
           }),
           { status: 500, headers: { 'Content-Type': 'application/json' } }
         );

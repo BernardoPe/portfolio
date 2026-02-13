@@ -1,7 +1,6 @@
 import { lazy, Suspense } from 'react';
 import Header from './components/layout/Header';
 import HeroSection from './components/HeroSection';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 const AboutSection = lazy(() => import('./components/AboutSection'));
 const ExperienceSection = lazy(() => import('./components/ExperienceSection'));
@@ -13,16 +12,20 @@ const ChatSection = lazy(() => import('./components/ChatSection'));
 const NotFound = lazy(() => import('./components/NotFound'));
 
 function App() {
-  return (
-    <BrowserRouter>
-      <Suspense>
-        <Routes>
-          <Route path="/" element={<MainApp />} />
-          <Route path="/r" element={<MainApp />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+  const path = window.location.pathname;
+
+  if (path !== '/' && path !== '/r') {
+    return (
+      <Suspense fallback={null}>
+        <NotFound />
       </Suspense>
-    </BrowserRouter>
+    );
+  }
+
+  return (
+    <Suspense fallback={null}>
+      <MainApp />
+    </Suspense>
   );
 }
 

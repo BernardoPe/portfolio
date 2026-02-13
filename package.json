@@ -28,7 +28,6 @@
     "marked": "^17.0.1",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
-    "react-router-dom": "^6.14.0",
     "streamdown": "^2.1.0"
   },
   "devDependencies": {

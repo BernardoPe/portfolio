@@ -5,7 +5,7 @@ interface Props {
   children?: React.ReactNode;
 }
 
-export default function ResumeLink({ children = 'CV', className = '' }: Props) {
+export default function ResumeLink({ children = 'Resume', className = '' }: Props) {
   return (
     <a
       href="/resume.pdf"
