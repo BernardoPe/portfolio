@@ -18,7 +18,7 @@ function HeroSection(): React.JSX.Element {
             isBgLoaded ? 'opacity-100' : 'opacity-0'
           }`}
         />
-        <div className="absolute inset-0 bg-black/60" />
+        <div className="absolute inset-0 bg-black/65" />
       </div>
 
       <div className="relative z-10 flex h-full flex-col items-center justify-center px-4 text-center gap-5">
