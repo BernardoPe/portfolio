@@ -142,7 +142,7 @@ export default function Chat({ embedded = false }: ChatProps) {
         >
           {agentMessages.length === 0 && (
             <div className="h-full flex items-center justify-center">
-              <Card className="p-6 max-w-md mx-auto bg-neutral-100 dark:bg-neutral-900">
+              <Card className="p-4 max-w-sm mx-auto bg-neutral-100 dark:bg-neutral-900">
                 <div className="text-center space-y-4">
                   <p className="text-muted-foreground text-sm">
                     Start a conversation by asking about:
@@ -189,7 +189,7 @@ export default function Chat({ embedded = false }: ChatProps) {
                             return (
                               <div key={i}>
                                 <Card
-                                  className={`p-4 rounded-md bg-neutral-100 dark:bg-neutral-900 ${
+                                  className={`p-3 rounded-md bg-neutral-100 dark:bg-neutral-900 ${
                                     isUser
                                       ? 'rounded-br-none'
                                       : 'rounded-bl-none border-assistant-border'

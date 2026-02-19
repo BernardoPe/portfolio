@@ -61,16 +61,16 @@ export default function ContactForm(): React.JSX.Element {
 
   return (
     <form onSubmit={handleSubmit} className="max-w-3xl">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
         <input
-          className="w-full p-3 rounded bg-secondary border border-white/10"
+          className="w-full p-2.5 rounded bg-secondary border border-white/10 text-sm md:text-base"
           placeholder="Your name"
           value={name}
           onChange={e => setName(e.target.value)}
           required
         />
         <input
-          className="w-full p-3 rounded bg-secondary border border-white/10"
+          className="w-full p-2.5 rounded bg-secondary border border-white/10 text-sm md:text-base"
           placeholder="Your email"
           value={email}
           onChange={e => setEmail(e.target.value)}
@@ -80,14 +80,14 @@ export default function ContactForm(): React.JSX.Element {
       </div>
 
       <input
-        className="w-full p-3 rounded bg-secondary border border-white/10 mb-4"
+        className="w-full p-2.5 rounded bg-secondary border border-white/10 mb-3 text-sm md:text-base"
         placeholder="Subject (optional)"
         value={subject}
         onChange={e => setSubject(e.target.value)}
       />
 
       <textarea
-        className="w-full p-3 rounded bg-secondary border border-white/10 mb-4 min-h-[15rem]"
+        className="w-full p-2.5 rounded bg-secondary border border-white/10 mb-3 min-h-[13rem] text-sm md:text-base"
         placeholder="Your message"
         value={message}
         onChange={e => setMessage(e.target.value)}
@@ -100,7 +100,7 @@ export default function ContactForm(): React.JSX.Element {
       <div className="flex items-center gap-4">
         <button
           type="submit"
-          className="bg-blue-900 hover:bg-blue-800 color-primary rounded-lg px-6 py-3 text-base font-medium transition-colors duration-200"
+          className="bg-blue-900 hover:bg-blue-800 color-primary rounded-lg px-5 py-2.5 text-sm md:text-base font-medium transition-colors duration-200"
           disabled={loading}
         >
           {loading ? 'Sending…' : 'Send Message'}

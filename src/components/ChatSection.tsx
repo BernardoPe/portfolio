@@ -5,7 +5,7 @@ import Chat from './ui/Chat';
 function ChatSection(): React.JSX.Element {
   return (
     <Section id={SectionId.Chat} title="AI Chat" subtitle="Ask about me." className="mb-1">
-      <div className="max-w-5xl mx-auto">
+      <div className="max-w-4xl mx-auto">
         <Chat embedded />
       </div>
     </Section>

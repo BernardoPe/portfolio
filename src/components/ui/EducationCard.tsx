@@ -7,29 +7,29 @@ interface Props {
 
 export default function EducationCard({ entry }: Props): React.JSX.Element {
   return (
-    <div className="bg-secondary rounded-xl p-6 shadow-lg w-full max-w-[50rem] mx-auto">
-      <div className="flex flex-col md:flex-row items-center md:items-start md:gap-6">
+    <div className="bg-secondary rounded-xl px-7 py-5 shadow-lg w-full max-w-[44rem] mx-auto">
+      <div className="flex flex-col md:flex-row items-center md:items-start md:gap-5">
         {entry.logo && (
           <img
             src={entry.logo}
             alt={entry.institution}
-            className="w-24 h-24 object-contain rounded-md flex-shrink-0"
+            className="w-20 h-20 object-contain rounded-md flex-shrink-0"
           />
         )}
         <div className="flex-1 md:mt-4 mt-0 text-center md:text-left">
-          <h4 className="text-xl md:text-3xl font-semibold color-primary ">{entry.title}</h4>
+          <h4 className="text-lg md:text-2xl font-semibold color-primary ">{entry.title}</h4>
           <div className="flex gap-3 flex-wrap py-2 items-center justify-center md:justify-start">
             {entry.institutionUrl ? (
               <a
                 href={entry.institutionUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-base color-secondary"
+                className="text-sm md:text-base color-secondary"
               >
                 {entry.institution}
               </a>
             ) : (
-              <span className="color-secondary text-base">{entry.institution}</span>
+              <span className="color-secondary text-sm md:text-base">{entry.institution}</span>
             )}
             {entry.grade && (
               <span className="text-sm bg-emerald-800 color-primary rounded-full px-3 py-1">
@@ -38,7 +38,7 @@ export default function EducationCard({ entry }: Props): React.JSX.Element {
             )}
           </div>
           {entry.bullets && entry.bullets.length > 0 && (
-            <p className="color-tertiary text-base">{entry.bullets[0]}</p>
+            <p className="color-tertiary text-sm md:text-base">{entry.bullets[0]}</p>
           )}
         </div>
       </div>

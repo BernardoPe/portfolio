@@ -29,11 +29,10 @@
   --bg-primary: #050816;
   --bg-secondary: #161037;
 
-  --breakpoint-3xl: 120rem; /* 1920px */
   --breakpoint-4xl: 160rem; /* 2560px */
 }
 
-@media (width >= 120rem) {
+@media (width >= 128rem) {
   html {
     font-size: 17px;
   }

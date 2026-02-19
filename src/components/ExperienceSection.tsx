@@ -10,7 +10,7 @@ export default function ExperienceSection(): React.JSX.Element {
 
   return (
     <Section id={SectionId.Experience} title="My Professional Journey" subtitle="Work Experience.">
-      <div className="w-full flex flex-col md:flex-row h-full gap-10 mb-16 pt-8">
+      <div className="w-full flex flex-col md:flex-row h-full gap-8 mb-14 pt-6">
         <div className="md:w-1/3">
           {EXPERIENCES.map((e, idx) => (
             <ExperienceItem
@@ -24,10 +24,10 @@ export default function ExperienceSection(): React.JSX.Element {
           ))}
         </div>
 
-        <div className="md:w-2/3 bg-secondary rounded-xl p-8 shadow-lg min-h-45">
-          <h3 className="text-2xl font-semibold mb-2">{exp.position}</h3>
-          <div className="text-lg color-secondary mb-2">{exp.company}</div>
-          <div className="text-lg color-secondary mb-4">
+        <div className="md:w-2/3 bg-secondary rounded-xl px-8 py-6 shadow-lg min-h-40">
+          <h3 className="text-xl md:text-2xl font-semibold mb-2">{exp.position}</h3>
+          <div className="text-base md:text-lg color-secondary mb-1">{exp.company}</div>
+          <div className="text-base md:text-lg color-secondary mb-3">
             {exp.start} {exp.end ? ` - ${exp.end}` : ''}
           </div>
 
