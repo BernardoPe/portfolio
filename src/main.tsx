@@ -12,10 +12,8 @@ function preloadImage(url: string) {
 }
 
 import heroBg from './assets/hero-bg.jpg';
-import wavingHand from './assets/waving-hand.png';
 import signature from './assets/signature.png';
 preloadImage(heroBg);
-preloadImage(wavingHand);
 preloadImage(signature);
 
 async function bootstrap() {

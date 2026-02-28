@@ -3,7 +3,7 @@ import heroBg from '../assets/hero-bg.jpg';
 import GitHubLink from './ui/links/GithubLink';
 import LinkedInLink from './ui/links/LinkedinLink';
 import ResumeLink from './ui/links/ResumeLink';
-import wavingHand from '../assets/waving-hand.png';
+import wavingHand from '../assets/waving-hand.svg';
 
 function HeroSection(): React.JSX.Element {
   const [isBgLoaded, setIsBgLoaded] = useState(false);
@@ -33,7 +33,7 @@ function HeroSection(): React.JSX.Element {
           <img
             src={wavingHand}
             alt="Waving Hand"
-            className="inline-block w-8 h-8 3xl:w-10 3xl:h-10 mr-2"
+            className="inline-block w-8 h-8 3xl:w-10 3xl:h-10 mr-2 ml-2"
           />
           Welcome to my website.
         </p>
