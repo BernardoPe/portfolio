@@ -6,6 +6,7 @@ import { useAgentChat } from '@cloudflare/ai-chat/react';
 import type { UIMessage } from '@ai-sdk/react';
 
 import Button from './Button';
+import { LoadingSpinner } from './LoadingSpinner';
 import Card from './Card';
 import Avatar from './Avatar';
 import { MemoizedMarkdown } from './MemoizedMarkdown';
@@ -61,6 +62,7 @@ export default function Chat({ embedded = false }: ChatProps) {
     status,
     sendMessage,
     stop,
+    error,
   } = useAgentChat<unknown, UIMessage<{ createdAt: string }>>({
     agent,
   });
@@ -253,6 +255,78 @@ export default function Chat({ embedded = false }: ChatProps) {
               </div>
             );
           })}
+
+          {(status === 'submitted' || status === 'streaming') && (
+            <div className="flex justify-start">
+              <div className="flex gap-2 max-w-[70%] md:max-w-[85%] flex-row">
+                {agentMessages.length === 0 ||
+                agentMessages[agentMessages.length - 1]?.role !== 'assistant' ? (
+                  <Avatar username={'AI'} className="shrink-0" />
+                ) : (
+                  <div className="w-8" />
+                )}
+                <Card className="p-3 rounded-md bg-neutral-100 dark:bg-neutral-900 rounded-bl-none border-assistant-border flex items-center gap-2">
+                  <LoadingSpinner />
+                  <span className="text-sm text-muted-foreground animate-pulse">Thinking...</span>
+                </Card>
+              </div>
+            </div>
+          )}
+
+          {error && (
+            <div className="flex justify-center my-4 px-4">
+              <Card className="p-4 bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-800 w-full max-w-md">
+                <div className="flex items-start gap-3">
+                  <div className="mt-0.5 text-red-600 dark:text-red-400">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <circle cx="12" cy="12" r="10" />
+                      <line x1="12" y1="8" x2="12" y2="12" />
+                      <line x1="12" y1="16" x2="12.01" y2="16" />
+                    </svg>
+                  </div>
+                  <div className="space-y-2">
+                    <p className="text-sm font-medium text-red-800 dark:text-red-200">
+                      Something went wrong
+                    </p>
+                    <p className="text-xs text-red-600 dark:text-red-400">
+                      {'There was an error processing your request.'}
+                    </p>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="text-xs text-red-800 dark:text-red-200 hover:bg-red-100 dark:hover:bg-red-900/40 px-2 h-7"
+                      onClick={() => {
+                        if (agentMessages.length > 0) {
+                          const lastUserMessage = [...agentMessages]
+                            .reverse()
+                            .find(m => m.role === 'user');
+                          if (lastUserMessage) {
+                            const text = lastUserMessage.parts?.find(p => p.type === 'text')?.text;
+                            if (text) {
+                              setAgentInput(text);
+                            }
+                          }
+                        }
+                      }}
+                    >
+                      Retry by copying last message
+                    </Button>
+                  </div>
+                </div>
+              </Card>
+            </div>
+          )}
+
           <div ref={messagesEndRef} />
         </div>
 

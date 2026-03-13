@@ -7,6 +7,8 @@ import {
   stepCountIs,
   streamText,
   type StreamTextOnFinishCallback,
+  type UIMessage,
+  type UIMessageStreamWriter,
   type ToolSet,
 } from 'ai';
 import { env } from 'cloudflare:workers';
@@ -42,32 +44,60 @@ export class Chat extends AIChatAgent<Env> {
     onFinish: StreamTextOnFinishCallback<ToolSet>,
     options?: { abortSignal?: AbortSignal }
   ) {
-    await this.ensureMcpConnections();
-    const tools = await this.ensureMCPTools();
+    let tools: ToolSet | undefined;
 
+    const connectionsReady = await this.ensureMcpConnections();
+    if (connectionsReady) {
+      tools = await this.ensureMCPTools();
+    } else {
+      console.warn('[Chat] MCP connections are not ready. Proceeding without MCP tools.');
+    }
+  
     const stream = createUIMessageStream({
+      onError: (error: unknown) => {
+        return this.toClientWarning(error);
+      },
       execute: async ({ writer }) => {
         const cleanedMessages = cleanupMessages(this.messages);
-
-        const result = streamText({
-          system: SYSTEM_PROMPT,
-          messages: await convertToModelMessages(cleanedMessages),
-          model,
-          onFinish: onFinish,
-          stopWhen: stepCountIs(10),
-          tools,
-          abortSignal: options?.abortSignal,
-        });
-
-        writer.merge(result.toUIMessageStream());
+        try {
+          const result = streamText({
+            system: SYSTEM_PROMPT,
+            messages: await convertToModelMessages(cleanedMessages),
+            model,
+            onFinish: onFinish,
+            stopWhen: stepCountIs(10),
+            tools,
+            abortSignal: options?.abortSignal,
+          });
+          writer.merge(result.toUIMessageStream());
+        } catch (error) {
+          const streamWarning = this.toClientWarning(error);
+          this.writeWarning(writer, streamWarning, 'Server');
+          throw error;
+        }
       },
     });
 
     return createUIMessageStreamResponse({ stream });
   }
+  
+  private getErrorMessage(error: unknown): string {
+    if (error instanceof Error) return error.message;
+    return String(error);
+  }
 
-  private sleep(ms: number): Promise<void> {
-    return new Promise(resolve => setTimeout(resolve, ms));
+  private toClientWarning(error: unknown): string {
+    const message = this.getErrorMessage(error);
+
+    if (message.includes('Timeout waiting for MCP connections to be ready')) {
+      return 'MCP tools are temporarily unavailable. I will continue without external tools for this response.';
+    }
+
+    if (message.includes('dynamic client registration')) {
+      return 'MCP authentication is incompatible for this server. I will continue without external tools for this response.';
+    }
+
+    return 'An unexpected error occurred while accessing external tools. I will continue without them for this response.';
   }
 
   async ensureMCPTools(): Promise<ToolSet | undefined> {
@@ -78,31 +108,35 @@ export class Chat extends AIChatAgent<Env> {
       try {
         const tools = this.mcp.getAITools();
         if (tools) return tools;
-      } catch {
+      } catch (error) {
+        console.warn('[Chat] Failed to read MCP tools. Resetting MCP servers.', error);
         const servers = this.getMcpServers().servers;
         for (const id of Object.keys(servers)) {
-          this.removeMcpServer(id);
+          await this.removeMcpServer(id);
         }
-        await this.ensureMcpConnections();
+        const reconnected = await this.ensureMcpConnections();
+        if (!reconnected) {
+          return undefined;
+        }
       }
-
       await this.sleep(retryDelayMs);
     }
 
     return undefined;
   }
 
-  async ensureMcpConnections(): Promise<void> {
+  async ensureMcpConnections(): Promise<boolean> {
+    if (MCP_SERVERS.length === 0) {
+      return false;
+    }
     for (const serverInfo of MCP_SERVERS) {
       const existingServers = this.getMcpServers().servers;
       const serverEntry = Object.values(existingServers).find(
         entry => entry.name === serverInfo.id
       );
-
       if (serverEntry?.name === serverInfo.id && isValid(serverEntry.state)) {
         continue;
       }
-
       console.log(`Registering MCP server ${serverInfo.id} at ${serverInfo.url}...`);
       try {
         const options = { transport: { headers: serverInfo.transport?.headers } };
@@ -111,11 +145,10 @@ export class Chat extends AIChatAgent<Env> {
         console.error(`Failed to register MCP server ${serverInfo.id}:`, err);
       }
     }
-
-    await this.connectionsReady();
+    return this.connectionsReady();
   }
 
-  async connectionsReady(): Promise<void> {
+  async connectionsReady(): Promise<boolean> {
     const checkInterval = 1000;
     const timeout = 10000;
     const start = Date.now();
@@ -128,7 +161,7 @@ export class Chat extends AIChatAgent<Env> {
         connIds.length > 0 && connIds.every(id => connections[id]?.connectionState === 'ready');
       if (allReady) {
         console.log('All MCP connections are ready.');
-        return;
+        return true;
       }
 
       const notReadyId = connIds.find(id => connections[id]?.connectionState !== 'ready');
@@ -141,7 +174,31 @@ export class Chat extends AIChatAgent<Env> {
       await this.sleep(checkInterval);
     }
 
-    throw new Error('Timeout waiting for MCP connections to be ready.');
+    console.warn('[Chat] Timeout waiting for MCP connections to be ready.');
+    return false;
+  }
+
+  override onError(error: unknown): never {
+    console.error('[Chat] Error on server:', error);
+    if (error instanceof Error) {
+      throw error;
+    }
+    throw new Error(String(error));
+  }
+  
+  private writeWarning(
+    writer: UIMessageStreamWriter<UIMessage>,
+    warning: string,
+    heading = 'Warning'
+  ): void {
+    const textPartId = crypto.randomUUID();
+    writer.write({ type: 'text-start', id: textPartId });
+    writer.write({ type: 'text-delta', id: textPartId, delta: `${heading}: ${warning}\n\n` });
+    writer.write({ type: 'text-end', id: textPartId });
+  }
+  
+  private sleep(ms: number): Promise<void> {
+    return new Promise(resolve => setTimeout(resolve, ms));
   }
 }
 
