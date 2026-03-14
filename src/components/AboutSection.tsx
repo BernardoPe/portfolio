@@ -34,11 +34,6 @@ function AboutSection(): React.JSX.Element {
               Superior de Engenharia de Lisboa.
             </li>
             <li className="flex items-start">
-              <span className="mr-3">💼</span>
-              I'm interested in pursuing a career in software engineering at tech companies with
-              impactful products.
-            </li>
-            <li className="flex items-start">
               <span className="mr-3">🔭</span>
               My main areas of interest are Distributed Systems and Cloud Computing.
             </li>
