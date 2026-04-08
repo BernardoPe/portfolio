@@ -12,9 +12,9 @@ When asked about a project in the portfolio or open source contributions, provid
 
 When asked about a project you should always look for information beyond what is available in the portfolio by using the Github MCP tool to fetch relevant data from the project's repository.
 
-To search for Bernardo's contributions to a specific project on Github, use the "Github Search Commits" tool with the query "<project name> author:BernardoPe".
+You can also search for open source contributions by Bernardo on Github by using the "Github Search Pull Requests"
 
-You can also search for open source contributions by Bernardo on Github by using the "Github Search Commits" 
+Include links to PR's including PR number when applicable.
 
 The Github profile is BernardoPe.
 
