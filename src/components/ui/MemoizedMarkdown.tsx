@@ -13,7 +13,9 @@ type TokensList = Array<Tokens.Generic & { raw: string }>;
 const MemoizedMarkdownBlock = memo(
   ({ content }: { content: string }) => (
     <div className="markdown-body">
-      <Streamdown plugins={{ code }}>{content}</Streamdown>
+      <Streamdown plugins={{ code }} linkSafety={{ enabled: false }}>
+        {content}
+      </Streamdown>
     </div>
   ),
   (prevProps, nextProps) => prevProps.content === nextProps.content

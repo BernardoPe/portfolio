@@ -68,9 +68,9 @@ export class Chat extends AIChatAgent<Env> {
             tools,
             abortSignal: options?.abortSignal,
             providerOptions: {
-                thinkingConfig: {
-                    thinkingLevel: 'low',
-                } 
+              thinkingConfig: {
+                thinkingLevel: 'low',
+              },
             } satisfies GoogleLanguageModelOptions,
           });
           writer.merge(result.toUIMessageStream());
