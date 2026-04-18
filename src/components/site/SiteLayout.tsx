@@ -146,7 +146,7 @@ export function SiteLayout({ children }: SiteLayoutProps): React.JSX.Element {
         )}
       </header>
 
-      <main className="flex-1">{children}</main>
+      <main className="flex-1 flex flex-col 2xl:justify-center [&>*]:w-full">{children}</main>
 
       <footer className="border-t border-border mt-16">
         <div className="mx-auto max-w-6xl px-5 lg:px-8 py-6 flex flex-col sm:flex-row gap-3 justify-between items-center text-[12px] text-muted-foreground">

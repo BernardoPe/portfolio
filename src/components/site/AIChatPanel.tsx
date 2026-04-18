@@ -139,7 +139,7 @@ function AIChatRuntime({ sessionId, onClear }: AIChatRuntimeProps): React.JSX.El
 
   const hasMessages = useMemo(() => messages.length > 0, [messages.length]);
 
-  const loading = (status === 'submitted' || status === 'streaming') && hasMessages
+  const loading = (status === 'submitted' || status === 'streaming') && hasMessages;
 
   useEffect(() => {
     scrollerRef.current?.scrollTo({

@@ -14,7 +14,7 @@ export default function AIChatPage(): React.JSX.Element {
       <PageHeader
         index="03"
         title="AI Chat"
-        subtitle="Ask anything about my background, projects, or experience."
+        subtitle="Ask about my background, projects, or experience."
       />
       <AIChatPanel />
     </>
