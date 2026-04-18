@@ -1,12 +1,12 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "portfolio",
-  "main": "worker/index.ts",
+  "main": "worker/entry.ts",
   "compatibility_date": "2025-09-27",
   "compatibility_flags": ["nodejs_compat"],
   "assets": {
-    "not_found_handling": "single-page-application",
-    "directory": "public",
+    "directory": "out",
+    "binding": "ASSETS",
   },
   "observability": {
     "enabled": true,

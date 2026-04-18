@@ -17,17 +17,36 @@
   .bg-secondary {
     background-color: var(--bg-secondary);
   }
+
+  .page-panel {
+    @apply rounded-3xl border border-white/10 bg-[#111a2f]/75 px-6 py-8 md:px-10 md:py-10;
+  }
+
+  .page-kicker {
+    @apply text-sm md:text-base tracking-wide text-[#70a8ff] mb-3;
+  }
+
+  .page-title {
+    @apply text-4xl md:text-5xl font-semibold text-white tracking-tight;
+  }
+
+  .page-description {
+    @apply mt-4 text-base md:text-lg max-w-3xl;
+    color: var(--text-secondary);
+  }
 }
 
 @theme {
   --font-poppins: 'Poppins', 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-dancing-script: 'Dancing Script', cursive;
   --text-primary: #ffffff;
-  --text-secondary: #8c8c8c;
-  --text-tertiary: #a8a4c1;
+  --text-secondary: #9da3b2;
+  --text-tertiary: #b2abc9;
   --accent: #f48120;
   --bg-primary: #050816;
   --bg-secondary: #161037;
+  --bg-tertiary: #241a54;
+  --border: rgba(255, 255, 255, 0.12);
 
   --breakpoint-4xl: 160rem; /* 2560px */
 }
@@ -62,6 +81,9 @@ body {
   font-family: var(--font-poppins);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background:
+    radial-gradient(circle at 15% 10%, rgba(244, 129, 32, 0.12), transparent 36%),
+    radial-gradient(circle at 85% 80%, rgba(96, 79, 255, 0.15), transparent 42%), var(--bg-primary);
 }
 
 /* Markdown Table Styling (Tailwind @apply) */

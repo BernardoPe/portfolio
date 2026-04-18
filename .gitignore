@@ -29,3 +29,9 @@ dist-ssr
 !.dev.vars.example
 .env*
 !.env.example
+
+# build artifacts
+.next
+out
+.open-next
+*.tsbuildinfo

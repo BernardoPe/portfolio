@@ -5,7 +5,7 @@ export enum SectionId {
   Experience = 'experience',
   Projects = 'projects',
   Skills = 'skills',
-  Chat = 'AI Chat',
+  Chat = 'chat',
   Contact = 'contact',
 }
 

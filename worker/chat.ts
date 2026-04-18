@@ -45,7 +45,7 @@ export class Chat extends AIChatAgent<Env> {
     options?: { abortSignal?: AbortSignal }
   ) {
     const connectionsReady = await this.ensureMcpConnections();
-    const tools = connectionsReady ? await this.ensureMCPTools() : undefined;
+    const tools = connectionsReady ? this.mcp.getAITools() : undefined;
 
     if (!connectionsReady) {
       console.warn('[Chat] MCP connections are not ready. Proceeding without MCP tools.');
@@ -91,16 +91,6 @@ export class Chat extends AIChatAgent<Env> {
       throw error;
     }
     throw new Error(String(error));
-  }
-
-  async ensureMCPTools(): Promise<ToolSet | undefined> {
-    try {
-      await this.mcp.ensureJsonSchema();
-      return this.mcp.getAITools();
-    } catch (error) {
-      console.warn('[Chat] Failed to initialize MCP tools. Proceeding without them.', error);
-      return undefined;
-    }
   }
 
   async ensureMcpConnections(): Promise<boolean> {
