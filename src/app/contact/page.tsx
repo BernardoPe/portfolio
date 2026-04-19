@@ -1,19 +1,17 @@
 import type { Metadata } from 'next';
 import { PageHeader } from '../../components/site/SiteLayout';
 import { ContactPanel } from '../../components/site/ContactPanel';
+import { CONTACT_METADATA, CONTACT_PAGE_CONTENT } from '../../data/contact';
 
-export const metadata: Metadata = {
-  title: 'Contact - Bernardo Pereira',
-  description: 'Get in touch with Bernardo Pereira',
-};
+export const metadata: Metadata = CONTACT_METADATA;
 
 export default function ContactPage(): React.JSX.Element {
   return (
     <>
       <PageHeader
-        index="04"
-        title="Contact"
-        subtitle="Get in touch - Send a message or reach out directly."
+        index={CONTACT_PAGE_CONTENT.headerIndex}
+        title={CONTACT_PAGE_CONTENT.headerTitle}
+        subtitle={CONTACT_PAGE_CONTENT.headerSubtitle}
       />
       <ContactPanel />
     </>

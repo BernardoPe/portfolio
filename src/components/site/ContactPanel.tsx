@@ -1,7 +1,10 @@
 'use client';
 
 import { useState } from 'react';
-import { Github, Linkedin, Mail, Send } from 'lucide-react';
+import { Mail, Send } from 'lucide-react';
+import { CONTACT_PAGE_CONTENT } from '../../data/contact';
+import { PROFILE, SOCIAL_LINKS } from '../../data/profile';
+import { SocialIcon } from './SocialIcon';
 
 interface ContactFormState {
   name: string;
@@ -44,13 +47,13 @@ export function ContactPanel(): React.JSX.Element {
 
       setForm({ name: '', email: '', message: '' });
       setSent(true);
-      setStatusText('Message sent. Thank you!');
+      setStatusText(CONTACT_PAGE_CONTENT.sentStatus);
     } catch {
       setSent(true);
-      setStatusText('Opening your mail client…');
+      setStatusText(CONTACT_PAGE_CONTENT.fallbackStatus);
       const subject = encodeURIComponent(`Portfolio contact - ${form.name}`);
       const body = encodeURIComponent(`${form.message}\n\n- ${form.name} (${form.email})`);
-      window.location.href = `mailto:bernardo.correia.pereira@gmail.com?subject=${subject}&body=${body}`;
+      window.location.href = `mailto:${PROFILE.email}?subject=${subject}&body=${body}`;
     } finally {
       setLoading(false);
     }
@@ -96,63 +99,48 @@ export function ContactPanel(): React.JSX.Element {
           disabled={loading}
           className="hover-lift inline-flex items-center gap-2 px-5 py-2.5 bg-primary text-primary-foreground rounded-xl text-sm font-semibold hover:bg-primary/90 disabled:opacity-60"
         >
-          <Send size={14} /> {loading ? 'Sending...' : 'Send message'}
+          <Send size={14} />
+          {loading ? CONTACT_PAGE_CONTENT.sendingLabel : CONTACT_PAGE_CONTENT.sendButtonLabel}
         </button>
         {sent && <p className="text-sm text-primary">{statusText}</p>}
       </form>
 
       <aside className="lg:col-span-5 space-y-4">
         <div className="hover-lift border border-border/80 rounded-2xl bg-card p-6">
-          <div className="text-sm font-semibold mb-4">Direct channels</div>
+          <div className="text-sm font-semibold mb-4">
+            {CONTACT_PAGE_CONTENT.directChannelsTitle}
+          </div>
           <ul className="space-y-3 text-sm">
-            <li>
-              <a
-                href="mailto:bernardo.correia.pereira@gmail.com"
-                className="flex items-center gap-3 hover:text-primary transition-colors"
-              >
-                <span className="h-9 w-9 flex items-center justify-center rounded-lg bg-secondary text-muted-foreground">
-                  <Mail size={15} />
-                </span>
-                bernardo.correia.pereira@gmail.com
-              </a>
-            </li>
-            <li>
-              <a
-                href="https://github.com/bernardope"
-                target="_blank"
-                rel="noreferrer"
-                className="flex items-center gap-3 hover:text-primary transition-colors"
-              >
-                <span className="h-9 w-9 flex items-center justify-center rounded-lg bg-secondary text-muted-foreground">
-                  <Github size={15} />
-                </span>
-                github.com/bernardope
-              </a>
-            </li>
-            <li>
-              <a
-                href="https://www.linkedin.com/in/bernardope"
-                target="_blank"
-                rel="noreferrer"
-                className="flex items-center gap-3 hover:text-primary transition-colors"
-              >
-                <span className="h-9 w-9 flex items-center justify-center rounded-lg bg-secondary text-muted-foreground">
-                  <Linkedin size={15} />
-                </span>
-                linkedin.com/in/bernardope
-              </a>
-            </li>
+            {SOCIAL_LINKS.map(link => (
+              <li key={link.id}>
+                <a
+                  href={link.href}
+                  target={link.external ? '_blank' : undefined}
+                  rel={link.external ? 'noreferrer' : undefined}
+                  className="flex items-center gap-3 hover:text-primary transition-colors"
+                >
+                  <span className="h-9 w-9 flex items-center justify-center rounded-lg bg-secondary text-muted-foreground">
+                    {link.id === 'email' ? (
+                      <Mail size={15} />
+                    ) : (
+                      <SocialIcon brand={link.id} size={15} className="opacity-90" />
+                    )}
+                  </span>
+                  {link.display}
+                </a>
+              </li>
+            ))}
           </ul>
         </div>
 
         <div className="hover-lift border border-border/80 rounded-2xl bg-card p-6 space-y-3 text-sm">
           <div className="flex justify-between">
-            <span className="text-muted-foreground">Location</span>
-            <span>Lisbon, Portugal</span>
+            <span className="text-muted-foreground">{CONTACT_PAGE_CONTENT.locationLabel}</span>
+            <span>{PROFILE.location}</span>
           </div>
           <div className="flex justify-between">
-            <span className="text-muted-foreground">Response time</span>
-            <span>~24h</span>
+            <span className="text-muted-foreground">{CONTACT_PAGE_CONTENT.responseTimeLabel}</span>
+            <span>{PROFILE.responseTime}</span>
           </div>
         </div>
       </aside>

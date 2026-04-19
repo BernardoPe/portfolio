@@ -3,20 +3,50 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useMemo, useState } from 'react';
-import { Github, Linkedin, Mail, Menu, X } from 'lucide-react';
-
-const SIGNATURE_SRC = '/assets/signature.png';
-
-const NAV = [
-  { to: '/', label: 'Index', code: '00' },
-  { to: '/work', label: 'Experience', code: '01' },
-  { to: '/projects', label: 'Projects', code: '02' },
-  { to: '/ai-chat', label: 'AI Chat', code: '03' },
-  { to: '/contact', label: 'Contact', code: '04' },
-] as const;
+import { Mail, Menu, X } from 'lucide-react';
+import { NAV_ITEMS } from '../../data/navigation';
+import { PROFILE, SOCIAL_LINKS_BY_ID } from '../../data/profile';
+import { SocialIcon } from './SocialIcon';
 
 interface SiteLayoutProps {
   children: React.ReactNode;
+}
+
+type SocialType = 'github' | 'linkedin' | 'email';
+
+const HEADER_SOCIALS: SocialType[] = ['github', 'linkedin'];
+const FOOTER_SOCIALS: SocialType[] = ['github', 'linkedin', 'email'];
+
+interface SocialLinkButtonProps {
+  type: SocialType;
+  bordered?: boolean;
+  muted?: boolean;
+}
+
+function SocialLinkButton({
+  type,
+  bordered = false,
+  muted = false,
+}: SocialLinkButtonProps): React.JSX.Element {
+  const link = SOCIAL_LINKS_BY_ID[type];
+
+  return (
+    <a
+      href={link.href}
+      target={link.external ? '_blank' : undefined}
+      rel={link.external ? 'noreferrer' : undefined}
+      aria-label={link.label}
+      className={`h-8 w-8 flex items-center justify-center rounded-sm border transition-colors ${
+        bordered ? 'border-border' : 'border-transparent'
+      } ${muted ? 'text-muted-foreground' : ''} hover:border-border-strong hover:text-primary`}
+    >
+      {type === 'email' ? (
+        <Mail size={14} />
+      ) : (
+        <SocialIcon brand={type} size={16} className="opacity-90" />
+      )}
+    </a>
+  );
 }
 
 export function SiteLayout({ children }: SiteLayoutProps): React.JSX.Element {
@@ -35,14 +65,14 @@ export function SiteLayout({ children }: SiteLayoutProps): React.JSX.Element {
         <div className="mx-auto max-w-6xl px-5 lg:px-8 h-[4.25rem] flex items-center relative">
           <Link href="/" aria-label="Home" className="flex items-center gap-2 group">
             <img
-              src={SIGNATURE_SRC}
-              alt="Bernardo Pereira signature"
+              src={PROFILE.signatureSrc}
+              alt={`${PROFILE.name} signature`}
               className="h-6 lg:h-8 w-auto opacity-90 group-hover:opacity-100 transition-opacity"
             />
           </Link>
 
           <nav className="hidden md:flex items-center gap-1 absolute left-1/2 -translate-x-1/2">
-            {NAV.map(item => {
+            {NAV_ITEMS.map(item => {
               const active = pathname === item.to;
               return (
                 <Link
@@ -67,25 +97,10 @@ export function SiteLayout({ children }: SiteLayoutProps): React.JSX.Element {
             })}
           </nav>
 
-          <div className="hidden md:flex items-center gap-1 ml-auto">
-            <a
-              href="https://github.com/bernardope"
-              target="_blank"
-              rel="noreferrer"
-              aria-label="GitHub"
-              className="h-8 w-8 flex items-center justify-center rounded-sm border border-transparent text-muted-foreground hover:border-border-strong hover:text-primary transition-colors"
-            >
-              <Github size={14} />
-            </a>
-            <a
-              href="https://www.linkedin.com/in/bernardope"
-              target="_blank"
-              rel="noreferrer"
-              aria-label="LinkedIn"
-              className="h-8 w-8 flex items-center justify-center rounded-sm border border-transparent text-muted-foreground hover:border-border-strong hover:text-primary transition-colors"
-            >
-              <Linkedin size={14} />
-            </a>
+          <div className="hidden md:flex items-center gap-2 ml-auto">
+            {HEADER_SOCIALS.map(type => (
+              <SocialLinkButton key={type} type={type} muted />
+            ))}
           </div>
 
           <button
@@ -103,7 +118,7 @@ export function SiteLayout({ children }: SiteLayoutProps): React.JSX.Element {
             style={{ animation: 'fade-in 0.2s ease-out' }}
           >
             <nav className="mx-auto max-w-6xl px-5 py-2 flex flex-col">
-              {NAV.map(item => {
+              {NAV_ITEMS.map(item => {
                 const active = pathname === item.to;
                 return (
                   <Link
@@ -122,24 +137,9 @@ export function SiteLayout({ children }: SiteLayoutProps): React.JSX.Element {
               })}
 
               <div className="flex items-center gap-2 px-2.5 py-2">
-                <a
-                  href="https://github.com/bernardope"
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label="GitHub"
-                  className="h-8 w-8 flex items-center justify-center rounded-sm border border-border text-muted-foreground hover:border-border-strong hover:text-primary transition-colors"
-                >
-                  <Github size={14} />
-                </a>
-                <a
-                  href="https://www.linkedin.com/in/bernardope"
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label="LinkedIn"
-                  className="h-8 w-8 flex items-center justify-center rounded-sm border border-border text-muted-foreground hover:border-border-strong hover:text-primary transition-colors"
-                >
-                  <Linkedin size={14} />
-                </a>
+                {HEADER_SOCIALS.map(type => (
+                  <SocialLinkButton key={type} type={type} bordered muted />
+                ))}
               </div>
             </nav>
           </div>
@@ -150,33 +150,13 @@ export function SiteLayout({ children }: SiteLayoutProps): React.JSX.Element {
 
       <footer className="border-t border-border mt-16">
         <div className="mx-auto max-w-6xl px-5 lg:px-8 py-6 flex flex-col sm:flex-row gap-3 justify-between items-center text-[12px] text-muted-foreground">
-          <span>© {year} - Bernardo Pereira</span>
+          <span>
+            © {year} - {PROFILE.name}
+          </span>
           <div className="flex items-center gap-1">
-            <a
-              href="https://github.com/bernardope"
-              target="_blank"
-              rel="noreferrer"
-              aria-label="GitHub"
-              className="h-8 w-8 flex items-center justify-center rounded-sm border border-transparent hover:border-border-strong hover:text-primary transition-colors"
-            >
-              <Github size={14} />
-            </a>
-            <a
-              href="https://www.linkedin.com/in/bernardope"
-              target="_blank"
-              rel="noreferrer"
-              aria-label="LinkedIn"
-              className="h-8 w-8 flex items-center justify-center rounded-sm border border-transparent hover:border-border-strong hover:text-primary transition-colors"
-            >
-              <Linkedin size={14} />
-            </a>
-            <a
-              href="mailto:bernardo.correia.pereira@gmail.com"
-              aria-label="Email"
-              className="h-8 w-8 flex items-center justify-center rounded-sm border border-transparent hover:border-border-strong hover:text-primary transition-colors"
-            >
-              <Mail size={14} />
-            </a>
+            {FOOTER_SOCIALS.map(type => (
+              <SocialLinkButton key={type} type={type} />
+            ))}
           </div>
         </div>
       </footer>

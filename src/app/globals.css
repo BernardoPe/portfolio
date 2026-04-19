@@ -34,6 +34,8 @@
 }
 
 :root {
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-inter);
   --radius: 4px;
   --background: oklch(0.16 0.012 250);
   --foreground: oklch(0.96 0.005 240);

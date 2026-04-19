@@ -37,7 +37,7 @@ export async function handleContactRequest(request: Request): Promise<Response> 
     if (FORM_ENDPOINT) endpoint = FORM_ENDPOINT;
     else if (FORMSPREE_FORM_ID) endpoint = `https://formspree.io/f/${FORMSPREE_FORM_ID}`;
     else {
-      return createJsonErrorResponse({ error: 'There was an error.' }, 500);
+      return createJsonErrorResponse({ error: 'Thezre was an error.' }, 500);
     }
 
     const payload = {

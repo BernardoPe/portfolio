@@ -1,34 +1,17 @@
 import type { Metadata } from 'next';
-import { Inter, Space_Grotesk } from 'next/font/google';
+import { Inter } from 'next/font/google';
 import './globals.css';
 import { SiteLayout } from '../components/site/SiteLayout';
+import { ROOT_METADATA } from '../data/siteMetadata';
 
 const inter = Inter({
   subsets: ['latin'],
   variable: '--font-inter',
+  weight: ['400', '500', '700'],
   display: 'swap',
 });
 
-const spaceGrotesk = Space_Grotesk({
-  subsets: ['latin'],
-  variable: '--font-space-grotesk',
-  display: 'swap',
-});
-
-export const metadata: Metadata = {
-  title: 'Bernardo Pereira - MSc Student & Software Engineer',
-  description:
-    'Portfolio of Bernardo Pereira - MSc Computer Science & Engineering student at Instituto Superior Técnico. Backend, JVM, and systems engineering.',
-  authors: [{ name: 'Bernardo Pereira' }],
-  openGraph: {
-    title: 'Bernardo Pereira - Software Engineer',
-    description: 'MSc student @ Instituto Superior Técnico. Backend, JVM, systems engineering.',
-    type: 'website',
-  },
-  twitter: {
-    card: 'summary',
-  },
-};
+export const metadata: Metadata = ROOT_METADATA;
 
 interface RootLayoutProps {
   children: React.ReactNode;
@@ -36,8 +19,8 @@ interface RootLayoutProps {
 
 export default function RootLayout({ children }: RootLayoutProps): React.JSX.Element {
   return (
-    <html lang="en" className="dark">
-      <body className={`${inter.variable} ${spaceGrotesk.variable}`}>
+    <html lang="en" className={`dark ${inter.variable}`}>
+      <body>
         <SiteLayout>{children}</SiteLayout>
       </body>
     </html>

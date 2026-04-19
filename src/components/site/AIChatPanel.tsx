@@ -8,17 +8,9 @@ import type { UIMessage } from '@ai-sdk/react';
 import { marked, type Tokens } from 'marked';
 import { Streamdown } from 'streamdown';
 import { createCodePlugin } from '@streamdown/code';
+import { CHAT_PAGE_CONTENT } from '../../data/chat';
 
 const codePlugin = createCodePlugin({ themes: ['github-light', 'github-dark'] });
-
-const SUGGESTIONS = [
-  "What's Bernardo working on right now?",
-  'Tell me about his projects.',
-  'Does he have open-source contributions?',
-] as const;
-
-const INTRO_MESSAGE =
-  "Hi! I'm Bernardo's AI assistant. I can help with:\n\n- Projects and tech stack\n- Experience and education background\n- Open-source contributions\n\nTry one of the suggestions below or ask your own question.";
 
 const CHAT_STORAGE_KEY = 'chat-uuid';
 
@@ -35,14 +27,6 @@ function getStoredId(): string {
   }
 
   return id;
-}
-
-function setStoredId(id: string): void {
-  if (typeof window === 'undefined') {
-    return;
-  }
-
-  localStorage.setItem(CHAT_STORAGE_KEY, id);
 }
 
 function getMessageText(message: UIMessage<{ createdAt: string }>): string {
@@ -95,33 +79,22 @@ export function AIChatPanel(): React.JSX.Element {
 
   if (!mounted) {
     return (
-      <section className="mx-auto max-w-5xl px-5 lg:px-8 py-8 lg:py-6">
-        <div className="border border-border rounded-sm bg-card flex items-center justify-center h-[62vh] min-h-[440px] text-sm text-muted-foreground">
-          Preparing AI chat...
+      <section className="mx-auto max-w-6xl px-5 lg:px-8 py-12 lg:py-12">
+        <div className="border border-border rounded-sm bg-card flex items-center justify-center h-[68vh] min-h-[500px] text-sm text-muted-foreground">
+          {CHAT_PAGE_CONTENT.preparingText}
         </div>
       </section>
     );
   }
 
-  return (
-    <AIChatRuntime
-      key={sessionId}
-      sessionId={sessionId}
-      onClear={() => {
-        const nextId = crypto.randomUUID();
-        setStoredId(nextId);
-        setSessionId(nextId);
-      }}
-    />
-  );
+  return <AIChatRuntime key={sessionId} sessionId={sessionId} />;
 }
 
 interface AIChatRuntimeProps {
   sessionId: string;
-  onClear: () => void;
 }
 
-function AIChatRuntime({ sessionId, onClear }: AIChatRuntimeProps): React.JSX.Element {
+function AIChatRuntime({ sessionId }: AIChatRuntimeProps): React.JSX.Element {
   const [input, setInput] = useState('');
   const scrollerRef = useRef<HTMLDivElement>(null);
 
@@ -130,7 +103,7 @@ function AIChatRuntime({ sessionId, onClear }: AIChatRuntimeProps): React.JSX.El
     name: sessionId,
   });
 
-  const { messages, sendMessage, status, stop, error } = useAgentChat<
+  const { messages, sendMessage, clearHistory, status, stop, error } = useAgentChat<
     unknown,
     UIMessage<{ createdAt: string }>
   >({
@@ -162,8 +135,8 @@ function AIChatRuntime({ sessionId, onClear }: AIChatRuntimeProps): React.JSX.El
   };
 
   return (
-    <section className="mx-auto max-w-5xl px-5 lg:px-8 py-12 lg:py-12">
-      <div className="border border-border rounded-sm bg-card flex flex-col h-[62vh] min-h-[440px]">
+    <section className="mx-auto max-w-6xl px-5 lg:px-8 py-12 lg:py-12">
+      <div className="border border-border rounded-sm bg-card flex flex-col h-[68vh] min-h-[500px]">
         <div ref={scrollerRef} className="flex-1 overflow-y-auto p-5 space-y-4">
           {!hasMessages && (
             <div
@@ -174,7 +147,7 @@ function AIChatRuntime({ sessionId, onClear }: AIChatRuntimeProps): React.JSX.El
                 <Sparkles size={13} />
               </span>
               <div className="max-w-[80%] rounded-sm px-3.5 py-2.5 text-sm leading-relaxed bg-background border border-border text-foreground/90">
-                <MarkdownMessage content={INTRO_MESSAGE} id="intro-message" />
+                <MarkdownMessage content={CHAT_PAGE_CONTENT.introMessage} id="intro-message" />
               </div>
             </div>
           )}
@@ -237,7 +210,7 @@ function AIChatRuntime({ sessionId, onClear }: AIChatRuntimeProps): React.JSX.El
         <div className="border-t border-border p-3">
           {!hasMessages && (
             <div className="flex flex-wrap gap-1.5 mb-3">
-              {SUGGESTIONS.map(s => (
+              {CHAT_PAGE_CONTENT.suggestions.map(s => (
                 <button
                   key={s}
                   onClick={() => {
@@ -256,43 +229,49 @@ function AIChatRuntime({ sessionId, onClear }: AIChatRuntimeProps): React.JSX.El
               e.preventDefault();
               void send(input);
             }}
-            className="flex gap-2"
+            className="flex flex-col sm:flex-row gap-2"
           >
             <input
               value={input}
               onChange={e => setInput(e.target.value)}
-              placeholder="Ask something about Bernardo…"
+              placeholder={CHAT_PAGE_CONTENT.inputPlaceholder}
               className="flex-1 bg-background border border-border-strong rounded-sm px-3 py-2 text-sm focus:outline-none focus:border-primary"
             />
-            {loading ? (
+            <div className="flex items-center gap-2 sm:flex-none">
+              {loading ? (
+                <button
+                  type="button"
+                  onClick={stop}
+                  className="hover-lift shrink-0 inline-flex items-center gap-2 px-3.5 py-2 bg-primary text-primary-foreground rounded-sm text-[11px] font-medium uppercase tracking-wider hover:opacity-90"
+                >
+                  <Square size={12} /> Stop
+                </button>
+              ) : (
+                <button
+                  type="submit"
+                  disabled={!input.trim()}
+                  className="hover-lift shrink-0 inline-flex items-center gap-2 px-3.5 py-2 bg-primary text-primary-foreground rounded-sm text-[11px] font-medium uppercase tracking-wider hover:opacity-90 disabled:opacity-50"
+                >
+                  <Send size={12} /> Send
+                </button>
+              )}
+
               <button
                 type="button"
-                onClick={stop}
-                className="hover-lift inline-flex items-center gap-2 px-3.5 py-2 bg-primary text-primary-foreground rounded-sm text-[11px] font-medium uppercase tracking-wider hover:opacity-90"
+                disabled={!hasMessages}
+                onClick={() => {
+                  stop();
+                  setInput('');
+                  clearHistory();
+                }}
+                className="hover-lift shrink-0 inline-flex items-center gap-2 px-2.5 sm:px-3 py-2 border border-border-strong rounded-sm text-[11px] font-medium uppercase tracking-wider text-muted-foreground hover:border-primary hover:text-primary transition-colors disabled:opacity-50 disabled:hover:border-border-strong disabled:hover:text-muted-foreground"
+                aria-label="Clear chat"
+                title="Clear chat"
               >
-                <Square size={12} /> Stop
+                <Trash2 size={12} />
+                <span className="hidden sm:inline">Clear</span>
               </button>
-            ) : (
-              <button
-                type="submit"
-                disabled={!input.trim()}
-                className="hover-lift inline-flex items-center gap-2 px-3.5 py-2 bg-primary text-primary-foreground rounded-sm text-[11px] font-medium uppercase tracking-wider hover:opacity-90 disabled:opacity-50"
-              >
-                <Send size={12} /> Send
-              </button>
-            )}
-
-            <button
-              type="button"
-              disabled={!hasMessages}
-              onClick={() => {
-                stop();
-                onClear();
-              }}
-              className="hover-lift inline-flex items-center gap-2 px-3 py-2 border border-border-strong rounded-sm text-[11px] font-medium uppercase tracking-wider text-muted-foreground hover:border-primary hover:text-primary transition-colors disabled:opacity-50 disabled:hover:border-border-strong disabled:hover:text-muted-foreground"
-            >
-              <Trash2 size={12} /> Clear
-            </button>
+            </div>
           </form>
         </div>
       </div>
