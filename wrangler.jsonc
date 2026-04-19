@@ -23,6 +23,16 @@
       },
     ],
   },
+  "routes": [
+    {
+      "pattern": "www.bernardope.com/*",
+      "zone_name": "bernardope.com",
+    },
+    {
+      "pattern": "*.bernardope.com/*",
+      "zone_name": "bernardope.com",
+    },
+  ],
   "migrations": [
     {
       "tag": "v1",
