@@ -1,8 +1,4 @@
 @import 'tailwindcss';
-@import 'streamdown/styles.css';
-
-@source "../../node_modules/streamdown/dist/*.js";
-@source "../../node_modules/@streamdown/code/dist/*.js";
 
 @theme inline {
   --radius-sm: 3px;
@@ -111,53 +107,6 @@
 @utility font-display {
   font-family: var(--font-display);
   letter-spacing: -0.02em;
-}
-
-.markdown-body {
-  margin-bottom: 12px;
-}
-
-.markdown-body a,
-.markdown-body button[data-streamdown='link'] {
-  color: var(--accent);
-  text-decoration: underline;
-  text-underline-offset: 3px;
-  cursor: pointer;
-  transition: opacity 0.2s;
-}
-
-.markdown-body a:hover,
-.markdown-body button[data-streamdown='link']:hover {
-  opacity: 0.8;
-}
-
-.markdown-body a,
-.markdown-body button[data-streamdown='link'] {
-  color: var(--accent);
-  cursor: pointer;
-  transition: opacity 0.2s;
-}
-
-.markdown-body a:hover,
-.markdown-body button[data-streamdown='link']:hover {
-  opacity: 0.8;
-}
-
-.markdown-body code {
-  font-family:
-    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New',
-    monospace;
-  font-size: 0.9em;
-}
-
-.markdown-body pre {
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  overflow-x: auto;
-}
-
-.markdown-body .katex {
-  font-size: 1em;
 }
 
 @keyframes reveal-up {
