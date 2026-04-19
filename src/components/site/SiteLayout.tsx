@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useMemo, useState } from 'react';
@@ -64,9 +65,14 @@ export function SiteLayout({ children }: SiteLayoutProps): React.JSX.Element {
       <header className="sticky top-0 z-40 border-b border-border bg-background/85 backdrop-blur">
         <div className="mx-auto max-w-6xl px-5 lg:px-8 h-[4.25rem] flex items-center relative">
           <Link href="/" aria-label="Home" className="flex items-center gap-2 group">
-            <img
+            <Image
               src={PROFILE.signatureSrc}
               alt={`${PROFILE.name} signature`}
+              width={228}
+              height={84}
+              priority
+              fetchPriority="high"
+              sizes="(min-width: 1024px) 87px, 65px"
               className="h-6 lg:h-8 w-auto opacity-90 group-hover:opacity-100 transition-opacity"
             />
           </Link>

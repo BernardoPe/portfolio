@@ -11,7 +11,7 @@ export interface SocialLink {
 export const PROFILE = {
   name: 'Bernardo Pereira',
   headline: 'Computer Science Student',
-  signatureSrc: '/assets/signature.png',
+  signatureSrc: '/assets/signature-228.webp',
   resumeUrl: 'https://www.bernardope.com/resume.pdf',
   email: 'bernardo.correia.pereira@gmail.com',
   location: 'Lisbon, Portugal',

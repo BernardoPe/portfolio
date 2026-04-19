@@ -1,5 +1,4 @@
 import React from 'react';
-import { withBasePath } from '@/utils/routing';
 
 export default function NotFound(): React.JSX.Element {
   return (
@@ -8,7 +7,7 @@ export default function NotFound(): React.JSX.Element {
         <h1 className="text-4xl font-bold mb-4">404 — Not Found</h1>
         <p className="mb-6 color-secondary">The page you requested does not exist.</p>
         <a
-          href={withBasePath('/')}
+          href={'/'}
           className="inline-block bg-[#f48120] hover:opacity-90 color-primary rounded-lg px-6 py-3 text-base font-medium transition-opacity duration-200"
         >
           Go home

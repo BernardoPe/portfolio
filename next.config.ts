@@ -8,6 +8,9 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   outputFileTracingRoot: __dirname,
   output: 'export',
+  experimental: {
+    inlineCss: true,
+  },
   images: {
     unoptimized: true,
   },
