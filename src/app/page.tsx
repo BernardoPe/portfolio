@@ -44,12 +44,12 @@ export default function HomePage(): React.JSX.Element {
   return (
     <>
       <section>
-        <div className="mx-auto max-w-6xl px-5 lg:px-8 pt-8 pb-8 lg:pt-12 lg:pb-12">
+        <div className="layout-container pt-8 pb-8 lg:pt-12 lg:pb-12">
           <div
             className="max-w-3xl"
             style={{ animation: 'reveal-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both' }}
           >
-            <div className="text-[16px] font-medium uppercase tracking-[0.18em] text-primary mb-4">
+            <div className="text-sm font-medium uppercase tracking-[0.18em] text-primary mb-4">
               {HOME_CONTENT.heroCode}
             </div>
 
@@ -65,23 +65,17 @@ export default function HomePage(): React.JSX.Element {
             </p>
 
             <div className="mt-8 flex flex-wrap gap-2">
-              <Link
-                href={HOME_CONTENT.primaryCta.href}
-                className="group hover-lift inline-flex items-center gap-2 px-3.5 py-2 bg-primary text-primary-foreground rounded-sm text-[12px] font-medium hover:bg-primary/90 transition-colors"
-              >
+              <Link href={HOME_CONTENT.primaryCta.href} className="group hover-lift btn-primary-sm">
                 {HOME_CONTENT.primaryCta.label} <ArrowUpRight size={13} className="arrow-shift" />
               </Link>
-              <Link
-                href={HOME_CONTENT.secondaryCta.href}
-                className="hover-lift inline-flex items-center gap-2 px-3.5 py-2 border border-border-strong rounded-sm text-[12px] font-medium hover:border-primary hover:text-primary transition-colors"
-              >
+              <Link href={HOME_CONTENT.secondaryCta.href} className="hover-lift btn-outline-sm">
                 {HOME_CONTENT.secondaryCta.label}
               </Link>
               <a
                 href={PROFILE.resumeUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="hover-lift inline-flex items-center gap-2 px-3.5 py-2 border border-border-strong rounded-sm text-[12px] font-medium hover:border-primary hover:text-primary transition-colors"
+                className="hover-lift btn-outline-sm"
               >
                 <FileText size={13} /> {HOME_CONTENT.resumeLabel}
               </a>
@@ -91,15 +85,14 @@ export default function HomePage(): React.JSX.Element {
       </section>
 
       <section>
-        <div className="mx-auto max-w-6xl px-5 lg:px-8 py-8 lg:py-6 grid lg:grid-cols-12 gap-8 lg:gap-12">
+        <div className="layout-container py-10 grid lg:grid-cols-12 gap-12">
           <Reveal className="lg:col-span-3">
-            <div className="flex items-center gap-2 text-[12px] font-medium uppercase text-primary">
-              <span className="h-px w-6 bg-primary/60" />
+            <div className="text-sm uppercase tracking-[0.18em] text-primary mb-3 font-medium">
               {HOME_CONTENT.aboutCode}
             </div>
           </Reveal>
 
-          <div className="lg:col-span-9 space-y-5 text-base lg:text-[17px] leading-relaxed text-foreground/85">
+          <div className="lg:col-span-9 space-y-6 text-base lg:text-md leading-relaxed text-foreground/85">
             <Reveal delay={80}>
               <p>{renderText(HOME_CONTENT.aboutParagraphs[0])}</p>
             </Reveal>
@@ -112,18 +105,18 @@ export default function HomePage(): React.JSX.Element {
       </section>
 
       <section>
-        <div className="mx-auto max-w-6xl px-5 lg:px-8 py-8 lg:py-6 grid sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-5">
+        <div className="layout-container py-6 grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {HOME_NAV_CARDS.map((card, i) => (
             <Link
               key={card.code}
               href={card.to}
-              className="group hover-lift border border-border rounded-sm bg-card p-6 lg:p-7 hover:border-primary/60 hover:shadow-[0_8px_30px_-12px_oklch(0.78_0.16_55_/_0.25)]"
+              className="group panel-card panel-hover p-7"
               style={{
                 animation: `reveal-up 0.6s cubic-bezier(0.22, 1, 0.36, 1) ${i * 120}ms both`,
               }}
             >
-              <div className="text-[13px] font-medium text-primary mb-3">{card.code}</div>
-              <div className="font-display text-2xl xl:text-[1.65rem] font-medium flex items-center justify-between gap-2">
+              <div className="text-sm font-medium text-primary mb-3">{card.code}</div>
+              <div className="text-2xl font-medium flex items-center justify-between gap-2">
                 {card.label}
                 <ArrowUpRight
                   size={20}

@@ -16,18 +16,18 @@ export default function ProjectsPage(): React.JSX.Element {
         subtitle={PROJECTS_PAGE_CONTENT.headerSubtitle}
       />
 
-      <section className="mx-auto max-w-6xl px-5 lg:px-8 py-8 lg:py-6">
+      <section className="layout-container py-6">
         <div className="grid md:grid-cols-2 gap-4">
           {PROJECTS.map((p, i) => (
             <Reveal key={p.code} as="article" delay={i * 80}>
-              <div className="group hover-lift border border-border rounded-sm bg-card p-6 hover:border-primary/60 hover:shadow-[0_8px_30px_-12px_oklch(0.78_0.16_55_/_0.25)] flex flex-col h-full">
-                <div className="flex items-baseline justify-between mb-2">
+              <div className="group panel-card panel-hover p-6 flex flex-col h-full">
+                <div className="flex justify-between mb-2">
                   <a
                     href={p.url}
                     target="_blank"
                     rel="noreferrer"
                     aria-label={`${p.name} repository`}
-                    className="inline-flex items-center gap-1.5 text-[12px] font-medium uppercase tracking-wider text-muted-foreground hover:text-primary transition-colors"
+                    className="inline-flex items-center gap-1.5 text-[12px] font-medium tracking-wider text-muted-foreground transition-colors"
                   >
                     <Github size={13} /> {PROJECTS_PAGE_CONTENT.repoLabel}
                   </a>
@@ -39,10 +39,7 @@ export default function ProjectsPage(): React.JSX.Element {
                 </p>
                 <ul className="mt-5 flex flex-wrap gap-2">
                   {p.stack.map(s => (
-                    <li
-                      key={s.name}
-                      className="inline-flex items-center gap-2 px-2.5 py-1.5 border border-border-strong rounded-sm text-[12px] font-medium text-foreground/80 transition-colors hover:border-primary/60 hover:text-foreground"
-                    >
+                    <li key={s.name} className="chip">
                       <DevIcon slug={s.icon} size={16} className="h-4 w-4" />
                       {s.name}
                     </li>

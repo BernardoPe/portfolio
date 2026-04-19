@@ -60,45 +60,38 @@ export function ContactPanel(): React.JSX.Element {
   };
 
   return (
-    <section className="mx-auto max-w-6xl px-5 lg:px-8 py-8 lg:py-6 grid lg:grid-cols-12 gap-6">
-      <form
-        onSubmit={onSubmit}
-        className="hover-lift lg:col-span-7 border border-border/80 rounded-2xl bg-card p-6 lg:p-8 space-y-5"
-      >
+    <section className="layout-container py-6 grid lg:grid-cols-12 gap-6">
+      <form onSubmit={onSubmit} className="panel-card panel-hover lg:col-span-7 p-8 space-y-5">
         <div>
-          <label className="block text-sm font-medium text-foreground mb-1.5">Name</label>
+          <label className="form-label">Name</label>
           <input
             required
             value={form.name}
             onChange={e => setForm({ ...form, name: e.target.value })}
-            className="w-full bg-background border border-border-strong rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-primary"
+            className="field-input"
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-foreground mb-1.5">Email</label>
+          <label className="form-label">Email</label>
           <input
             required
             type="email"
             value={form.email}
             onChange={e => setForm({ ...form, email: e.target.value })}
-            className="w-full bg-background border border-border-strong rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-primary"
+            className="field-input"
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-foreground mb-1.5">Message</label>
+          <label className="form-label">Message</label>
           <textarea
             required
             rows={6}
             value={form.message}
             onChange={e => setForm({ ...form, message: e.target.value })}
-            className="w-full bg-background border border-border-strong rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-primary resize-none"
+            className="field-input resize-none"
           />
         </div>
-        <button
-          type="submit"
-          disabled={loading}
-          className="hover-lift inline-flex items-center gap-2 px-5 py-2.5 bg-primary text-primary-foreground rounded-xl text-sm font-semibold hover:bg-primary/90 disabled:opacity-60"
-        >
+        <button type="submit" disabled={loading} className="btn-primary-sm disabled:opacity-60">
           <Send size={14} />
           {loading ? CONTACT_PAGE_CONTENT.sendingLabel : CONTACT_PAGE_CONTENT.sendButtonLabel}
         </button>
@@ -106,7 +99,7 @@ export function ContactPanel(): React.JSX.Element {
       </form>
 
       <aside className="lg:col-span-5 space-y-4">
-        <div className="hover-lift border border-border/80 rounded-2xl bg-card p-6">
+        <div className="panel-card panel-hover p-6">
           <div className="text-sm font-semibold mb-4">
             {CONTACT_PAGE_CONTENT.directChannelsTitle}
           </div>
@@ -133,7 +126,7 @@ export function ContactPanel(): React.JSX.Element {
           </ul>
         </div>
 
-        <div className="hover-lift border border-border/80 rounded-2xl bg-card p-6 space-y-3 text-sm">
+        <div className="panel-card panel-hover p-6 space-y-3 text-sm">
           <div className="flex justify-between">
             <span className="text-muted-foreground">{CONTACT_PAGE_CONTENT.locationLabel}</span>
             <span>{PROFILE.location}</span>

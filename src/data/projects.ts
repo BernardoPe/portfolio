@@ -25,7 +25,7 @@ export const PROJECTS_PAGE_CONTENT = {
   headerIndex: '02',
   headerTitle: 'Projects',
   headerSubtitle: "Things I've built or contributed to.",
-  repoLabel: 'repo',
+  repoLabel: 'REPO',
 } as const;
 
 export const PROJECTS: ProjectItem[] = [

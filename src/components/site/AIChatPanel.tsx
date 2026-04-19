@@ -70,17 +70,16 @@ function MarkdownMessage({ content, id }: { content: string; id: string }): Reac
 
 export function AIChatPanel(): React.JSX.Element {
   const [mounted, setMounted] = useState(false);
-  const [sessionId, setSessionId] = useState('server-session');
+  const sessionId = useMemo(() => getStoredId(), []);
 
   useEffect(() => {
     setMounted(true);
-    setSessionId(getStoredId());
   }, []);
 
   if (!mounted) {
     return (
-      <section className="mx-auto max-w-6xl px-5 lg:px-8 py-12 lg:py-12">
-        <div className="border border-border rounded-sm bg-card flex items-center justify-center h-[68vh] min-h-[500px] text-sm text-muted-foreground">
+      <section className="layout-container py-12">
+        <div className="panel-card flex items-center justify-center h-[68vh] min-h-[500px] text-sm text-muted-foreground">
           {CHAT_PAGE_CONTENT.preparingText}
         </div>
       </section>
@@ -135,18 +134,15 @@ function AIChatRuntime({ sessionId }: AIChatRuntimeProps): React.JSX.Element {
   };
 
   return (
-    <section className="mx-auto max-w-6xl px-5 lg:px-8 py-12 lg:py-12">
-      <div className="border border-border rounded-sm bg-card flex flex-col h-[68vh] min-h-[500px]">
+    <section className="layout-container py-12">
+      <div className="panel-card flex flex-col h-[68vh] min-h-[500px]">
         <div ref={scrollerRef} className="flex-1 overflow-y-auto p-5 space-y-4">
           {!hasMessages && (
-            <div
-              className="flex gap-3 justify-start"
-              style={{ animation: 'fade-in 0.3s ease-out' }}
-            >
+            <div className="flex gap-3" style={{ animation: 'fade-in 0.3s ease-out' }}>
               <span className="h-7 w-7 shrink-0 flex items-center justify-center rounded-sm bg-primary/15 text-primary">
                 <Sparkles size={13} />
               </span>
-              <div className="max-w-[80%] rounded-sm px-3.5 py-2.5 text-sm leading-relaxed bg-background border border-border text-foreground/90">
+              <div className="max-w-[80%] rounded-sm px-3.5 py-2.5 text-sm leading-relaxed bg-background border text-foreground/90">
                 <MarkdownMessage content={CHAT_PAGE_CONTENT.introMessage} id="intro-message" />
               </div>
             </div>
@@ -163,7 +159,7 @@ function AIChatRuntime({ sessionId }: AIChatRuntimeProps): React.JSX.Element {
             return (
               <div
                 key={m.id}
-                className={`flex gap-3 ${isUser ? 'justify-end' : 'justify-start'}`}
+                className={isUser ? 'flex gap-3 justify-end' : 'flex gap-3'}
                 style={{ animation: 'fade-in 0.3s ease-out' }}
               >
                 {!isUser && (
@@ -175,7 +171,7 @@ function AIChatRuntime({ sessionId }: AIChatRuntimeProps): React.JSX.Element {
                   className={`max-w-[80%] rounded-sm px-3.5 py-2.5 text-sm leading-relaxed ${
                     isUser
                       ? 'bg-primary text-primary-foreground whitespace-pre-wrap'
-                      : 'bg-background border border-border text-foreground/90'
+                      : 'bg-background border text-foreground/90'
                   }`}
                 >
                   {isUser ? text : <MarkdownMessage content={text} id={m.id} />}
@@ -190,11 +186,11 @@ function AIChatRuntime({ sessionId }: AIChatRuntimeProps): React.JSX.Element {
           })}
 
           {loading && (
-            <div className="flex gap-3 justify-start">
+            <div className="flex gap-3">
               <span className="h-7 w-7 shrink-0 flex items-center justify-center rounded-sm bg-primary/15 text-primary">
                 <Sparkles size={13} />
               </span>
-              <div className="bg-background border border-border rounded-sm px-3.5 py-2.5 text-sm text-muted-foreground">
+              <div className="bg-background border rounded-sm px-3.5 py-2.5 text-sm text-muted-foreground">
                 Thinking<span className="animate-pulse">…</span>
               </div>
             </div>
@@ -207,7 +203,7 @@ function AIChatRuntime({ sessionId }: AIChatRuntimeProps): React.JSX.Element {
           )}
         </div>
 
-        <div className="border-t border-border p-3">
+        <div className="border-t p-3">
           {!hasMessages && (
             <div className="flex flex-wrap gap-1.5 mb-3">
               {CHAT_PAGE_CONTENT.suggestions.map(s => (
@@ -216,7 +212,7 @@ function AIChatRuntime({ sessionId }: AIChatRuntimeProps): React.JSX.Element {
                   onClick={() => {
                     void send(s);
                   }}
-                  className="hover-lift px-2.5 py-1 border border-border-strong rounded-sm text-[11px] font-medium text-muted-foreground hover:border-primary hover:text-primary transition-colors"
+                  className="chip text-[11px]"
                 >
                   {s}
                 </button>
@@ -235,14 +231,14 @@ function AIChatRuntime({ sessionId }: AIChatRuntimeProps): React.JSX.Element {
               value={input}
               onChange={e => setInput(e.target.value)}
               placeholder={CHAT_PAGE_CONTENT.inputPlaceholder}
-              className="flex-1 bg-background border border-border-strong rounded-sm px-3 py-2 text-sm focus:outline-none focus:border-primary"
+              className="flex-1 bg-background border-strong rounded-sm px-3 py-2 text-sm focus:outline-none focus:border-primary"
             />
             <div className="flex items-center gap-2 sm:flex-none">
               {loading ? (
                 <button
                   type="button"
                   onClick={stop}
-                  className="hover-lift shrink-0 inline-flex items-center gap-2 px-3.5 py-2 bg-primary text-primary-foreground rounded-sm text-[11px] font-medium uppercase tracking-wider hover:opacity-90"
+                  className="btn-primary-sm shrink-0 uppercase tracking-wider text-[11px]"
                 >
                   <Square size={12} /> Stop
                 </button>
@@ -250,7 +246,7 @@ function AIChatRuntime({ sessionId }: AIChatRuntimeProps): React.JSX.Element {
                 <button
                   type="submit"
                   disabled={!input.trim()}
-                  className="hover-lift shrink-0 inline-flex items-center gap-2 px-3.5 py-2 bg-primary text-primary-foreground rounded-sm text-[11px] font-medium uppercase tracking-wider hover:opacity-90 disabled:opacity-50"
+                  className="btn-primary-sm shrink-0 uppercase tracking-wider text-[11px] disabled:opacity-50"
                 >
                   <Send size={12} /> Send
                 </button>
@@ -264,7 +260,7 @@ function AIChatRuntime({ sessionId }: AIChatRuntimeProps): React.JSX.Element {
                   setInput('');
                   clearHistory();
                 }}
-                className="hover-lift shrink-0 inline-flex items-center gap-2 px-2.5 sm:px-3 py-2 border border-border-strong rounded-sm text-[11px] font-medium uppercase tracking-wider text-muted-foreground hover:border-primary hover:text-primary transition-colors disabled:opacity-50 disabled:hover:border-border-strong disabled:hover:text-muted-foreground"
+                className="btn-outline-sm shrink-0 px-2.5 sm:px-3 uppercase tracking-wider text-[11px] disabled:opacity-50 disabled:hover-strong disabled:hover:text-muted-foreground"
                 aria-label="Clear chat"
                 title="Clear chat"
               >
