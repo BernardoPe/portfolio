@@ -25,12 +25,12 @@
   },
   "routes": [
     {
-      "pattern": "www.bernardope.com/*",
-      "zone_name": "bernardope.com",
+      "pattern": "www.bernardope.com",
+      "custom_domain": true,
     },
     {
-      "pattern": "*.bernardope.com/*",
-      "zone_name": "bernardope.com",
+      "pattern": "bernardope.com",
+      "custom_domain": true,
     },
   ],
   "migrations": [
