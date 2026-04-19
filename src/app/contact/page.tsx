@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
-import { PageHeader } from '../../components/site/SiteLayout';
-import { ContactPanel } from '../../components/site/ContactPanel';
-import { CONTACT_METADATA, CONTACT_PAGE_CONTENT } from '../../data/contact';
+import { ContactPanel } from '@/components/site/ContactPanel';
+import { PageHeader } from '@/components/site/SiteLayout';
+import { CONTACT_METADATA, CONTACT_PAGE_CONTENT } from '@/data/contact';
 
 export const metadata: Metadata = CONTACT_METADATA;
 

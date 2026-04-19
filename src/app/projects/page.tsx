@@ -1,9 +1,9 @@
 import type { Metadata } from 'next';
 import { Github } from 'lucide-react';
-import { PageHeader } from '../../components/site/SiteLayout';
-import { Reveal } from '../../components/site/Reveal';
-import { getDevIcon } from '../../data/devIcons';
-import { PROJECTS, PROJECTS_METADATA, PROJECTS_PAGE_CONTENT } from '../../data/projects';
+import { DevIcon } from '@/components/site/DevIcon';
+import { Reveal } from '@/components/site/Reveal';
+import { PageHeader } from '@/components/site/SiteLayout';
+import { PROJECTS, PROJECTS_METADATA, PROJECTS_PAGE_CONTENT } from '@/data/projects';
 
 export const metadata: Metadata = PROJECTS_METADATA;
 
@@ -43,14 +43,7 @@ export default function ProjectsPage(): React.JSX.Element {
                       key={s.name}
                       className="inline-flex items-center gap-2 px-2.5 py-1.5 border border-border-strong rounded-sm text-[12px] font-medium text-foreground/80 transition-colors hover:border-primary/60 hover:text-foreground"
                     >
-                      <img
-                        src={getDevIcon(s.icon)}
-                        alt=""
-                        width={16}
-                        height={16}
-                        loading="lazy"
-                        className="h-4 w-4"
-                      />
+                      <DevIcon slug={s.icon} size={16} className="h-4 w-4" />
                       {s.name}
                     </li>
                   ))}

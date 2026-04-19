@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
-import { AIChatPanel } from '../../components/site/AIChatPanel';
-import { PageHeader } from '../../components/site/SiteLayout';
-import { CHAT_METADATA, CHAT_PAGE_CONTENT } from '../../data/chat';
+import { AIChatPanel } from '@/components/site/AIChatPanel';
+import { PageHeader } from '@/components/site/SiteLayout';
+import { CHAT_METADATA, CHAT_PAGE_CONTENT } from '@/data/chat';
 
 export const metadata: Metadata = CHAT_METADATA;
 

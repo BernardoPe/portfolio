@@ -1,5 +1,5 @@
 import React from 'react';
-import { withBasePath } from '../utils/routing';
+import { withBasePath } from '@/utils/routing';
 
 export default function NotFound(): React.JSX.Element {
   return (

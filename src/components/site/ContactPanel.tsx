@@ -2,9 +2,9 @@
 
 import { useState } from 'react';
 import { Mail, Send } from 'lucide-react';
-import { CONTACT_PAGE_CONTENT } from '../../data/contact';
-import { PROFILE, SOCIAL_LINKS } from '../../data/profile';
-import { SocialIcon } from './SocialIcon';
+import { SocialIcon } from '@/components/site/SocialIcon';
+import { CONTACT_PAGE_CONTENT } from '@/data/contact';
+import { PROFILE, SOCIAL_LINKS } from '@/data/profile';
 
 interface ContactFormState {
   name: string;

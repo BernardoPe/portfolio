@@ -1,4 +1,4 @@
-import { ROUTES } from './routes';
+import { ROUTES } from '@/data/routes';
 
 export interface SocialLink {
   id: 'github' | 'linkedin' | 'email';

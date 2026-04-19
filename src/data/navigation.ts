@@ -1,4 +1,4 @@
-import { ROUTES } from './routes';
+import { ROUTES } from '@/data/routes';
 
 export interface NavigationItem {
   to: string;

@@ -4,9 +4,9 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useMemo, useState } from 'react';
 import { Mail, Menu, X } from 'lucide-react';
-import { NAV_ITEMS } from '../../data/navigation';
-import { PROFILE, SOCIAL_LINKS_BY_ID } from '../../data/profile';
-import { SocialIcon } from './SocialIcon';
+import { SocialIcon } from '@/components/site/SocialIcon';
+import { NAV_ITEMS } from '@/data/navigation';
+import { PROFILE, SOCIAL_LINKS_BY_ID } from '@/data/profile';
 
 interface SiteLayoutProps {
   children: React.ReactNode;

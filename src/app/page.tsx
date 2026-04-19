@@ -1,10 +1,10 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { ArrowUpRight, FileText } from 'lucide-react';
-import { Reveal } from '../components/site/Reveal';
-import { HOME_CONTENT, HOME_METADATA, type RichTextBlock } from '../data/home';
-import { HOME_NAV_CARDS } from '../data/navigation';
-import { PROFILE } from '../data/profile';
+import { Reveal } from '@/components/site/Reveal';
+import { HOME_CONTENT, HOME_METADATA, type RichTextBlock } from '@/data/home';
+import { HOME_NAV_CARDS } from '@/data/navigation';
+import { PROFILE } from '@/data/profile';
 
 export const metadata: Metadata = HOME_METADATA;
 
@@ -69,7 +69,8 @@ export default function HomePage(): React.JSX.Element {
                 href={HOME_CONTENT.primaryCta.href}
                 className="group hover-lift inline-flex items-center gap-2 px-3.5 py-2 bg-primary text-primary-foreground rounded-sm text-[12px] font-medium hover:bg-primary/90 transition-colors"
               >
-                {HOME_CONTENT.primaryCta.label} <ArrowUpRight size={13} className="arrow-shift" />
+                {HOME_CONTENT.primaryCta.label}{' '}
+                <ArrowUpRight size={13} className="arrow-shift" />
               </Link>
               <Link
                 href={HOME_CONTENT.secondaryCta.href}

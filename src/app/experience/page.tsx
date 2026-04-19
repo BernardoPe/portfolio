@@ -1,15 +1,15 @@
 import type { Metadata } from 'next';
 import { ExternalLink } from 'lucide-react';
-import { PageHeader } from '../../components/site/SiteLayout';
-import { Reveal } from '../../components/site/Reveal';
-import { getDevIcon } from '../../data/devIcons';
+import { DevIcon } from '@/components/site/DevIcon';
+import { Reveal } from '@/components/site/Reveal';
+import { PageHeader } from '@/components/site/SiteLayout';
 import {
   EDUCATION,
   EXPERIENCE_ENTRY,
   EXPERIENCE_METADATA,
   EXPERIENCE_PAGE_CONTENT,
   SKILLS,
-} from '../../data/experience';
+} from '@/data/experience';
 
 export const metadata: Metadata = EXPERIENCE_METADATA;
 
@@ -160,14 +160,7 @@ export default function WorkPage(): React.JSX.Element {
                       key={it.name}
                       className="inline-flex items-center gap-2 px-2.5 py-1.5 border border-border-strong rounded-sm text-[13px] font-medium text-foreground/90 transition-colors hover:border-primary/60 hover:text-foreground"
                     >
-                      <img
-                        src={getDevIcon(it.icon)}
-                        alt=""
-                        width={16}
-                        height={16}
-                        loading="lazy"
-                        className="h-4 w-4"
-                      />
+                      <DevIcon slug={it.icon} size={16} className="h-4 w-4" />
                       {it.name}
                     </li>
                   ))}

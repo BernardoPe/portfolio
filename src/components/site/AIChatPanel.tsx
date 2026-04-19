@@ -8,7 +8,7 @@ import type { UIMessage } from '@ai-sdk/react';
 import { marked, type Tokens } from 'marked';
 import { Streamdown } from 'streamdown';
 import { createCodePlugin } from '@streamdown/code';
-import { CHAT_PAGE_CONTENT } from '../../data/chat';
+import { CHAT_PAGE_CONTENT } from '@/data/chat';
 
 const codePlugin = createCodePlugin({ themes: ['github-light', 'github-dark'] });
 

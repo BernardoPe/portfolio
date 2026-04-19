@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import type { DevIconSlug } from './devIcons';
+import type { DevIconSlug } from '@/data/devIcons';
 
 export interface ProjectStackItem {
   name: string;

@@ -9,6 +9,9 @@
     "esModuleInterop": true,
     "module": "ESNext",
     "moduleResolution": "bundler",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
@@ -19,10 +22,8 @@
   "include": [
     "next-env.d.ts",
     "src/global.d.ts",
-    "src/app/**/*.ts",
-    "src/app/**/*.tsx",
-    "src/components/site/**/*.ts",
-    "src/components/site/**/*.tsx",
+    "src/**/*.ts",
+    "src/**/*.tsx",
     ".next/types/**/*.ts"
   ],
   "exclude": ["node_modules", "dist"]
