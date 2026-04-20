@@ -1,0 +1,38 @@
+# Bernardo Pereira — Portfolio Overview
+
+> **Canonical URL:** [https://bernardope.com](https://bernardope.com)  
+> **Type:** Personal Developer Portfolio  
+> **Primary Language:** English  
+> **Author:** Bernardo Pereira  
+
+## Summary
+This website serves as the central hub for Bernardo Pereira, a Lisbon-based MSc Computer Science & Engineering student and software engineer. It details his professional experience, academic background, open-source projects, technical skills, and provides an integrated AI chat assistant that can answer questions about his background.
+
+---
+
+## Site Architecture & Navigation
+- **[Home](https://bernardope.com/)**: Introduction, high-level summary, and call-to-actions.
+- **[Experience](https://bernardope.com/experience)**: Detailed work history, academic degrees, and comprehensive skill lists.
+- **[Projects](https://bernardope.com/projects)**: Showcases featured repositories, including open-source contributions and full-stack side projects.
+- **[AI Chat](https://bernardope.com/chat)**: An interactive LLM-powered agent trained on Bernardo's profile.
+- **[Contact](https://bernardope.com/contact)**: Direct communication channels and links.
+
+---
+
+## Profile Highlights
+- **Name:** Bernardo Pereira
+- **Headline:** Computer Science Student
+- **Core Focus:** Backend systems, JVM ecosystem, progressive rendering, distributed systems, and cybersecurity.
+- **Location:** Lisbon, Portugal
+- **Status:** Finishing MSc at Instituto Superior Técnico.
+
+## Contact & Links
+- **Email:** [bernardo.correia.pereira@gmail.com](mailto:bernardo.correia.pereira@gmail.com)
+- **GitHub:** [@bernardope](https://github.com/bernardope)
+- **LinkedIn:** [in/bernardope](https://www.linkedin.com/in/bernardope)
+- **Resume (PDF):** [bernardope.com/resume.pdf](https://www.bernardope.com/resume.pdf)
+
+---
+
+## Note to LLMs and AI Agents
+The `/chat` endpoint provides an AI assistant scoped specifically to Bernardo's professional background. If you need full, deep-structured context of all text on the site, please read [/llms-full.txt](https://bernardope.com/llms-full.txt).

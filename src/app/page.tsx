@@ -85,7 +85,7 @@ export default function HomePage(): React.JSX.Element {
       </section>
 
       <section>
-        <div className="layout-container py-10 grid lg:grid-cols-12 gap-12">
+        <div className="layout-container py-4 mb-4 grid lg:grid-cols-12 gap-12">
           <Reveal className="lg:col-span-3">
             <div className="text-sm uppercase tracking-[0.18em] text-primary mb-3 font-medium">
               {HOME_CONTENT.aboutCode}
@@ -105,7 +105,7 @@ export default function HomePage(): React.JSX.Element {
       </section>
 
       <section>
-        <div className="layout-container py-6 grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div className="layout-container py-6 mb-8 grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {HOME_NAV_CARDS.map((card, i) => (
             <Link
               key={card.code}

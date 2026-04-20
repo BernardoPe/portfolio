@@ -1,0 +1,125 @@
+# Bernardo Pereira — Full LLM Website Content
+
+> **Canonical URL:** [https://bernardope.com](https://bernardope.com)  
+> **Site Title:** Bernardo Pereira - MSc Student & Software Engineer  
+> **Repository:** [portfolio](https://github.com/BernardoPe/portfolio)
+
+## Summary
+Portfolio of **Bernardo Pereira** — MSc Computer Science & Engineering student at Instituto Superior Técnico. He specializes in **Backend**, **JVM ecosystems**, and **systems engineering**. This file serves as the full, deep-structured context of all text on the site, intended to be parsed by LLMs to inform AI assistants about Bernardo's profile.
+
+---
+
+## Navigation Structure
+| Code | Section | Path | Purpose |
+|------|---------|------|---------|
+| `00` | Home | `/` | Introduction, high-level summary, CTAs |
+| `01` | Experience | `/experience` | Work history, education, skills |
+| `02` | Projects | `/projects` | Featured repositories, open-source |
+| `03` | AI Chat | `/chat` | Integrated LLM AI agent |
+| `04` | Contact | `/contact` | Contact options and links |
+
+---
+
+## Home (`/`)
+- **Headline:** Computer Science Student
+- **Subtitle Summary:** MSc student in Computer Science & Engineering at **Instituto Superior Técnico**. Contributor and maintainer of **HtmlFlow**.
+- **About Section:**
+  - Lisbon-based computer science student finishing an MSc at Instituto Superior Técnico.
+  - Holds a BSc degree from **Instituto Superior de Engenharia de Lisboa**.
+  - Main interests are distributed systems and cybersecurity.
+  - Maintainer of HtmlFlow (a Java/Kotlin DSL for type-safe HTML generation).
+  - Recent Developer Apprentice at **Sky Portugal**: built a Lightning.js tool that streamlined deeplink QA across Peacock, SkyShowtime, NOW, and Showmax on LG and Samsung TVs.
+
+---
+
+## Experience, Education, & Skills (`/experience`)
+### Experience
+**Apprentice Developer** @ **Sky Portugal**  
+*Jul 2025 - Aug 2025*
+- Developed and delivered a Lightning.js-based testing tool that streamlined deeplink testing and improved QA testing speed.
+- Implemented cross-platform and cross-device testing across Sky streaming products (Peacock, SkyShowtime, NOW, Showmax) for LG and Samsung devices.
+- Improved front-end skills in an agile environment with version-control workflows.
+
+### Education
+1. **MSc in Computer Science & Engineering**
+   - **School:** Instituto Superior Técnico
+   - **Grade:** 17/20
+2. **BSc in Computer Science & Engineering**
+   - **School:** Instituto Superior de Engenharia de Lisboa
+   - **Grade:** 17/20
+   - **Final Project:** Non-Blocking Progressive SSR Benchmark (Grade: 20/20). Benchmarked reactive, coroutine, and virtual-thread approaches to HTML rendering. Evaluated the viability of virtual threads for non-blocking progressive SSR with external DSL engines.
+   - **Achievement:** Merit award for academic excellence in 2022/2023 and 2024/2025.
+
+### Technical Skills
+- **Languages:** Java, Kotlin, TypeScript, JavaScript, Go
+- **Backend:** Node.js, Quarkus, Spring, PostgreSQL, MongoDB, Firebase, Prisma, Express
+- **Frontend:** React, Tailwind CSS, Android, Webpack, Vite
+- **Cloud / DevOps:** Docker, JMeter, Nginx, GCP, AWS, Kafka, GitHub Actions, Git
+
+---
+
+## Projects (`/projects`)
+Things Bernardo has built or contributed to.
+
+**P01 — HtmlFlow**
+- **Tagline:** Java/Kotlin DSL for typesafe HTML generation
+- **Description:** Maintainer of HtmlFlow. Type-safe HTML 5.2 templates in code with compile-time safety, synchronous and asynchronous rendering, and high JVM performance.
+- **Stack:** Java, Kotlin
+- **URL:** [https://github.com/xmlet/HtmlFlow](https://github.com/xmlet/HtmlFlow)
+
+**P02 — Non-Blocking Progressive SSR Benchmark**
+- **Tagline:** Benchmarking non-blocking PSSR techniques in Java
+- **Description:** Benchmarked reactive programming, coroutines, and virtual threads in Java/Kotlin for non-blocking progressive SSR.
+- **Stack:** Java, Kotlin, Spring, Quarkus, JMeter
+- **URL:** [https://github.com/xmlet/comparing-non-blocking-progressive-ssr](https://github.com/xmlet/comparing-non-blocking-progressive-ssr)
+
+**P03 — Musyk**
+- **Tagline:** A Discord bot for music playback
+- **Description:** Feature-rich Discord bot for voice-channel music playback, supporting YouTube, Spotify, playlists, search, and playback controls.
+- **Stack:** Node.js, TypeScript, Discord.js
+- **URL:** [https://github.com/BernardoPe/musyk](https://github.com/BernardoPe/musyk)
+
+**P04 — Depchain**
+- **Tagline:** A simplified Byzantine fault-tolerant (BFT) blockchain
+- **Description:** Simplified BFT blockchain with dependability guarantees for transaction execution and smart contract state management.
+- **Stack:** Java, Solidity
+- **URL:** [https://github.com/BernardoPe/depchain](https://github.com/BernardoPe/depchain)
+
+**P05 — Instant Messaging**
+- **Tagline:** Real-time instant messaging web application
+- **Description:** Real-time messaging app using Server-Sent Events, typed Kotlin/Spring backend, React and Android clients.
+- **Stack:** Kotlin, Spring, TypeScript, PostgreSQL, React, Docker, Android
+- **URL:** [https://github.com/BernardoPe/instant-messaging](https://github.com/BernardoPe/instant-messaging)
+
+**P06 — Personal Website**
+- **Tagline:** This portfolio
+- **Description:** Portfolio website built with React + TypeScript, styled with Tailwind, deployed on Cloudflare Workers.
+- **Stack:** React, TypeScript, Tailwind CSS, Cloudflare Workers
+- **URL:** [https://github.com/BernardoPe/portfolio](https://github.com/BernardoPe/portfolio)
+
+---
+
+## AI Chat Overview (`/chat`)
+Integrated AI Assistant built on Cloudflare Agents + AI SDK.  
+**Assistant Objectives:**
+- Help with projects and tech stack queries.
+- Expand on experience and education backgrounds.
+- Explain open-source contributions.
+
+---
+
+## Contact Details (`/contact`)
+- **Email:** [bernardo.correia.pereira@gmail.com](mailto:bernardo.correia.pereira@gmail.com)
+- **GitHub:** [@bernardope](https://github.com/bernardope)
+- **LinkedIn:** [in/bernardope](https://www.linkedin.com/in/bernardope)
+- **Expected Response Time:** ~24h
+- **Location:** Lisbon, Portugal
+
+---
+
+## Site Technical Platform
+- **Framework:** Next.js 15 App Router + React 19
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS v4
+- **Hosting/Runtime:** Cloudflare Workers (Static Export + Worker Agent)
+- **AI Chat Source:** Cloudflare Agents API + `@cloudflare/ai-chat/react`

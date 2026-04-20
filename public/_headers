@@ -1,0 +1,34 @@
+# Root page discovery links for crawlers/agents.
+/
+  Link: </llms.txt>; rel="describedby"; type="text/plain"; title="LLM-friendly site overview"
+  Link: </llms-full.txt>; rel="describedby"; type="text/plain"; title="Full LLM content"
+  Link: </sitemap.xml>; rel="sitemap"
+
+# Security headers applied to all routes.
+/*
+  # Forces HTTPS for one year (including subdomains) and opts into preload lists.
+  Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+  # Prevents this site from being embedded in iframes (clickjacking mitigation).
+  X-Frame-Options: DENY
+  # Disables MIME type sniffing to reduce content-type confusion attacks.
+  X-Content-Type-Options: nosniff
+  # Sends no referrer information on outbound links/requests.
+  Referrer-Policy: no-referrer
+  # Isolates top-level browsing context from cross-origin windows (COOP).
+  Cross-Origin-Opener-Policy: same-origin
+  # Prevents other origins from reading these resources unless explicitly allowed.
+  Cross-Origin-Resource-Policy: same-origin
+  # Restricts allowed content sources and dangerous capabilities (XSS/clickjacking hardening).
+  Content-Security-Policy: default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self'; upgrade-insecure-requests
+
+# Response headers specifically for the concise LLM descriptor file.
+/llms.txt
+  # Ensures plain-text MIME type with UTF-8 encoding.
+  Content-Type: text/plain; charset=utf-8
+  Cache-Control: public, max-age=3600
+
+# Response headers specifically for the full LLM content file.
+/llms-full.txt
+  # Ensures plain-text MIME type with UTF-8 encoding.
+  Content-Type: text/plain; charset=utf-8
+  Cache-Control: public, max-age=3600
