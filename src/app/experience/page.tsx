@@ -153,7 +153,7 @@ export default function WorkPage(): React.JSX.Element {
                 <ul className="flex flex-wrap gap-2">
                   {s.items.map(it => (
                     <li key={it.name} className="chip text-[13px] text-foreground/90">
-                      <DevIcon slug={it.icon} size={16} className="h-4 w-4" />
+                      <DevIcon slug={it.icon} size={16} className="h-5 w-5" />
                       {it.name}
                     </li>
                   ))}

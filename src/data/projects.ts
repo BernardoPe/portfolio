@@ -68,6 +68,17 @@ export const PROJECTS: ProjectItem[] = [
   },
   {
     code: 'P04',
+    name: 'Depchain',
+    tagline: 'A simplified Byzantine fault-tolerant (BFT) blockchain',
+    body: 'A simplified Byzantine fault-tolerant (BFT) blockchain with high dependability guarantees supporting transaction execution and smart contract state management. ',
+    stack: [
+      { name: 'Java', icon: 'java' },
+      { name: 'Solidity', icon: 'solidity' },
+    ],
+    url: 'https://github.com/BernardoPe/depchain',
+  },
+  {
+    code: 'P05',
     name: 'Instant Messaging',
     tagline: 'Real-time instant messaging web application',
     body: 'Real-time messaging app using Server-Sent Events for live updates with a typed Kotlin/Spring backend and React/Android clients.',
@@ -83,7 +94,7 @@ export const PROJECTS: ProjectItem[] = [
     url: 'https://github.com/BernardoPe/instant-messaging',
   },
   {
-    code: 'P05',
+    code: 'P06',
     name: 'Personal Website',
     tagline: 'This portfolio',
     body: "The site you're reading. Built with React + TypeScript, styled with Tailwind, deployed on Cloudflare Workers.",

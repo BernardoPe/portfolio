@@ -117,6 +117,8 @@ export const SKILLS: SkillGroup[] = [
       { name: 'JMeter', icon: 'apachejmeter' },
       { name: 'Nginx', icon: 'nginx' },
       { name: 'GCP', icon: 'googlecloud' },
+      { name: 'AWS', icon: 'aws' },
+      { name: 'Kafka', icon: 'kafka' },
       { name: 'GitHub Actions', icon: 'githubactions' },
       { name: 'Git', icon: 'git' },
     ],

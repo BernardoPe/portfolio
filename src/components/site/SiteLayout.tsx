@@ -134,7 +134,7 @@ export function SiteLayout({ children }: SiteLayoutProps): React.JSX.Element {
         )}
       </header>
 
-      <main className="flex-1 flex flex-col">{children}</main>
+      <main className="flex-1 flex flex-col 2xl:justify-center">{children}</main>
 
       <footer className="border-t mt-16">
         <div className="layout-container py-6 flex flex-col sm:flex-row justify-between items-center text-sm text-muted-foreground">

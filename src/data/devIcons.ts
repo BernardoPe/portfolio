@@ -31,6 +31,9 @@ export const DEV_ICONS = {
   git: devIcon('git'),
   discord: devIcon('discordjs'),
   cloudflareworkers: devIcon('cloudflareworkers'),
+  solidity: devIcon('solidity'),
+  aws: devIcon('amazonwebservices', 'original-wordmark'),
+  kafka: devIcon('apachekafka'),
 } as const;
 
 export type DevIconSlug = keyof typeof DEV_ICONS;
