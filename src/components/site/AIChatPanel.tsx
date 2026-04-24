@@ -5,10 +5,13 @@ import { useAgentChat } from '@cloudflare/ai-chat/react';
 import { memo, useEffect, useMemo, useRef, useState } from 'react';
 import { Send, Sparkles, Square, Trash2, User } from 'lucide-react';
 import type { UIMessage } from '@ai-sdk/react';
-import { marked, type Tokens } from 'marked';
 import { Streamdown } from 'streamdown';
 import { createCodePlugin } from '@streamdown/code';
 import { CHAT_PAGE_CONTENT } from '@/data/chat';
+import {
+  AIChatToolCallTimeline,
+  getToolCallProgress,
+} from '@/components/site/AIChatToolCallTimeline';
 
 const codePlugin = createCodePlugin({ themes: ['github-light', 'github-dark'] });
 
@@ -37,12 +40,6 @@ function getMessageText(message: UIMessage<{ createdAt: string }>): string {
     .trim();
 }
 
-function splitMarkdownIntoBlocks(markdown: string): string[] {
-  const tokens = marked.lexer(markdown) as Array<Tokens.Generic & { raw: string }>;
-  const blocks = tokens.map(token => token.raw);
-  return blocks.length > 0 ? blocks : [markdown];
-}
-
 const MarkdownBlock = memo(function MarkdownBlock({
   content,
 }: {
@@ -58,14 +55,7 @@ const MarkdownBlock = memo(function MarkdownBlock({
 });
 
 function MarkdownMessage({ content, id }: { content: string; id: string }): React.JSX.Element {
-  const blocks = useMemo(() => splitMarkdownIntoBlocks(content), [content]);
-  return (
-    <>
-      {blocks.map((block, index) => (
-        <MarkdownBlock key={`${id}-block-${index}`} content={block} />
-      ))}
-    </>
-  );
+  return <MarkdownBlock key={id} content={content} />;
 }
 
 export function AIChatPanel(): React.JSX.Element {
@@ -150,7 +140,8 @@ function AIChatRuntime({ sessionId }: AIChatRuntimeProps): React.JSX.Element {
 
           {messages.map(m => {
             const text = getMessageText(m);
-            if (!text) {
+            const toolCalls = getToolCallProgress(m);
+            if (!text && toolCalls.length === 0) {
               return null;
             }
 
@@ -174,7 +165,12 @@ function AIChatRuntime({ sessionId }: AIChatRuntimeProps): React.JSX.Element {
                       : 'bg-background border text-foreground/90'
                   }`}
                 >
-                  {isUser ? text : <MarkdownMessage content={text} id={m.id} />}
+                  {!isUser && toolCalls.length > 0 && (
+                    <div className="mb-3">
+                      <AIChatToolCallTimeline calls={toolCalls} />
+                    </div>
+                  )}
+                  {isUser ? text : text ? <MarkdownMessage content={text} id={m.id} /> : null}
                 </div>
                 {isUser && (
                   <span className="h-7 w-7 shrink-0 flex items-center justify-center rounded-sm bg-secondary text-muted-foreground">

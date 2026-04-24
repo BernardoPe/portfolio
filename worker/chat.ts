@@ -14,7 +14,7 @@ import { google, type GoogleLanguageModelOptions } from '@ai-sdk/google';
 import { env } from 'cloudflare:workers';
 import { SYSTEM_PROMPT } from './prompt';
 import { classifyWorkerError } from './errors';
-import { cleanupMessages, isValid } from './utils';
+import { cleanupMessages } from './utils';
 
 const model = google('gemini-3-flash-preview');
 
@@ -23,13 +23,14 @@ interface MCPServerInfo {
   url: string;
   transport?: {
     headers?: Record<string, string>;
+    type?: 'streamable-http' | 'sse';
   };
 }
 
 const MCP_SERVERS: MCPServerInfo[] = [
   {
     id: 'Github',
-    url: 'https://api.githubcopilot.com/mcp',
+    url: 'https://api.githubcopilot.com/mcp/',
     transport: {
       headers: {
         Authorization: `Bearer ${env.GITHUB_PAT}`,
@@ -100,18 +101,36 @@ export class Chat extends AIChatAgent<Env> {
 
     for (const serverInfo of MCP_SERVERS) {
       const existingServers = this.getMcpServers().servers;
-      const serverEntry = Object.values(existingServers).find(
-        entry => entry.name === serverInfo.id
+      const existingServerById = Object.entries(existingServers).find(
+        ([, entry]) => entry.name === serverInfo.id
       );
-      if (serverEntry?.name === serverInfo.id && isValid(serverEntry.state)) {
+      const serverEntryId = existingServerById?.[0];
+      const serverEntry = existingServerById?.[1];
+
+      if (serverEntry?.name === serverInfo.id && serverEntry.state === 'ready') {
         continue;
+      }
+
+      if (serverEntryId && serverEntry && serverEntry.state !== 'ready') {
+        console.warn(
+          `[Chat] Removing stale MCP server ${serverInfo.id} in state ${serverEntry.state}.`
+        );
+        try {
+          await this.removeMcpServer(serverEntryId);
+        } catch (removeError) {
+          console.error(`Failed to remove stale MCP server ${serverInfo.id}:`, removeError);
+        }
       }
 
       console.log(`Registering MCP server ${serverInfo.id} at ${serverInfo.url}...`);
 
       try {
-        const options = { transport: { headers: serverInfo.transport?.headers } };
-        await this.addMcpServer(serverInfo.id, serverInfo.url, serverInfo.url, undefined, options);
+        await this.addMcpServer(serverInfo.id, serverInfo.url, {
+          transport: {
+            headers: serverInfo.transport?.headers,
+            type: serverInfo.transport?.type,
+          },
+        });
       } catch (err) {
         console.error(`Failed to register MCP server ${serverInfo.id}:`, err);
       }
@@ -122,7 +141,7 @@ export class Chat extends AIChatAgent<Env> {
 
   async connectionsReady(): Promise<boolean> {
     const checkInterval = 1000;
-    const timeout = 5000;
+    const timeout = 2000;
     const start = Date.now();
 
     while (Date.now() - start <= timeout) {
