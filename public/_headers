@@ -19,7 +19,7 @@
   # Prevents other origins from reading these resources unless explicitly allowed.
   Cross-Origin-Resource-Policy: same-origin
   # Restricts allowed content sources and dangerous capabilities (XSS/clickjacking hardening).
-  Content-Security-Policy: default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self'; upgrade-insecure-requests
+  Content-Security-Policy: default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self'; upgrade-insecure-requests
 
 # Response headers specifically for the concise LLM descriptor file.
 /llms.txt
