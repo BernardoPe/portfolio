@@ -14,8 +14,7 @@
     "build:cf": "npm run build",
     "lint": "eslint .",
     "preview": "npm run build && wrangler dev",
-    "deploy": "npm run build && wrangler deploy",
-    "cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts"
+    "deploy": "npm run build && wrangler deploy"
   },
   "dependencies": {
     "@ai-sdk/google": "^3.0.60",
