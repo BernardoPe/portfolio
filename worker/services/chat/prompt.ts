@@ -1,6 +1,6 @@
-import { ROUTES } from '../src/data/routes';
-import { PROFILE, SOCIAL_LINKS_BY_ID } from '../src/data/profile';
-import { PROJECTS } from '../src/data/projects';
+import { ROUTES } from '../../../src/data/routes';
+import { PROFILE, SOCIAL_LINKS_BY_ID } from '../../../src/data/profile';
+import { PROJECTS } from '../../../src/data/projects';
 
 const ROUTES_BLOCK = [
   `- ${ROUTES.home} (Home)`,

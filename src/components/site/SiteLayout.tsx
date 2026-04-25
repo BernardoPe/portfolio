@@ -8,6 +8,7 @@ import { Mail } from 'lucide-react';
 import { SocialIcon } from '@/components/site/SocialIcon';
 import { NAV_ITEMS } from '@/data/navigation';
 import { PROFILE, SOCIAL_LINKS_BY_ID } from '@/data/profile';
+import { registerWebMCPTools } from '@/utils/webmcp';
 
 interface SiteLayoutProps {
   children: React.ReactNode;
@@ -56,6 +57,10 @@ export function SiteLayout({ children }: SiteLayoutProps): React.JSX.Element {
   useEffect(() => {
     setOpen(false);
   }, [pathname]);
+
+  useEffect(() => {
+    registerWebMCPTools();
+  }, []);
 
   return (
     <div className="min-h-screen flex flex-col">

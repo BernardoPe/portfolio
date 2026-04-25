@@ -49,21 +49,19 @@ export function classifyWorkerError(error: unknown): WorkerErrorDetails {
   if (message.includes('dynamic client registration')) {
     return {
       kind: 'mcp-auth',
-      message:
-        'MCP authentication is incompatible for this server. I will continue without external tools for this response.',
+      message: 'Authentication failed for MCP server. I will continue without external tools.',
       cause: error,
     };
   }
 
   return {
     kind: 'unexpected',
-    message:
-      'An unexpected error occurred while accessing external tools. I will continue without them for this response.',
+    message: 'An unexpected error occurred.',
     cause: error,
   };
 }
 
-export function createJsonErrorResponse(body: JsonErrorBody, status: number): Response {
+export function createJsonErrorResponse(body: JsonErrorBody, status: number = 400): Response {
   return new Response(JSON.stringify(body), {
     status,
     headers: { 'Content-Type': 'application/json' },

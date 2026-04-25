@@ -1,21 +1,27 @@
+import { Hono } from 'hono';
 import { routeAgentRequest } from 'agents';
-import { handleContactRequest } from './contact';
+import { apiRoutes } from './routes/api';
+import { wellKnownRoutes } from './routes/well-known';
+import { maybeConvertHtmlToMarkdown } from './utils/markdown';
+import { env } from 'cloudflare:workers';
 
-export { Chat } from './chat';
+export { Chat } from './services/chat/chat';
 
-export default {
-  async fetch(request: Request, env: Env): Promise<Response> {
-    const url = new URL(request.url);
+const app = new Hono();
 
-    if (url.pathname === '/api/send') {
-      return handleContactRequest(request);
-    }
+app.route('/.well-known', wellKnownRoutes);
+app.route('/api', apiRoutes);
 
-    const agentResponse = await routeAgentRequest(request, env);
-    if (agentResponse) {
-      return agentResponse;
-    }
+app.all('*', async c => {
+  const request = c.req.raw;
 
-    return env.ASSETS.fetch(request);
-  },
-};
+  const agentResponse = await routeAgentRequest(request, env);
+  if (agentResponse) {
+    return await maybeConvertHtmlToMarkdown(request, agentResponse, env);
+  }
+
+  const assetResponse = await env.ASSETS.fetch(request);
+  return await maybeConvertHtmlToMarkdown(request, assetResponse, env);
+});
+
+export default app;

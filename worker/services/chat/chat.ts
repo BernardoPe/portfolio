@@ -13,8 +13,8 @@ import {
 import { google, type GoogleLanguageModelOptions } from '@ai-sdk/google';
 import { env } from 'cloudflare:workers';
 import { SYSTEM_PROMPT } from './prompt';
-import { classifyWorkerError } from './errors';
-import { cleanupMessages } from './utils';
+import { classifyWorkerError } from '../../utils/errors';
+import { cleanupMessages } from '../../utils/common';
 
 const model = google('gemini-3-flash-preview');
 
