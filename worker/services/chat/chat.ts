@@ -48,7 +48,7 @@ export class Chat extends AIChatAgent<Env> {
   override async fetch(request: Request): Promise<Response> {
     if (this.clientIp === 'unknown') {
       this.clientIp = request.headers.get('cf-connecting-ip') ?? 'unknown';
-    } 
+    }
     return super.fetch(request);
   }
 

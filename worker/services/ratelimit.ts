@@ -77,7 +77,10 @@ export class RateLimiterDO extends DurableObject {
         JSON.stringify({
           allowed,
           limit: rule.maxRequests,
-          remaining: Math.max(0, Math.floor(rule.maxRequests - effectiveCount - (increment && allowed ? 1 : 0))),
+          remaining: Math.max(
+            0,
+            Math.floor(rule.maxRequests - effectiveCount - (increment && allowed ? 1 : 0))
+          ),
           resetTime,
           retryAfter: allowed ? 0 : Math.ceil((resetTime - now) / 1000),
         }),
