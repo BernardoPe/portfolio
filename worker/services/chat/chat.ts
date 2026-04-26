@@ -15,6 +15,8 @@ import { env } from 'cloudflare:workers';
 import { SYSTEM_PROMPT } from './prompt';
 import { classifyWorkerError } from '../../utils/errors';
 import { cleanupMessages } from '../../utils/common';
+import { checkRateLimit } from '../ratelimit';
+import { chatRule } from '../../routes/api';
 
 const model = google('gemini-3-flash-preview');
 
@@ -41,10 +43,31 @@ const MCP_SERVERS: MCPServerInfo[] = [
 ];
 
 export class Chat extends AIChatAgent<Env> {
+  private clientIp: string = 'unknown';
+
+  override async fetch(request: Request): Promise<Response> {
+    if (this.clientIp === 'unknown') {
+      this.clientIp = request.headers.get('cf-connecting-ip') ?? 'unknown';
+    } 
+    return super.fetch(request);
+  }
+
   async onChatMessage(
     onFinish: StreamTextOnFinishCallback<ToolSet>,
     options?: { abortSignal?: AbortSignal }
   ) {
+    const rlNamespace = env.RateLimiter;
+    const status = await checkRateLimit(rlNamespace, this.clientIp, chatRule);
+    if (!status.allowed) {
+      return new Response('Rate limit exceeded. Please try again later.', {
+        status: 429,
+        headers: {
+          'Retry-After': status.retryAfter.toString(),
+          'Content-Type': 'text/plain',
+        },
+      });
+    }
+
     const connectionsReady = await this.ensureMcpConnections();
     const tools = connectionsReady ? this.mcp.getAITools() : undefined;
 

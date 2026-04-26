@@ -1,73 +1,23 @@
 'use client';
 
-import { useState } from 'react';
 import { Mail, Send } from 'lucide-react';
 import { SocialIcon } from '@/components/site/SocialIcon';
 import { CONTACT_PAGE_CONTENT } from '@/data/contact';
 import { PROFILE, SOCIAL_LINKS } from '@/data/profile';
-
-interface ContactFormState {
-  name: string;
-  email: string;
-  message: string;
-}
+import { useContactForm } from '@/hooks/useContactForm';
 
 export function ContactPanel(): React.JSX.Element {
-  const [form, setForm] = useState<ContactFormState>({ name: '', email: '', message: '' });
-  const [loading, setLoading] = useState(false);
-  const [sent, setSent] = useState(false);
-  const [statusText, setStatusText] = useState('');
-
-  const onSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (!form.name || !form.email || !form.message || loading) {
-      return;
-    }
-
-    setLoading(true);
-    setSent(false);
-    setStatusText('');
-
-    try {
-      const res = await fetch('/api/send', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: form.name,
-          email: form.email,
-          message: form.message,
-          subject: `Portfolio contact - ${form.name}`,
-        }),
-      });
-
-      if (!res.ok) {
-        throw new Error('Could not send message');
-      }
-
-      setForm({ name: '', email: '', message: '' });
-      setSent(true);
-      setStatusText(CONTACT_PAGE_CONTENT.sentStatus);
-    } catch {
-      setSent(true);
-      setStatusText(CONTACT_PAGE_CONTENT.fallbackStatus);
-      const subject = encodeURIComponent(`Portfolio contact - ${form.name}`);
-      const body = encodeURIComponent(`${form.message}\n\n- ${form.name} (${form.email})`);
-      window.location.href = `mailto:${PROFILE.email}?subject=${subject}&body=${body}`;
-    } finally {
-      setLoading(false);
-    }
-  };
+  const { form, loading, sent, statusText, rateLimit, updateField, submit } = useContactForm();
 
   return (
     <section className="layout-container py-6 grid lg:grid-cols-12 gap-6">
-      <form onSubmit={onSubmit} className="panel-card panel-hover lg:col-span-7 p-8 space-y-5">
+      <form onSubmit={submit} className="panel-card panel-hover lg:col-span-7 p-8 space-y-5">
         <div>
           <label className="form-label">Name</label>
           <input
             required
             value={form.name}
-            onChange={e => setForm({ ...form, name: e.target.value })}
+            onChange={e => updateField('name', e.target.value)}
             className="field-input"
           />
         </div>
@@ -77,7 +27,7 @@ export function ContactPanel(): React.JSX.Element {
             required
             type="email"
             value={form.email}
-            onChange={e => setForm({ ...form, email: e.target.value })}
+            onChange={e => updateField('email', e.target.value)}
             className="field-input"
           />
         </div>
@@ -87,7 +37,7 @@ export function ContactPanel(): React.JSX.Element {
             required
             rows={6}
             value={form.message}
-            onChange={e => setForm({ ...form, message: e.target.value })}
+            onChange={e => updateField('message', e.target.value)}
             className="field-input resize-none"
           />
         </div>
@@ -96,6 +46,13 @@ export function ContactPanel(): React.JSX.Element {
           {loading ? CONTACT_PAGE_CONTENT.sendingLabel : CONTACT_PAGE_CONTENT.sendButtonLabel}
         </button>
         {sent && <p className="text-sm text-primary">{statusText}</p>}
+        {rateLimit && (
+          <p className="text-[10px] text-muted-foreground uppercase tracking-widest">
+            {rateLimit.remaining} requests remaining
+            {rateLimit.reset &&
+              ` • Resets in ${Math.ceil((parseInt(rateLimit.reset) * 1000 - Date.now()) / 60000)}m`}
+          </p>
+        )}
       </form>
 
       <aside className="lg:col-span-5 space-y-4">

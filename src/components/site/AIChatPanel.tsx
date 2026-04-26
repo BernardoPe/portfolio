@@ -1,7 +1,5 @@
 'use client';
 
-import { useAgent } from 'agents/react';
-import { useAgentChat } from '@cloudflare/ai-chat/react';
 import { memo, useEffect, useMemo, useRef, useState } from 'react';
 import { Send, Sparkles, Square, Trash2, User } from 'lucide-react';
 import type { UIMessage } from '@ai-sdk/react';
@@ -12,6 +10,7 @@ import {
   AIChatToolCallTimeline,
   getToolCallProgress,
 } from '@/components/site/AIChatToolCallTimeline';
+import { useAIChat } from '@/hooks/useAIChat';
 
 const codePlugin = createCodePlugin({ themes: ['github-light', 'github-dark'] });
 
@@ -76,7 +75,7 @@ export function AIChatPanel(): React.JSX.Element {
     );
   }
 
-  return <AIChatRuntime key={sessionId} sessionId={sessionId} />;
+  return <AIChatRuntime sessionId={sessionId} />;
 }
 
 interface AIChatRuntimeProps {
@@ -84,24 +83,23 @@ interface AIChatRuntimeProps {
 }
 
 function AIChatRuntime({ sessionId }: AIChatRuntimeProps): React.JSX.Element {
-  const [input, setInput] = useState('');
   const scrollerRef = useRef<HTMLDivElement>(null);
 
-  const agent = useAgent({
-    agent: 'chat',
-    name: sessionId,
+  const {
+    messages,
+    input,
+    setInput,
+    error,
+    isRateLimited,
+    quota,
+    hasMessages,
+    loading,
+    send,
+    stop,
+    handleClear,
+  } = useAIChat({
+    sessionId,
   });
-
-  const { messages, sendMessage, clearHistory, status, stop, error } = useAgentChat<
-    unknown,
-    UIMessage<{ createdAt: string }>
-  >({
-    agent,
-  });
-
-  const hasMessages = useMemo(() => messages.length > 0, [messages.length]);
-
-  const loading = (status === 'submitted' || status === 'streaming') && hasMessages;
 
   useEffect(() => {
     scrollerRef.current?.scrollTo({
@@ -109,19 +107,6 @@ function AIChatRuntime({ sessionId }: AIChatRuntimeProps): React.JSX.Element {
       behavior: 'smooth',
     });
   }, [messages, loading]);
-
-  const send = async (text: string) => {
-    if (!text.trim() || loading) {
-      return;
-    }
-
-    setInput('');
-
-    await sendMessage({
-      role: 'user',
-      parts: [{ type: 'text', text }],
-    });
-  };
 
   return (
     <section className="layout-container py-12">
@@ -138,7 +123,7 @@ function AIChatRuntime({ sessionId }: AIChatRuntimeProps): React.JSX.Element {
             </div>
           )}
 
-          {messages.map(m => {
+          {messages.map((m: UIMessage<{ createdAt: string }>) => {
             const text = getMessageText(m);
             const toolCalls = getToolCallProgress(m);
             if (!text && toolCalls.length === 0) {
@@ -194,7 +179,9 @@ function AIChatRuntime({ sessionId }: AIChatRuntimeProps): React.JSX.Element {
 
           {error && (
             <div className="text-sm text-red-400 border border-red-400/40 rounded-sm px-3 py-2">
-              Could not reach the AI backend.
+              {isRateLimited
+                ? 'You have hit your request quota. Please come back later.'
+                : 'Could not reach the AI backend.'}
             </div>
           )}
         </div>
@@ -205,6 +192,7 @@ function AIChatRuntime({ sessionId }: AIChatRuntimeProps): React.JSX.Element {
               {CHAT_PAGE_CONTENT.suggestions.map(s => (
                 <button
                   key={s}
+                  disabled={isRateLimited}
                   onClick={() => {
                     void send(s);
                   }}
@@ -219,15 +207,20 @@ function AIChatRuntime({ sessionId }: AIChatRuntimeProps): React.JSX.Element {
           <form
             onSubmit={e => {
               e.preventDefault();
-              void send(input);
+              void send();
             }}
             className="flex flex-col sm:flex-row gap-2"
           >
             <input
               value={input}
               onChange={e => setInput(e.target.value)}
-              placeholder={CHAT_PAGE_CONTENT.inputPlaceholder}
-              className="flex-1 bg-background border-strong rounded-sm px-3 py-2 text-sm focus:outline-none focus:border-primary"
+              disabled={isRateLimited}
+              placeholder={
+                isRateLimited
+                  ? 'You have hit your request quota. Please come back later.'
+                  : CHAT_PAGE_CONTENT.inputPlaceholder
+              }
+              className="flex-1 bg-background border-strong rounded-sm px-3 py-2 text-sm focus:outline-none focus:border-primary disabled:opacity-50"
             />
             <div className="flex items-center gap-2 sm:flex-none">
               {loading ? (
@@ -251,11 +244,7 @@ function AIChatRuntime({ sessionId }: AIChatRuntimeProps): React.JSX.Element {
               <button
                 type="button"
                 disabled={!hasMessages}
-                onClick={() => {
-                  stop();
-                  setInput('');
-                  clearHistory();
-                }}
+                onClick={handleClear}
                 className="btn-outline-sm shrink-0 px-2.5 sm:px-3 uppercase tracking-wider text-[11px] disabled:opacity-50 disabled:hover-strong disabled:hover:text-muted-foreground"
                 aria-label="Clear chat"
                 title="Clear chat"
@@ -265,6 +254,16 @@ function AIChatRuntime({ sessionId }: AIChatRuntimeProps): React.JSX.Element {
               </button>
             </div>
           </form>
+          {quota !== null && (
+            <div className="text-[10px] text-muted-foreground text-left mt-1.5 px-1">
+              Requests remaining: {quota.remaining}/{quota.limit}
+              {quota.remaining === 0 && quota.resetTime && (
+                <span className="ml-1">
+                  (Resets at {new Date(quota.resetTime).toLocaleTimeString()})
+                </span>
+              )}
+            </div>
+          )}
         </div>
       </div>
     </section>

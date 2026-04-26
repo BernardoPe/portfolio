@@ -22,6 +22,10 @@
         "name": "Chat",
         "class_name": "Chat",
       },
+      {
+        "name": "RateLimiter",
+        "class_name": "RateLimiter",
+      },
     ],
   },
   "routes": [
@@ -38,6 +42,10 @@
     {
       "tag": "v1",
       "new_sqlite_classes": ["Chat"],
+    },
+    {
+      "tag": "v2",
+      "new_sqlite_classes": ["RateLimiter"],
     },
   ],
 }

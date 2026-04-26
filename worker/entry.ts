@@ -4,10 +4,14 @@ import { apiRoutes } from './routes/api';
 import { wellKnownRoutes } from './routes/well-known';
 import { maybeConvertHtmlToMarkdown } from './utils/markdown';
 import { env } from 'cloudflare:workers';
+import { registerMiddlewares } from './middlewares';
 
 export { Chat } from './services/chat/chat';
+export { RateLimiterDO as RateLimiter } from './services/ratelimit';
 
 const app = new Hono();
+
+registerMiddlewares(app);
 
 app.route('/.well-known', wellKnownRoutes);
 app.route('/api', apiRoutes);

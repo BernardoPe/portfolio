@@ -1,8 +1,34 @@
 import { Hono } from 'hono';
+import { env } from 'cloudflare:workers';
 import { submitContact } from '../services/contact';
 import { getContactApiSpec } from '../services/openapi';
+import { checkRateLimit } from '../services/ratelimit';
 
 export const apiRoutes = new Hono();
+
+export const chatRule = {
+  key: 'chat',
+  windowMs: 60 * 60 * 1000,
+  maxRequests: 20,
+};
+
+export const contactRule = {
+  key: 'contact',
+  windowMs: 60 * 60 * 1000,
+  maxRequests: 3,
+};
+
+apiRoutes.get('/quota', async c => {
+  const identifier = c.req.header('cf-connecting-ip') || 'unknown';
+  const status = await checkRateLimit(env.RateLimiter, identifier, chatRule, false);
+  return c.json({
+    allowed: status.allowed,
+    limit: status.limit,
+    remaining: status.remaining,
+    resetTime: status.resetTime,
+    retryAfter: status.retryAfter,
+  });
+});
 
 apiRoutes.post('/send', async c => {
   try {
