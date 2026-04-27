@@ -11,6 +11,7 @@ import {
   getToolCallProgress,
 } from '@/components/site/AIChatToolCallTimeline';
 import { useAIChat } from '@/hooks/useAIChat';
+import { FORM_LIMITS } from '@/data/config';
 
 const codePlugin = createCodePlugin({ themes: ['github-light', 'github-dark'] });
 
@@ -227,6 +228,7 @@ function AIChatRuntime({ sessionId }: AIChatRuntimeProps): React.JSX.Element {
               value={input}
               onChange={e => setInput(e.target.value)}
               disabled={isRateLimited}
+              maxLength={FORM_LIMITS.chat.maxInputLength}
               placeholder={
                 isRateLimited
                   ? 'You have hit your request quota. Please come back later.'

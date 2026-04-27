@@ -1,5 +1,6 @@
 import { env } from 'cloudflare:workers';
 import { createJsonErrorResponse } from '../utils/errors';
+import { FORM_LIMITS } from '../../src/data/config';
 
 interface ContactRequestBody {
   name: string;
@@ -21,6 +22,14 @@ export async function submitContact(body: unknown): Promise<Response> {
 
   if (!name || !email || !message) {
     return createJsonErrorResponse({ error: 'Missing fields' }, 400);
+  }
+
+  if (
+    name.length > FORM_LIMITS.contact.maxNameLength ||
+    email.length > FORM_LIMITS.contact.maxEmailLength ||
+    message.length > FORM_LIMITS.contact.maxMessageLength
+  ) {
+    return createJsonErrorResponse({ error: 'Field length limit exceeded' }, 400);
   }
 
   const FORM_ENDPOINT = env.FORM_ENDPOINT as string | undefined;

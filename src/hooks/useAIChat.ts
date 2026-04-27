@@ -3,6 +3,7 @@ import { useAgentChat } from '@cloudflare/ai-chat/react';
 import { useMemo, useState, useEffect } from 'react';
 import type { Dispatch, SetStateAction } from 'react';
 import type { UIMessage } from '@ai-sdk/react';
+import { FORM_LIMITS } from '@/data/config';
 
 export interface UseAIChatOptions {
   sessionId: string;
@@ -81,7 +82,7 @@ export function useAIChat({ sessionId }: UseAIChatOptions): UseAIChatResult {
 
   const send = async (text?: string) => {
     const messageText = text ?? input;
-    if (!messageText.trim() || loading) {
+    if (!messageText.trim() || loading || messageText.length > FORM_LIMITS.chat.maxInputLength) {
       return;
     }
 

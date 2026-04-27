@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { CONTACT_PAGE_CONTENT } from '@/data/contact';
 import { PROFILE } from '@/data/profile';
+import { FORM_LIMITS } from '@/data/config';
 
 export interface ContactFormState {
   name: string;
@@ -27,7 +28,15 @@ export function useContactForm() {
   const submit = async (e?: React.FormEvent) => {
     if (e) e.preventDefault();
 
-    if (!form.name || !form.email || !form.message || loading) {
+    if (
+      !form.name ||
+      !form.email ||
+      !form.message ||
+      loading ||
+      form.name.length > FORM_LIMITS.contact.maxNameLength ||
+      form.email.length > FORM_LIMITS.contact.maxEmailLength ||
+      form.message.length > FORM_LIMITS.contact.maxMessageLength
+    ) {
       return;
     }
 

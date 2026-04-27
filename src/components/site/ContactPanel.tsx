@@ -4,6 +4,7 @@ import { Mail, Send } from 'lucide-react';
 import { SocialIcon } from '@/components/site/SocialIcon';
 import { CONTACT_PAGE_CONTENT } from '@/data/contact';
 import { PROFILE, SOCIAL_LINKS } from '@/data/profile';
+import { FORM_LIMITS } from '@/data/config';
 import { useContactForm } from '@/hooks/useContactForm';
 
 export function ContactPanel(): React.JSX.Element {
@@ -18,6 +19,7 @@ export function ContactPanel(): React.JSX.Element {
             required
             value={form.name}
             onChange={e => updateField('name', e.target.value)}
+            maxLength={FORM_LIMITS.contact.maxNameLength}
             className="field-input"
           />
         </div>
@@ -28,6 +30,7 @@ export function ContactPanel(): React.JSX.Element {
             type="email"
             value={form.email}
             onChange={e => updateField('email', e.target.value)}
+            maxLength={FORM_LIMITS.contact.maxEmailLength}
             className="field-input"
           />
         </div>
@@ -38,6 +41,7 @@ export function ContactPanel(): React.JSX.Element {
             rows={6}
             value={form.message}
             onChange={e => updateField('message', e.target.value)}
+            maxLength={FORM_LIMITS.contact.maxMessageLength}
             className="field-input resize-none"
           />
         </div>
