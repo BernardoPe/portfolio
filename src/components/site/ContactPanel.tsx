@@ -1,6 +1,7 @@
 'use client';
 
 import { Mail, Send } from 'lucide-react';
+import { useRef, useEffect } from 'react';
 import { SocialIcon } from '@/components/site/SocialIcon';
 import { CONTACT_PAGE_CONTENT } from '@/data/contact';
 import { PROFILE, SOCIAL_LINKS } from '@/data/profile';
@@ -9,43 +10,85 @@ import { useContactForm } from '@/hooks/useContactForm';
 
 export function ContactPanel(): React.JSX.Element {
   const { form, loading, sent, statusText, rateLimit, updateField, submit } = useContactForm();
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  useEffect(() => {
+    if (textareaRef.current) {
+      textareaRef.current.style.height = 'auto';
+      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+    }
+  }, [form.message]);
+
+  const isNameOver = form.name.length > FORM_LIMITS.contact.maxNameLength;
+  const isEmailOver = form.email.length > FORM_LIMITS.contact.maxEmailLength;
+  const isMessageOver = form.message.length > FORM_LIMITS.contact.maxMessageLength;
+  const isAnyOver = isNameOver || isEmailOver || isMessageOver;
 
   return (
     <section className="layout-container py-6 grid lg:grid-cols-12 gap-6">
       <form onSubmit={submit} className="panel-card panel-hover lg:col-span-7 p-8 space-y-5">
         <div>
-          <label className="form-label">Name</label>
+          <div className="flex justify-between items-center mb-1.5">
+            <label className="form-label mb-0">Name</label>
+            {form.name.length > 0 && (
+              <span
+                className={`text-[10px] ${isNameOver ? 'text-red-500 font-medium' : 'text-muted-foreground'}`}
+              >
+                {form.name.length} / {FORM_LIMITS.contact.maxNameLength}
+              </span>
+            )}
+          </div>
           <input
             required
             value={form.name}
             onChange={e => updateField('name', e.target.value)}
-            maxLength={FORM_LIMITS.contact.maxNameLength}
-            className="field-input"
+            className={`field-input ${isNameOver ? 'border-red-500 focus:border-red-500' : ''}`}
           />
         </div>
         <div>
-          <label className="form-label">Email</label>
+          <div className="flex justify-between items-center mb-1.5">
+            <label className="form-label mb-0">Email</label>
+            {form.email.length > 0 && (
+              <span
+                className={`text-[10px] ${isEmailOver ? 'text-red-500 font-medium' : 'text-muted-foreground'}`}
+              >
+                {form.email.length} / {FORM_LIMITS.contact.maxEmailLength}
+              </span>
+            )}
+          </div>
           <input
             required
             type="email"
             value={form.email}
             onChange={e => updateField('email', e.target.value)}
-            maxLength={FORM_LIMITS.contact.maxEmailLength}
-            className="field-input"
+            className={`field-input ${isEmailOver ? 'border-red-500 focus:border-red-500' : ''}`}
           />
         </div>
         <div>
-          <label className="form-label">Message</label>
+          <div className="flex justify-between items-center mb-1.5">
+            <label className="form-label mb-0">Message</label>
+            {form.message.length > 0 && (
+              <span
+                className={`text-[10px] ${isMessageOver ? 'text-red-500 font-medium' : 'text-muted-foreground'}`}
+              >
+                {form.message.length} / {FORM_LIMITS.contact.maxMessageLength}
+              </span>
+            )}
+          </div>
           <textarea
+            ref={textareaRef}
             required
-            rows={6}
+            rows={4}
             value={form.message}
             onChange={e => updateField('message', e.target.value)}
-            maxLength={FORM_LIMITS.contact.maxMessageLength}
-            className="field-input resize-none"
+            className={`field-input resize-none overflow-y-auto min-h-[120px] max-h-[400px] ${isMessageOver ? 'border-red-500 focus:border-red-500' : ''}`}
           />
         </div>
-        <button type="submit" disabled={loading} className="btn-primary-sm disabled:opacity-60">
+        <button
+          type="submit"
+          disabled={loading || isAnyOver}
+          className="btn-primary-sm disabled:opacity-60"
+        >
           <Send size={14} />
           {loading ? CONTACT_PAGE_CONTENT.sendingLabel : CONTACT_PAGE_CONTENT.sendButtonLabel}
         </button>

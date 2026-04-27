@@ -89,6 +89,7 @@ interface AIChatRuntimeProps {
 
 function AIChatRuntime({ sessionId }: AIChatRuntimeProps): React.JSX.Element {
   const scrollerRef = useRef<HTMLDivElement>(null);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const {
     messages,
@@ -106,6 +107,13 @@ function AIChatRuntime({ sessionId }: AIChatRuntimeProps): React.JSX.Element {
   } = useAIChat({
     sessionId,
   });
+
+  useEffect(() => {
+    if (textareaRef.current) {
+      textareaRef.current.style.height = 'auto';
+      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+    }
+  }, [input]);
 
   useEffect(() => {
     scrollerRef.current?.scrollTo({
@@ -157,7 +165,7 @@ function AIChatRuntime({ sessionId }: AIChatRuntimeProps): React.JSX.Element {
                   </span>
                 )}
                 <div
-                  className={`max-w-[80%] rounded-sm px-3.5 py-2.5 text-sm leading-relaxed ${
+                  className={`max-w-[80%] rounded-sm px-3.5 py-2.5 text-sm leading-relaxed break-words ${
                     isUser
                       ? 'bg-primary text-primary-foreground whitespace-pre-wrap'
                       : 'bg-background border text-foreground/90'
@@ -222,62 +230,89 @@ function AIChatRuntime({ sessionId }: AIChatRuntimeProps): React.JSX.Element {
               e.preventDefault();
               void send();
             }}
-            className="flex flex-col sm:flex-row gap-2"
+            className="flex flex-col gap-2"
           >
-            <input
-              value={input}
-              onChange={e => setInput(e.target.value)}
-              disabled={isRateLimited}
-              maxLength={FORM_LIMITS.chat.maxInputLength}
-              placeholder={
-                isRateLimited
-                  ? 'You have hit your request quota. Please come back later.'
-                  : CHAT_PAGE_CONTENT.inputPlaceholder
-              }
-              className="flex-1 bg-background border-strong rounded-sm px-3 py-2 text-sm focus:outline-none focus:border-primary disabled:opacity-50"
-            />
-            <div className="flex items-center gap-2 sm:flex-none">
-              {loading ? (
+            <div className="relative flex flex-col sm:flex-row gap-2">
+              <textarea
+                ref={textareaRef}
+                rows={1}
+                value={input}
+                onChange={e => setInput(e.target.value)}
+                onKeyDown={e => {
+                  if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    void send();
+                  }
+                }}
+                disabled={isRateLimited}
+                placeholder={
+                  isRateLimited
+                    ? 'You have hit your request quota. Please come back later.'
+                    : CHAT_PAGE_CONTENT.inputPlaceholder
+                }
+                className="flex-1 bg-background border-strong rounded-sm px-3 py-2 text-sm focus:outline-none focus:border-primary disabled:opacity-50 resize-none overflow-y-auto min-h-[40px] max-h-[200px]"
+              />
+              <div className="flex items-center gap-2 sm:flex-none self-end sm:self-center">
+                {loading ? (
+                  <button
+                    type="button"
+                    onClick={stop}
+                    className="btn-primary-sm shrink-0 uppercase tracking-wider text-[11px]"
+                  >
+                    <Square size={12} /> Stop
+                  </button>
+                ) : (
+                  <button
+                    type="submit"
+                    disabled={
+                      !input.trim() ||
+                      input.length > FORM_LIMITS.chat.maxInputLength ||
+                      isRateLimited
+                    }
+                    className="btn-primary-sm shrink-0 uppercase tracking-wider text-[11px] disabled:opacity-50"
+                  >
+                    <Send size={12} /> Send
+                  </button>
+                )}
+
                 <button
                   type="button"
-                  onClick={stop}
-                  className="btn-primary-sm shrink-0 uppercase tracking-wider text-[11px]"
+                  disabled={!hasMessages}
+                  onClick={handleClear}
+                  className="btn-outline-sm shrink-0 px-2.5 sm:px-3 uppercase tracking-wider text-[11px] disabled:opacity-50 disabled:hover-strong disabled:hover:text-muted-foreground"
+                  aria-label="Clear chat"
+                  title="Clear chat"
                 >
-                  <Square size={12} /> Stop
+                  <Trash2 size={12} />
+                  <span className="hidden sm:inline">Clear</span>
                 </button>
-              ) : (
-                <button
-                  type="submit"
-                  disabled={!input.trim()}
-                  className="btn-primary-sm shrink-0 uppercase tracking-wider text-[11px] disabled:opacity-50"
-                >
-                  <Send size={12} /> Send
-                </button>
-              )}
-
-              <button
-                type="button"
-                disabled={!hasMessages}
-                onClick={handleClear}
-                className="btn-outline-sm shrink-0 px-2.5 sm:px-3 uppercase tracking-wider text-[11px] disabled:opacity-50 disabled:hover-strong disabled:hover:text-muted-foreground"
-                aria-label="Clear chat"
-                title="Clear chat"
-              >
-                <Trash2 size={12} />
-                <span className="hidden sm:inline">Clear</span>
-              </button>
+              </div>
             </div>
           </form>
-          {quotaInfo !== null && (
-            <div className="text-[10px] text-muted-foreground text-left mt-1.5 px-1">
-              Requests remaining: {quotaInfo.remaining}/{quotaInfo.limit}
-              {quotaInfo.remaining === 0 && quotaInfo.resetTime && (
-                <span className="ml-1">
-                  (Resets at {new Date(quotaInfo.resetTime).toLocaleTimeString()})
-                </span>
-              )}
-            </div>
-          )}
+          <div className="flex items-center mt-1.5 px-1 gap-3">
+            {quotaInfo !== null && (
+              <div className="text-[10px] text-muted-foreground text-left">
+                Requests remaining: {quotaInfo.remaining}/{quotaInfo.limit}
+                {quotaInfo.remaining === 0 && quotaInfo.resetTime && (
+                  <span className="ml-1">
+                    (Resets at {new Date(quotaInfo.resetTime).toLocaleTimeString()})
+                  </span>
+                )}
+              </div>
+            )}
+
+            {input.length > 0 && (
+              <div
+                className={`text-[10px] ${
+                  input.length > FORM_LIMITS.chat.maxInputLength
+                    ? 'text-red-500 font-medium'
+                    : 'text-muted-foreground'
+                }`}
+              >
+                {input.length} / {FORM_LIMITS.chat.maxInputLength} characters
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </section>

@@ -5,6 +5,6 @@ export const FORM_LIMITS = {
   contact: {
     maxNameLength: 100,
     maxEmailLength: 100,
-    maxMessageLength: 5000,
+    maxMessageLength: 500,
   },
 } as const;
