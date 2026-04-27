@@ -57,6 +57,16 @@ function MarkdownMessage({ content, id }: { content: string; id: string }): Reac
   return <MarkdownBlock key={id} content={content} />;
 }
 
+function AIChatLoadingState(): React.JSX.Element {
+  return (
+    <section className="layout-container py-12">
+      <div className="panel-card flex items-center justify-center h-[68vh] min-h-[500px] text-sm text-muted-foreground">
+        {CHAT_PAGE_CONTENT.preparingText}
+      </div>
+    </section>
+  );
+}
+
 export function AIChatPanel(): React.JSX.Element {
   const [mounted, setMounted] = useState(false);
   const sessionId = useMemo(() => getStoredId(), []);
@@ -66,13 +76,7 @@ export function AIChatPanel(): React.JSX.Element {
   }, []);
 
   if (!mounted) {
-    return (
-      <section className="layout-container py-12">
-        <div className="panel-card flex items-center justify-center h-[68vh] min-h-[500px] text-sm text-muted-foreground">
-          {CHAT_PAGE_CONTENT.preparingText}
-        </div>
-      </section>
-    );
+    return <AIChatLoadingState />;
   }
 
   return <AIChatRuntime sessionId={sessionId} />;
@@ -94,6 +98,7 @@ function AIChatRuntime({ sessionId }: AIChatRuntimeProps): React.JSX.Element {
     quota,
     hasMessages,
     loading,
+    ready,
     send,
     stop,
     handleClear,
@@ -107,6 +112,13 @@ function AIChatRuntime({ sessionId }: AIChatRuntimeProps): React.JSX.Element {
       behavior: 'smooth',
     });
   }, [messages, loading]);
+
+  if (!ready) {
+    return <AIChatLoadingState />;
+  }
+
+  const quotaInfo = quota ?? null;
+  const hasError = error !== null && error !== undefined;
 
   return (
     <section className="layout-container py-12">
@@ -177,7 +189,7 @@ function AIChatRuntime({ sessionId }: AIChatRuntimeProps): React.JSX.Element {
             </div>
           )}
 
-          {error && (
+          {hasError && (
             <div className="text-sm text-red-400 border border-red-400/40 rounded-sm px-3 py-2">
               {isRateLimited
                 ? 'You have hit your request quota. Please come back later.'
@@ -254,12 +266,12 @@ function AIChatRuntime({ sessionId }: AIChatRuntimeProps): React.JSX.Element {
               </button>
             </div>
           </form>
-          {quota !== null && (
+          {quotaInfo !== null && (
             <div className="text-[10px] text-muted-foreground text-left mt-1.5 px-1">
-              Requests remaining: {quota.remaining}/{quota.limit}
-              {quota.remaining === 0 && quota.resetTime && (
+              Requests remaining: {quotaInfo.remaining}/{quotaInfo.limit}
+              {quotaInfo.remaining === 0 && quotaInfo.resetTime && (
                 <span className="ml-1">
-                  (Resets at {new Date(quota.resetTime).toLocaleTimeString()})
+                  (Resets at {new Date(quotaInfo.resetTime).toLocaleTimeString()})
                 </span>
               )}
             </div>

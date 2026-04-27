@@ -1,6 +1,7 @@
 import { useAgent } from 'agents/react';
 import { useAgentChat } from '@cloudflare/ai-chat/react';
 import { useMemo, useState, useEffect } from 'react';
+import type { Dispatch, SetStateAction } from 'react';
 import type { UIMessage } from '@ai-sdk/react';
 
 export interface UseAIChatOptions {
@@ -13,9 +14,25 @@ export interface QuotaInfo {
   limit: number;
 }
 
-export function useAIChat({ sessionId }: UseAIChatOptions) {
+export interface UseAIChatResult {
+  messages: UIMessage<{ createdAt: string }>[];
+  input: string;
+  setInput: Dispatch<SetStateAction<string>>;
+  status: string;
+  error: unknown;
+  isRateLimited: boolean;
+  quota: QuotaInfo | null | undefined;
+  hasMessages: boolean;
+  loading: boolean;
+  ready: boolean;
+  send: (text?: string) => Promise<void>;
+  stop: () => void;
+  handleClear: () => void;
+}
+
+export function useAIChat({ sessionId }: UseAIChatOptions): UseAIChatResult {
   const [input, setInput] = useState('');
-  const [quota, setQuota] = useState<QuotaInfo | null>(null);
+  const [quota, setQuota] = useState<QuotaInfo | null | undefined>(undefined);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -30,6 +47,9 @@ export function useAIChat({ sessionId }: UseAIChatOptions) {
       .catch(err => {
         if (err.name !== 'AbortError') {
           console.error(err);
+          if (!controller.signal.aborted) {
+            setQuota(null);
+          }
         }
       });
     return () => {
@@ -48,6 +68,8 @@ export function useAIChat({ sessionId }: UseAIChatOptions) {
   >({
     agent,
   });
+
+  const ready = quota !== undefined;
 
   const isRateLimited = useMemo(() => {
     return quota?.remaining === 0;
@@ -93,6 +115,7 @@ export function useAIChat({ sessionId }: UseAIChatOptions) {
     quota,
     hasMessages,
     loading,
+    ready,
     send,
     stop,
     handleClear,
