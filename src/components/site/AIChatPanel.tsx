@@ -46,7 +46,7 @@ const MarkdownBlock = memo(function MarkdownBlock({
   content: string;
 }): React.JSX.Element {
   return (
-    <div className="markdown-body">
+    <div className="markdown-body list-disc">
       <Streamdown plugins={{ code: codePlugin }} linkSafety={{ enabled: false }}>
         {content}
       </Streamdown>

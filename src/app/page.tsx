@@ -105,7 +105,7 @@ export default function HomePage(): React.JSX.Element {
       </section>
 
       <section>
-        <div className="layout-container py-6 mb-8 grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div className="layout-container mt-4 grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {HOME_NAV_CARDS.map((card, i) => (
             <Link
               key={card.code}
