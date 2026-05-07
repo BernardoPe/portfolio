@@ -38,7 +38,7 @@ export default function ProjectsPage(): React.JSX.Element {
                   {p.body}
                 </p>
                 <ul className="mt-5 flex flex-wrap gap-2">
-                  {p.stack.map(s => (
+                  {p.stack.map((s) => (
                     <li key={s.name} className="chip">
                       <DevIcon slug={s.icon} size={16} className="h-5 w-5" />
                       {s.name}

@@ -1,4 +1,4 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 @theme inline {
   --radius-sm: 3px;
@@ -22,8 +22,8 @@
 
 :root {
   --font-sans:
-    Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial,
-    'Apple Color Emoji', 'Segoe UI Emoji', sans-serif;
+    Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial,
+    "Apple Color Emoji", "Segoe UI Emoji", sans-serif;
   --font-display: var(--font-sans);
   --radius: 4px;
   --background: oklch(0.16 0.012 250);
@@ -317,8 +317,8 @@
 
 @media (prefers-reduced-motion: reduce) {
   .reveal {
-    animation: none !important;
-    opacity: 1 !important;
+    animation: none;
+    opacity: 1;
   }
 
   .hover-lift:hover {

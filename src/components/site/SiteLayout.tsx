@@ -56,7 +56,7 @@ export function SiteLayout({ children }: SiteLayoutProps): React.JSX.Element {
 
   useEffect(() => {
     setOpen(false);
-  }, [pathname]);
+  }, []);
 
   useEffect(() => {
     registerWebMCPTools();
@@ -79,7 +79,7 @@ export function SiteLayout({ children }: SiteLayoutProps): React.JSX.Element {
           </Link>
 
           <nav className="hidden md:flex items-center gap-1 absolute left-1/2 -translate-x-1/2">
-            {NAV_ITEMS.map(item => {
+            {NAV_ITEMS.map((item) => {
               const active = pathname === item.to;
               return (
                 <Link
@@ -95,14 +95,15 @@ export function SiteLayout({ children }: SiteLayoutProps): React.JSX.Element {
           </nav>
 
           <div className="hidden md:flex items-center gap-2 ml-auto">
-            {HEADER_SOCIALS.map(type => (
+            {HEADER_SOCIALS.map((type) => (
               <SocialLinkButton key={type} type={type} muted />
             ))}
           </div>
 
           <button
+            type="button"
             aria-label="Toggle menu"
-            onClick={() => setOpen(v => !v)}
+            onClick={() => setOpen((v) => !v)}
             className="md:hidden h-8 w-8 ml-auto flex items-center justify-center rounded-sm border text-muted-foreground"
           >
             {open ? '✕' : '☰'}
@@ -115,7 +116,7 @@ export function SiteLayout({ children }: SiteLayoutProps): React.JSX.Element {
             style={{ animation: 'fade-in 0.2s ease-out' }}
           >
             <nav className="layout-container py-2 flex flex-col">
-              {NAV_ITEMS.map(item => {
+              {NAV_ITEMS.map((item) => {
                 const active = pathname === item.to;
                 return (
                   <Link
@@ -130,7 +131,7 @@ export function SiteLayout({ children }: SiteLayoutProps): React.JSX.Element {
               })}
 
               <div className="flex items-center gap-2 px-2.5 py-2">
-                {HEADER_SOCIALS.map(type => (
+                {HEADER_SOCIALS.map((type) => (
                   <SocialLinkButton key={type} type={type} bordered muted />
                 ))}
               </div>
@@ -147,7 +148,7 @@ export function SiteLayout({ children }: SiteLayoutProps): React.JSX.Element {
             © {year} - {PROFILE.name}
           </span>
           <div className="flex items-center gap-1">
-            {FOOTER_SOCIALS.map(type => (
+            {FOOTER_SOCIALS.map((type) => (
               <SocialLinkButton key={type} type={type} />
             ))}
           </div>

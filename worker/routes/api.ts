@@ -9,7 +9,7 @@ export const apiRoutes = new Hono();
 export const chatRule = {
   key: 'chat',
   windowMs: 60 * 60 * 1000,
-  maxRequests: 20,
+  maxRequests: 10,
 };
 
 export const contactRule = {
@@ -18,7 +18,7 @@ export const contactRule = {
   maxRequests: 3,
 };
 
-apiRoutes.get('/quota', async c => {
+apiRoutes.get('/quota', async (c) => {
   const identifier = c.req.header('cf-connecting-ip') || 'unknown';
   const status = await checkRateLimit(env.RateLimiter, identifier, chatRule, false);
   return c.json({
@@ -30,7 +30,7 @@ apiRoutes.get('/quota', async c => {
   });
 });
 
-apiRoutes.post('/send', async c => {
+apiRoutes.post('/send', async (c) => {
   try {
     const body = await c.req.json();
     const response = await submitContact(body);
@@ -44,7 +44,7 @@ apiRoutes.post('/send', async c => {
   }
 });
 
-apiRoutes.get('/health', c => {
+apiRoutes.get('/health', (c) => {
   const health = {
     status: 'ok',
     timestamp: new Date().toISOString(),
@@ -52,7 +52,7 @@ apiRoutes.get('/health', c => {
   return c.json(health);
 });
 
-apiRoutes.get('/send/spec.json', c => {
+apiRoutes.get('/send/spec.json', (c) => {
   const spec = getContactApiSpec();
 
   return c.json(spec, {

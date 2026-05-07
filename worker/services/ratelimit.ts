@@ -24,7 +24,7 @@ export async function checkRateLimit(
   namespace: DurableObjectNamespace<RateLimiterDO>,
   identifier: string,
   rule: Rule,
-  increment: boolean = true
+  increment = true
 ): Promise<RatelimitResponse> {
   const id = namespace.idFromName(`${rule.key}:${identifier}`);
   const obj = namespace.get(id);

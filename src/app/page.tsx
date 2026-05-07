@@ -11,10 +11,10 @@ export const metadata: Metadata = HOME_METADATA;
 function renderText(block: RichTextBlock): React.JSX.Element {
   return (
     <>
-      {block.map((segment, index) => {
+      {block.map((segment) => {
         if (segment.type === 'strong') {
           return (
-            <span key={`${segment.type}-${index}`} className="text-foreground font-medium">
+            <span key={`strong-${segment.text}`} className="text-foreground font-medium">
               {segment.text}
             </span>
           );
@@ -23,7 +23,7 @@ function renderText(block: RichTextBlock): React.JSX.Element {
         if (segment.type === 'link' && segment.href) {
           return (
             <a
-              key={`${segment.type}-${index}`}
+              key={`link-${segment.href}-${segment.text}`}
               href={segment.href}
               target="_blank"
               rel="noreferrer"
@@ -34,7 +34,7 @@ function renderText(block: RichTextBlock): React.JSX.Element {
           );
         }
 
-        return <span key={`${segment.type}-${index}`}>{segment.text}</span>;
+        return <span key={`text-${segment.text}`}>{segment.text}</span>;
       })}
     </>
   );

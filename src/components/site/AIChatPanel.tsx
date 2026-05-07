@@ -34,8 +34,8 @@ function getStoredId(): string {
 
 function getMessageText(message: UIMessage<{ createdAt: string }>): string {
   return message.parts
-    .filter(part => part.type === 'text')
-    .map(part => part.text)
+    .filter((part) => part.type === 'text')
+    .map((part) => part.text)
     .join('\n')
     .trim();
 }
@@ -113,14 +113,14 @@ function AIChatRuntime({ sessionId }: AIChatRuntimeProps): React.JSX.Element {
       textareaRef.current.style.height = 'auto';
       textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
     }
-  }, [input]);
+  }, []);
 
   useEffect(() => {
     scrollerRef.current?.scrollTo({
       top: scrollerRef.current.scrollHeight,
       behavior: 'smooth',
     });
-  }, [messages, loading]);
+  }, []);
 
   if (!ready) {
     return <AIChatLoadingState />;
@@ -210,9 +210,10 @@ function AIChatRuntime({ sessionId }: AIChatRuntimeProps): React.JSX.Element {
         <div className="border-t p-3">
           {!hasMessages && (
             <div className="flex flex-wrap gap-1.5 mb-3">
-              {CHAT_PAGE_CONTENT.suggestions.map(s => (
+              {CHAT_PAGE_CONTENT.suggestions.map((s) => (
                 <button
                   key={s}
+                  type="button"
                   disabled={isRateLimited}
                   onClick={() => {
                     void send(s);
@@ -226,7 +227,7 @@ function AIChatRuntime({ sessionId }: AIChatRuntimeProps): React.JSX.Element {
           )}
 
           <form
-            onSubmit={e => {
+            onSubmit={(e) => {
               e.preventDefault();
               void send();
             }}
@@ -237,8 +238,8 @@ function AIChatRuntime({ sessionId }: AIChatRuntimeProps): React.JSX.Element {
                 ref={textareaRef}
                 rows={1}
                 value={input}
-                onChange={e => setInput(e.target.value)}
-                onKeyDown={e => {
+                onChange={(e) => setInput(e.target.value)}
+                onKeyDown={(e) => {
                   if (e.key === 'Enter' && !e.shiftKey) {
                     e.preventDefault();
                     void send();

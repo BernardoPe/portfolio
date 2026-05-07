@@ -61,7 +61,7 @@ export function classifyWorkerError(error: unknown): WorkerErrorDetails {
   };
 }
 
-export function createJsonErrorResponse(body: JsonErrorBody, status: number = 400): Response {
+export function createJsonErrorResponse(body: JsonErrorBody, status = 400): Response {
   return new Response(JSON.stringify(body), {
     status,
     headers: { 'Content-Type': 'application/json' },

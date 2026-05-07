@@ -1,6 +1,6 @@
-import { Hono, Context, Next } from 'hono';
+import type { Hono, Context, Next } from 'hono';
 import { env } from 'cloudflare:workers';
-import { Rule, checkRateLimit } from './services/ratelimit';
+import { type Rule, checkRateLimit } from './services/ratelimit';
 import { contactRule } from './routes/api';
 
 export const rateLimiterMiddleware = (rule: Rule) => {

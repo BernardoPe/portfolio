@@ -1,6 +1,6 @@
 const DEVICON_BASE = 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons';
 
-function devIcon(slug: string, variant: string = 'original'): string {
+function devIcon(slug: string, variant = 'original'): string {
   return `${DEVICON_BASE}/${slug}/${slug}-${variant}.svg`;
 }
 

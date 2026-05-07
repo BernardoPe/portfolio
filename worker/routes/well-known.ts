@@ -3,7 +3,7 @@ import { buildApiCatalog } from '../services/catalog';
 
 export const wellKnownRoutes = new Hono();
 
-wellKnownRoutes.get('/api-catalog', c => {
+wellKnownRoutes.get('/api-catalog', (c) => {
   const siteUrl = `${c.req.header('x-forwarded-proto') || 'https'}://${c.req.header('host')}`;
   const catalog = buildApiCatalog(siteUrl);
 

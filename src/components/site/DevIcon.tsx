@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { getDevIcon, type DevIconSlug } from '@/data/devIcons';
 
 interface DevIconProps {
@@ -10,7 +11,7 @@ export function DevIcon({ slug, size = 16, className }: DevIconProps): React.JSX
   const src = getDevIcon(slug);
 
   return (
-    <img
+    <Image
       src={src}
       alt=""
       width={size}

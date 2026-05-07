@@ -10,7 +10,7 @@ const ROUTES_BLOCK = [
   `- ${ROUTES.contact}`,
 ].join('\n');
 
-const PROJECTS_BLOCK = PROJECTS.map(project => `- ${project.name}: ${project.url}`).join('\n');
+const PROJECTS_BLOCK = PROJECTS.map((project) => `- ${project.name}: ${project.url}`).join('\n');
 
 export const SYSTEM_PROMPT = `
 You are the AI assistant for Bernardo Pereira's portfolio site.

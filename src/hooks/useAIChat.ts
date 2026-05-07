@@ -39,13 +39,13 @@ export function useAIChat({ sessionId }: UseAIChatOptions): UseAIChatResult {
     const controller = new AbortController();
 
     fetch('/api/quota', { signal: controller.signal })
-      .then(res => res.json() as Promise<QuotaInfo>)
-      .then(data => {
+      .then((res) => res.json() as Promise<QuotaInfo>)
+      .then((data) => {
         if (!controller.signal.aborted) {
           setQuota({ remaining: data.remaining, resetTime: data.resetTime, limit: data.limit });
         }
       })
-      .catch(err => {
+      .catch((err) => {
         if (err.name !== 'AbortError') {
           console.error(err);
           if (!controller.signal.aborted) {
@@ -87,7 +87,7 @@ export function useAIChat({ sessionId }: UseAIChatOptions): UseAIChatResult {
     }
 
     if (quota !== null) {
-      setQuota(prev => (prev ? { ...prev, remaining: Math.max(0, prev.remaining - 1) } : null));
+      setQuota((prev) => (prev ? { ...prev, remaining: Math.max(0, prev.remaining - 1) } : null));
     }
 
     if (!text) {

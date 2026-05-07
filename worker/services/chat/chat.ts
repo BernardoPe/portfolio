@@ -43,7 +43,7 @@ const MCP_SERVERS: MCPServerInfo[] = [
 ];
 
 export class Chat extends AIChatAgent<Env> {
-  private clientIp: string = 'unknown';
+  private clientIp = 'unknown';
 
   override async fetch(request: Request): Promise<Response> {
     if (this.clientIp === 'unknown') {
@@ -172,13 +172,13 @@ export class Chat extends AIChatAgent<Env> {
       const connIds = Object.keys(connections);
 
       const allReady =
-        connIds.length > 0 && connIds.every(id => connections[id]?.connectionState === 'ready');
+        connIds.length > 0 && connIds.every((id) => connections[id]?.connectionState === 'ready');
       if (allReady) {
         console.log('All MCP connections are ready.');
         return true;
       }
 
-      const notReadyId = connIds.find(id => connections[id]?.connectionState !== 'ready');
+      const notReadyId = connIds.find((id) => connections[id]?.connectionState !== 'ready');
       console.log(
         `MCP connection ${notReadyId ?? 'unknown'} state is ${
           connections[notReadyId ?? '']?.connectionState ?? 'unknown'
@@ -204,6 +204,6 @@ export class Chat extends AIChatAgent<Env> {
   }
 
   private sleep(ms: number): Promise<void> {
-    return new Promise(resolve => setTimeout(resolve, ms));
+    return new Promise((resolve) => setTimeout(resolve, ms));
   }
 }

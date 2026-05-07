@@ -13,13 +13,17 @@ import {
 
 export const metadata: Metadata = EXPERIENCE_METADATA;
 
+import Image from 'next/image';
+
 function LogoBadge({ name, src }: { name: string; src: string }): React.JSX.Element {
   return (
-    <img
+    <Image
       src={src}
       alt={`${name} logo`}
       className="shrink-0 h-10 w-16 object-contain"
       loading="lazy"
+      width={64}
+      height={40}
     />
   );
 }
@@ -73,7 +77,7 @@ export default function WorkPage(): React.JSX.Element {
               </div>
             </header>
             <ul className="p-6 space-y-3 text-sm leading-relaxed text-foreground/85">
-              {EXPERIENCE_ENTRY.bullets.map(b => (
+              {EXPERIENCE_ENTRY.bullets.map((b) => (
                 <li key={b} className="flex gap-3">
                   <span className="text-primary mt-2 h-1.5 w-1.5 rounded-full bg-primary shrink-0" />
                   <span>{b}</span>
@@ -151,7 +155,7 @@ export default function WorkPage(): React.JSX.Element {
                   {s.group}
                 </div>
                 <ul className="flex flex-wrap gap-2">
-                  {s.items.map(it => (
+                  {s.items.map((it) => (
                     <li key={it.name} className="chip text-[13px] text-foreground/90">
                       <DevIcon slug={it.icon} size={16} className="h-5 w-5" />
                       {it.name}

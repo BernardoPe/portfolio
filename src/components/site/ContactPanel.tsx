@@ -17,7 +17,7 @@ export function ContactPanel(): React.JSX.Element {
       textareaRef.current.style.height = 'auto';
       textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
     }
-  }, [form.message]);
+  }, []);
 
   const isNameOver = form.name.length > FORM_LIMITS.contact.maxNameLength;
   const isEmailOver = form.email.length > FORM_LIMITS.contact.maxEmailLength;
@@ -29,7 +29,9 @@ export function ContactPanel(): React.JSX.Element {
       <form onSubmit={submit} className="panel-card panel-hover lg:col-span-7 p-8 space-y-5">
         <div>
           <div className="flex justify-between items-center mb-1.5">
-            <label className="form-label mb-0">Name</label>
+            <label htmlFor="name" className="form-label mb-0">
+              Name
+            </label>
             {form.name.length > 0 && (
               <span
                 className={`text-[10px] ${isNameOver ? 'text-red-500 font-medium' : 'text-muted-foreground'}`}
@@ -39,15 +41,18 @@ export function ContactPanel(): React.JSX.Element {
             )}
           </div>
           <input
+            id="name"
             required
             value={form.name}
-            onChange={e => updateField('name', e.target.value)}
+            onChange={(e) => updateField('name', e.target.value)}
             className={`field-input ${isNameOver ? 'border-red-500 focus:border-red-500' : ''}`}
           />
         </div>
         <div>
           <div className="flex justify-between items-center mb-1.5">
-            <label className="form-label mb-0">Email</label>
+            <label htmlFor="email" className="form-label mb-0">
+              Email
+            </label>
             {form.email.length > 0 && (
               <span
                 className={`text-[10px] ${isEmailOver ? 'text-red-500 font-medium' : 'text-muted-foreground'}`}
@@ -57,16 +62,19 @@ export function ContactPanel(): React.JSX.Element {
             )}
           </div>
           <input
+            id="email"
             required
             type="email"
             value={form.email}
-            onChange={e => updateField('email', e.target.value)}
+            onChange={(e) => updateField('email', e.target.value)}
             className={`field-input ${isEmailOver ? 'border-red-500 focus:border-red-500' : ''}`}
           />
         </div>
         <div>
           <div className="flex justify-between items-center mb-1.5">
-            <label className="form-label mb-0">Message</label>
+            <label htmlFor="message" className="form-label mb-0">
+              Message
+            </label>
             {form.message.length > 0 && (
               <span
                 className={`text-[10px] ${isMessageOver ? 'text-red-500 font-medium' : 'text-muted-foreground'}`}
@@ -76,11 +84,12 @@ export function ContactPanel(): React.JSX.Element {
             )}
           </div>
           <textarea
+            id="message"
             ref={textareaRef}
             required
             rows={4}
             value={form.message}
-            onChange={e => updateField('message', e.target.value)}
+            onChange={(e) => updateField('message', e.target.value)}
             className={`field-input resize-none overflow-y-auto min-h-[120px] max-h-[400px] ${isMessageOver ? 'border-red-500 focus:border-red-500' : ''}`}
           />
         </div>
@@ -97,7 +106,7 @@ export function ContactPanel(): React.JSX.Element {
           <p className="text-[10px] text-muted-foreground uppercase tracking-widest">
             {rateLimit.remaining} requests remaining
             {rateLimit.reset &&
-              ` • Resets in ${Math.ceil((parseInt(rateLimit.reset) * 1000 - Date.now()) / 60000)}m`}
+              ` • Resets in ${Math.ceil((Number.parseInt(rateLimit.reset, 10) * 1000 - Date.now()) / 60000)}m`}
           </p>
         )}
       </form>
@@ -108,7 +117,7 @@ export function ContactPanel(): React.JSX.Element {
             {CONTACT_PAGE_CONTENT.directChannelsTitle}
           </div>
           <ul className="space-y-3 text-sm">
-            {SOCIAL_LINKS.map(link => (
+            {SOCIAL_LINKS.map((link) => (
               <li key={link.id}>
                 <a
                   href={link.href}

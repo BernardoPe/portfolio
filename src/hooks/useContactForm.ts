@@ -22,7 +22,7 @@ export function useContactForm() {
   const [rateLimit, setRateLimit] = useState<RateLimitState | null>(null);
 
   const updateField = (field: keyof ContactFormState, value: string) => {
-    setForm(prev => ({ ...prev, [field]: value }));
+    setForm((prev) => ({ ...prev, [field]: value }));
   };
 
   const submit = async (e?: React.FormEvent) => {

@@ -87,11 +87,11 @@ const getContactInfoTool: WebMCPTool = {
     const includeFields = input.include as string[] | undefined;
     if (includeFields && Array.isArray(includeFields)) {
       const filtered: Record<string, string> = {};
-      includeFields.forEach(field => {
+      for (const field of includeFields) {
         if (field in contactInfo) {
           filtered[field] = contactInfo[field];
         }
-      });
+      }
       return JSON.stringify(filtered, null, 2);
     }
 
@@ -255,7 +255,7 @@ export function registerWebMCPTools(): void {
     getPagesTool,
   ];
 
-  tools.forEach(tool => {
+  for (const tool of tools) {
     try {
       navigator.modelContext.registerTool({
         name: tool.name,
@@ -283,7 +283,7 @@ export function registerWebMCPTools(): void {
     } catch (error) {
       console.warn(`[WebMCP] Failed to register tool "${tool.name}":`, error);
     }
-  });
+  }
 
   console.debug(`[WebMCP] Registered ${tools.length} tools`);
 }

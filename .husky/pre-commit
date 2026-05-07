@@ -1,11 +1,11 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
-# Run Prettier to format code
-echo "Running pre-commit: prettier"
-npm run --silent prettier || {
-  echo "Prettier failed - aborting commit"
+# Run Biome to format and lint code
+echo "Running pre-commit: biome format"
+npm run --silent format || {
+  echo "Format failed - aborting commit"
   exit 1
-} 
+}
 # Run linter and typecheck before commit
 echo "Running pre-commit: lint and typecheck"
 npm run --silent lint || {

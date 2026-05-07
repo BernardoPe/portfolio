@@ -52,8 +52,8 @@ function formatPreview(value: unknown, maxLength = 140): string | undefined {
 
 export function getToolCallProgress(message: UIMessage<{ createdAt: string }>): ToolCallProgress[] {
   return message.parts
-    .filter(part => isToolUIPart(part))
-    .map(part => {
+    .filter((part) => isToolUIPart(part))
+    .map((part) => {
       const state = getToolPartState(part);
       return {
         id: getToolCallId(part),
@@ -107,7 +107,7 @@ interface AIChatToolCallTimelineProps {
 export function AIChatToolCallTimeline({ calls }: AIChatToolCallTimelineProps): React.JSX.Element {
   return (
     <div className="mt-2 space-y-2">
-      {calls.map(call => (
+      {calls.map((call) => (
         <div key={call.id} className="rounded-sm border border-border/60 px-2.5 py-2">
           <div className="flex flex-wrap items-center gap-2">
             <span className="text-[11px] font-semibold tracking-wide uppercase text-foreground/90">

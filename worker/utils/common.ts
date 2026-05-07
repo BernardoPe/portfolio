@@ -4,11 +4,11 @@ import type { UIMessage } from 'ai';
 import { isStaticToolUIPart } from 'ai';
 
 export function cleanupMessages(messages: UIMessage[]): UIMessage[] {
-  return messages.filter(message => {
+  return messages.filter((message) => {
     if (!message.parts) return true;
 
     // Filter out messages with incomplete tool calls
-    const hasIncompleteToolCall = message.parts.some(part => {
+    const hasIncompleteToolCall = message.parts.some((part) => {
       if (!isStaticToolUIPart(part)) return false;
       // Remove tool calls that are still streaming or awaiting input without results
       return (

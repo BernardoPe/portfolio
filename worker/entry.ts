@@ -16,7 +16,7 @@ registerMiddlewares(app);
 app.route('/.well-known', wellKnownRoutes);
 app.route('/api', apiRoutes);
 
-app.all('*', async c => {
+app.all('*', async (c) => {
   const request = c.req.raw;
 
   const agentResponse = await routeAgentRequest(request, env);

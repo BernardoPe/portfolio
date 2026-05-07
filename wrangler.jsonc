@@ -7,45 +7,45 @@
   "assets": {
     "directory": "out",
     "binding": "ASSETS",
-    "run_worker_first": true,
+    "run_worker_first": true
   },
   "observability": {
-    "enabled": true,
+    "enabled": true
   },
   "ai": {
     "binding": "AI",
-    "remote": true,
+    "remote": true
   },
   "durable_objects": {
     "bindings": [
       {
         "name": "Chat",
-        "class_name": "Chat",
+        "class_name": "Chat"
       },
       {
         "name": "RateLimiter",
-        "class_name": "RateLimiter",
-      },
-    ],
+        "class_name": "RateLimiter"
+      }
+    ]
   },
   "routes": [
     {
       "pattern": "www.bernardope.com",
-      "custom_domain": true,
+      "custom_domain": true
     },
     {
       "pattern": "bernardope.com",
-      "custom_domain": true,
-    },
+      "custom_domain": true
+    }
   ],
   "migrations": [
     {
       "tag": "v1",
-      "new_sqlite_classes": ["Chat"],
+      "new_sqlite_classes": ["Chat"]
     },
     {
       "tag": "v2",
-      "new_sqlite_classes": ["RateLimiter"],
-    },
-  ],
+      "new_sqlite_classes": ["RateLimiter"]
+    }
+  ]
 }

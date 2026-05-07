@@ -35,4 +35,4 @@ export const NAV_ITEMS: NavigationItem[] = [
   },
 ];
 
-export const HOME_NAV_CARDS: NavigationItem[] = NAV_ITEMS.filter(item => item.description);
+export const HOME_NAV_CARDS: NavigationItem[] = NAV_ITEMS.filter((item) => item.description);
