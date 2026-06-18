@@ -10,7 +10,7 @@ import {
   type ToolSet,
   stepCountIs,
 } from 'ai';
-import { google, type GoogleLanguageModelOptions } from '@ai-sdk/google';
+import { createWorkersAI } from 'workers-ai-provider';
 import { env } from 'cloudflare:workers';
 import { SYSTEM_PROMPT } from './prompt';
 import { classifyWorkerError } from '../../utils/errors';
@@ -18,7 +18,15 @@ import { cleanupMessages } from '../../utils/common';
 import { checkRateLimit } from '../ratelimit';
 import { chatRule } from '../../routes/api';
 
-const model = google('gemini-3-flash-preview');
+let model: ReturnType<ReturnType<typeof createWorkersAI>> | undefined;
+
+function getModel() {
+  if (!model) {
+    const workersai = createWorkersAI({ binding: env.AI });
+    model = workersai('@cf/google/gemma-4-26b-a4b-it');
+  }
+  return model;
+}
 
 interface MCPServerInfo {
   id: string;
@@ -29,18 +37,20 @@ interface MCPServerInfo {
   };
 }
 
-const MCP_SERVERS: MCPServerInfo[] = [
-  {
-    id: 'Github',
-    url: 'https://api.githubcopilot.com/mcp/',
-    transport: {
-      headers: {
-        Authorization: `Bearer ${env.GITHUB_PAT}`,
-        'X-MCP-Readonly': 'true',
+function getMcpServerConfigs(): MCPServerInfo[] {
+  return [
+    {
+      id: 'Github',
+      url: 'https://api.githubcopilot.com/mcp/',
+      transport: {
+        headers: {
+          Authorization: `Bearer ${env.GITHUB_PAT}`,
+          'X-MCP-Readonly': 'true',
+        },
       },
     },
-  },
-];
+  ];
+}
 
 export class Chat extends AIChatAgent<Env> {
   private clientIp = 'unknown';
@@ -86,16 +96,11 @@ export class Chat extends AIChatAgent<Env> {
           const result = streamText({
             system: SYSTEM_PROMPT,
             messages: await convertToModelMessages(cleanedMessages),
-            model,
+            model: getModel(),
             onFinish,
             stopWhen: stepCountIs(10),
             tools,
             abortSignal: options?.abortSignal,
-            providerOptions: {
-              thinkingConfig: {
-                thinkingLevel: 'low',
-              },
-            } satisfies GoogleLanguageModelOptions,
           });
           writer.merge(result.toUIMessageStream());
         } catch (error) {
@@ -118,11 +123,12 @@ export class Chat extends AIChatAgent<Env> {
   }
 
   async ensureMcpConnections(): Promise<boolean> {
-    if (MCP_SERVERS.length === 0) {
+    const mcpServers = getMcpServerConfigs();
+    if (mcpServers.length === 0) {
       return false;
     }
 
-    for (const serverInfo of MCP_SERVERS) {
+    for (const serverInfo of mcpServers) {
       const existingServers = this.getMcpServers().servers;
       const existingServerById = Object.entries(existingServers).find(
         ([, entry]) => entry.name === serverInfo.id

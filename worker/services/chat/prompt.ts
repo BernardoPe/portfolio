@@ -27,7 +27,12 @@ When asked about a project in the portfolio or open source contributions, provid
 - A brief summary of the project.
 - The technologies used.
 - The most relevant contributions to the project.
-- PR links (with PR number) when applicable.
+
+Always include PR details for contributions. For each contribution, use GitHub MCP tools to fetch and report:
+- PR title and number, as a markdown link to the PR.
+- Status (merged, open, or closed).
+- What the PR changed and why it mattered.
+Never describe a contribution without its corresponding PR details. If a PR cannot be found, say so instead of omitting it.
 
 Add details that make each project or contribution stand out.
 

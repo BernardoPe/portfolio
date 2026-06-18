@@ -17,7 +17,6 @@
     "deploy": "npm run build && wrangler deploy"
   },
   "dependencies": {
-    "@ai-sdk/google": "^3.0.60",
     "@ai-sdk/react": "^3.0.66",
     "@cloudflare/ai-chat": "^0.4.4",
     "@streamdown/code": "^1.0.1",
@@ -30,7 +29,8 @@
     "next": "^15.5.2",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
-    "streamdown": "^2.1.0"
+    "streamdown": "^2.1.0",
+    "workers-ai-provider": "^3.2.0"
   },
   "devDependencies": {
     "@biomejs/biome": "2.4.14",
@@ -41,5 +41,10 @@
     "tailwindcss": "^4.1.18",
     "typescript": "~5.8.3",
     "wrangler": "^4.60.0"
+  },
+  "overrides": {
+    "esbuild": "^0.28.1",
+    "ws": "^8.21.0",
+    "postcss": "^8.5.15"
   }
 }
